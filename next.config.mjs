@@ -8,8 +8,8 @@ const nextConfig = {
   output: 'export',
 
   // Project page under /<repo>
-  basePath: isProd ? `/${repo}` : '',
-  assetPrefix: isProd ? `/${repo}/` : '',
+  basePath: '',
+  assetPrefix: '',
 
   // Helps avoid 404s on deep-link refreshes
   trailingSlash: true,
