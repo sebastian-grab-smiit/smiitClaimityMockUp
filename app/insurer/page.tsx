@@ -18,6 +18,7 @@ import {
   BarChart3,
   Users,
   MapPin,
+  Settings,
 } from "lucide-react"
 import Link from "next/link"
 import { QuickActions, insurerQuickActions } from "@/components/shared/quick-actions"
@@ -90,7 +91,7 @@ export default function InsurerDashboard() {
           <nav className="p-4 space-y-2">
             <Link
               href="/insurer"
-              className="flex items-center space-x-2 px-3 py-2 bg-teal-50 text-teal-700 rounded-lg"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
               <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>
@@ -127,7 +128,7 @@ export default function InsurerDashboard() {
               href="/insurer/settings"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <Users className="h-4 w-4" />
+              <Settings className="h-4 w-4" />
               <span>Einstellungen</span>
             </Link>
           </nav>
@@ -242,8 +243,8 @@ export default function InsurerDashboard() {
                     className="flex flex-col md:flex-row md:items-center justify-between p-4 border rounded-lg hover:bg-slate-50 space-y-3 md:space-y-0"
                   >
                     <div className="flex items-center space-x-4">
-                      <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <FileText className="h-5 w-5 text-teal-600" />
+                      <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <FileText className="h-5 w-5 text-primary" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2 mb-1">

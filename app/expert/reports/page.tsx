@@ -194,7 +194,7 @@ export default function ExpertReportsPage() {
             </Link>
             <Link
               href="/expert/reports"
-              className="flex items-center space-x-2 px-3 py-2 bg-green-50 text-green-700 rounded-lg"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
@@ -239,7 +239,7 @@ export default function ExpertReportsPage() {
                     onClick={() => setActiveTab(tab.id)}
                     className={`py-4 px-1 border-b-2 font-medium text-sm ${
                       activeTab === tab.id
-                        ? "border-teal-500 text-teal-600"
+                        ? "border-primary text-primary"
                         : "border-transparent text-slate-500 hover:text-slate-700"
                     }`}
                   >
@@ -261,13 +261,13 @@ export default function ExpertReportsPage() {
                         placeholder="Suche nach Titel, Fall-ID oder Versicherer..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                       />
                     </div>
                     <select
                       value={statusFilter}
                       onChange={(e) => setStatusFilter(e.target.value)}
-                      className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                      className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
                     >
                       <option value="all">Alle Status</option>
                       <option value="Entwurf">Entwurf</option>

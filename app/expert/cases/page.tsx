@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Search, Filter, MapPin, Clock, FileText } from "lucide-react"
+import { ArrowLeft, Search, Filter, MapPin, Clock, FileText, Upload } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
 
@@ -120,126 +120,166 @@ export default function ExpertCasesPage() {
     <div className="min-h-screen bg-slate-50">
       <PageHeader userType="expert" userName="Dr. Hans Müller" />
 
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-800">Meine Fälle</h1>
-            <p className="text-slate-600">Übersicht aller zugewiesenen Fälle</p>
-          </div>
-          <div className="text-sm text-slate-600">
-            {filteredCases.length} von {cases.length} Fällen
-          </div>
-        </div>
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-64 bg-white border-r min-h-screen">
+          <nav className="p-4 space-y-2">
+            <Link
+              href="/expert"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Dashboard</span>
+            </Link>
+            <Link
+              href="/expert/cases"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Meine Fälle</span>
+            </Link>
+            <Link
+              href="/expert/reports"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Upload className="h-4 w-4" />
+              <span>Berichte</span>
+            </Link>
+            <Link
+              href="/expert/calendar"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Clock className="h-4 w-4" />
+              <span>Kalender</span>
+            </Link>
+            <Link
+              href="/expert/profile"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Profil</span>
+            </Link>
+          </nav>
+        </aside>
 
-        {/* Search and Filters */}
-        <div className="bg-white rounded-lg p-6 mb-6">
-          <div className="flex items-center space-x-4 mb-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
-              <input
-                type="text"
-                placeholder="Suche nach Fall-ID, Versicherer, Typ oder Ort..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              />
+        {/* Main Content */}
+        <main className="flex-1 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-800">Meine Fälle</h1>
+              <p className="text-slate-600">Übersicht aller zugewiesenen Fälle</p>
             </div>
-            <Button variant="outline" className="flex items-center bg-transparent">
-              <Filter className="h-4 w-4 mr-2" />
-              Filter
-            </Button>
+            <div className="text-sm text-slate-600">
+              {filteredCases.length} von {cases.length} Fällen
+            </div>
           </div>
 
-          <div className="flex space-x-4">
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500"
-            >
-              <option value="all">Alle Status</option>
-              <option value="Neu">Neu</option>
-              <option value="Akzeptiert">Akzeptiert</option>
-              <option value="In Bearbeitung">In Bearbeitung</option>
-              <option value="Abgeschlossen">Abgeschlossen</option>
-            </select>
-            <select
-              value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value)}
-              className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500"
-            >
-              <option value="all">Alle Typen</option>
-              <option value="Fahrzeugschaden">Fahrzeugschaden</option>
-              <option value="Gebäudeschaden">Gebäudeschaden</option>
-              <option value="Maschinenschaden">Maschinenschaden</option>
-              <option value="Haftpflichtschaden">Haftpflichtschaden</option>
-            </select>
-          </div>
-        </div>
+          {/* Search and Filters */}
+          <div className="bg-white rounded-lg p-6 mb-6">
+            <div className="flex items-center space-x-4 mb-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+                <input
+                  type="text"
+                  placeholder="Suche nach Fall-ID, Versicherer, Typ oder Ort..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
+                />
+              </div>
+            </div>
 
-        {/* Cases List */}
-        <div className="space-y-4">
-          {filteredCases.map((case_) => (
-            <div key={case_.id} className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <div className="flex items-center space-x-2 mb-2">
-                    <h3 className="text-lg font-semibold text-slate-800">{case_.id}</h3>
-                    <Badge className={getStatusColor(case_.status)}>{case_.status}</Badge>
-                    <Badge className={getPriorityColor(case_.priority)}>{case_.priority}</Badge>
+            <div className="flex space-x-4">
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
+              >
+                <option value="all">Alle Status</option>
+                <option value="Neu">Neu</option>
+                <option value="Akzeptiert">Akzeptiert</option>
+                <option value="In Bearbeitung">In Bearbeitung</option>
+                <option value="Abgeschlossen">Abgeschlossen</option>
+              </select>
+              <select
+                value={typeFilter}
+                onChange={(e) => setTypeFilter(e.target.value)}
+                className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
+              >
+                <option value="all">Alle Typen</option>
+                <option value="Fahrzeugschaden">Fahrzeugschaden</option>
+                <option value="Gebäudeschaden">Gebäudeschaden</option>
+                <option value="Maschinenschaden">Maschinenschaden</option>
+                <option value="Haftpflichtschaden">Haftpflichtschaden</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Cases List */}
+          <div className="space-y-4">
+            {filteredCases.map((case_) => (
+              <div key={case_.id} className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <div className="flex items-center space-x-2 mb-2">
+                      <h3 className="text-lg font-semibold text-slate-800">{case_.id}</h3>
+                      <Badge className={getStatusColor(case_.status)}>{case_.status}</Badge>
+                      <Badge className={getPriorityColor(case_.priority)}>{case_.priority}</Badge>
+                    </div>
+                    <p className="text-slate-600 mb-1">
+                      {case_.insurer} • {case_.type}
+                    </p>
+                    <p className="text-sm text-slate-500">{case_.description}</p>
                   </div>
-                  <p className="text-slate-600 mb-1">
-                    {case_.insurer} • {case_.type}
-                  </p>
-                  <p className="text-sm text-slate-500">{case_.description}</p>
+                  <div className="text-right">
+                    <p className="text-xl font-bold text-slate-800">{case_.amount}</p>
+                    <p className="text-sm text-slate-500">
+                      {case_.status === "Abgeschlossen" ? "Abgeschlossen" : `Fällig: ${case_.deadline}`}
+                    </p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-xl font-bold text-slate-800">{case_.amount}</p>
-                  <p className="text-sm text-slate-500">
-                    {case_.status === "Abgeschlossen" ? "Abgeschlossen" : `Fällig: ${case_.deadline}`}
-                  </p>
-                </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div className="flex items-center space-x-2 text-sm text-slate-600">
-                  <MapPin className="h-4 w-4" />
-                  <span>{case_.location}</span>
-                  <span className="text-green-600">({case_.distance})</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div className="flex items-center space-x-2 text-sm text-slate-600">
+                    <MapPin className="h-4 w-4" />
+                    <span>{case_.location}</span>
+                    <span className="text-green-600">({case_.distance})</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-slate-600">
+                    <Clock className="h-4 w-4" />
+                    <span>Zugewiesen: {case_.assignedDate}</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-slate-600">
+                    <FileText className="h-4 w-4" />
+                    <span>Kontakt: {case_.contact}</span>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2 text-sm text-slate-600">
-                  <Clock className="h-4 w-4" />
-                  <span>Zugewiesen: {case_.assignedDate}</span>
-                </div>
-                <div className="flex items-center space-x-2 text-sm text-slate-600">
-                  <FileText className="h-4 w-4" />
-                  <span>Kontakt: {case_.contact}</span>
-                </div>
-              </div>
 
-              <div className="flex items-center justify-between pt-4 border-t">
-                <div className="text-sm text-slate-500">Telefon: {case_.phone}</div>
-                <div className="flex space-x-2">
-                  <Button variant="outline" size="sm">
-                    Kontakt
-                  </Button>
-                  <Link href={`/expert/cases/${case_.id}`}>
-                    <Button size="sm" className="">
-                      Details anzeigen
+                <div className="flex items-center justify-between pt-4 border-t">
+                  <div className="text-sm text-slate-500">Telefon: {case_.phone}</div>
+                  <div className="flex space-x-2">
+                    <Button variant="outline" size="sm">
+                      Kontakt
                     </Button>
-                  </Link>
+                    <Link href={`/expert/cases/${case_.id}`}>
+                      <Button size="sm" className="">
+                        Details anzeigen
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {filteredCases.length === 0 && (
-          <div className="bg-white rounded-lg p-12 text-center">
-            <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-slate-800 mb-2">Keine Fälle gefunden</h3>
-            <p className="text-slate-600">Versuchen Sie andere Suchbegriffe oder Filter.</p>
+            ))}
           </div>
-        )}
+
+          {filteredCases.length === 0 && (
+            <div className="bg-white rounded-lg p-12 text-center">
+              <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-slate-800 mb-2">Keine Fälle gefunden</h3>
+              <p className="text-slate-600">Versuchen Sie andere Suchbegriffe oder Filter.</p>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   )

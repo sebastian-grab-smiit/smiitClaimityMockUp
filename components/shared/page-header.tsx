@@ -37,16 +37,17 @@ export function PageHeader({
   }
 
   const getUserTypeBadgeColor = (type: string) => {
-    switch (type) {
-      case "insurer":
-        return "bg-blue-100 text-blue-800"
-      case "admin":
-        return "bg-purple-100 text-purple-800"
-      case "expert":
-        return "bg-green-100 text-green-800"
-      default:
-        return "bg-slate-100 text-slate-800"
-    }
+    // switch (type) {
+    //   case "insurer":
+    //     return "bg-blue-100 text-blue-800"
+    //   case "admin":
+    //     return "bg-purple-100 text-purple-800"
+    //   case "expert":
+    //     return "bg-green-100 text-green-800"
+    //   default:
+    //     return "bg-slate-100 text-primary"
+    // }
+    return "bg-slate-100 text-primary"
   }
 
   return (

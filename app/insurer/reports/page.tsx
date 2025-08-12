@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { PageHeader } from "@/components/shared/page-header"
-import { ArrowLeft, Search, Download, FileText, Calendar, Eye, CheckCircle, Clock, AlertCircle } from "lucide-react"
+import { ArrowLeft, Search, Users, Plus, Settings, BarChart3, Download, FileText, Calendar, Eye, CheckCircle, Clock, AlertCircle } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -130,194 +130,245 @@ export default function ReportsPage() {
     <div className="min-h-screen bg-slate-50">
       <PageHeader userType="insurer" userName="Helvetia Versicherung" />
 
-      <div className="max-w-7xl mx-auto p-6">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-slate-800 mb-2">Berichte & Rechnungen</h1>
-          <p className="text-slate-600">Verwalten und exportieren Sie Ihre Berichte und Rechnungen</p>
-        </div>
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-64 bg-white border-r min-h-screen hidden md:block">
+          <nav className="p-4 space-y-2">
+            <Link
+              href="/insurer"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>Dashboard</span>
+            </Link>
+            <Link
+              href="/insurer/claims/new"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Neuer Fall</span>
+            </Link>
+            <Link
+              href="/insurer/claims"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Alle Fälle</span>
+            </Link>
+            <Link
+              href="/insurer/reports"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
+            >
+              <Download className="h-4 w-4" />
+              <span>Berichte</span>
+            </Link>
+            <Link
+              href="/insurer/experts"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Users className="h-4 w-4" />
+              <span>Experten</span>
+            </Link>
+            <Link
+              href="/insurer/settings"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Settings className="h-4 w-4" />
+              <span>Einstellungen</span>
+            </Link>
+          </nav>
+        </aside>
 
-        {/* Filters */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="text-lg">Filter & Suche</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="lg:col-span-2">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
-                  <Input
-                    placeholder="Suche nach Bericht, Fall-ID oder Experte..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Alle Status</SelectItem>
-                  <SelectItem value="Entwurf">Entwurf</SelectItem>
-                  <SelectItem value="Abgeschlossen">Abgeschlossen</SelectItem>
-                  <SelectItem value="Freigegeben">Freigegeben</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select value={typeFilter} onValueChange={setTypeFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Typ" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Alle Typen</SelectItem>
-                  <SelectItem value="Gutachten">Gutachten</SelectItem>
-                  <SelectItem value="Vorabschätzung">Vorabschätzung</SelectItem>
-                  <SelectItem value="Abschlussbericht">Abschlussbericht</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Main Content */}
+        <main className="flex-1 p-4 md:p-6">
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold text-slate-800 mb-2">Berichte & Rechnungen</h1>
+            <p className="text-slate-600">Verwalten und exportieren Sie Ihre Berichte und Rechnungen</p>
+          </div>
 
-        <div className="grid lg:grid-cols-2 gap-6">
-          {/* Reports */}
-          <Card>
+          {/* Filters */}
+          <Card className="mb-6">
             <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Berichte ({filteredReports.length})</CardTitle>
-                  <CardDescription>Gutachten und Berichte von Experten</CardDescription>
-                </div>
-                <Button variant="outline" size="sm">
-                  <Download className="h-4 w-4 mr-2" />
-                  Export
-                </Button>
-              </div>
+              <CardTitle className="text-lg">Filter & Suche</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {filteredReports.map((report) => (
-                  <div key={report.id} className="border rounded-lg p-4 hover:bg-slate-50 transition-colors">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
-                          {getStatusIcon(report.status)}
-                        </div>
-                        <div>
-                          <div className="flex items-center space-x-2">
-                            <h3 className="font-semibold text-slate-800">{report.name}</h3>
-                            <Badge className={getStatusColor(report.status)}>{report.status}</Badge>
-                          </div>
-                          <p className="text-sm text-slate-600">
-                            {report.type} • Fall: {report.claimId}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 text-sm text-slate-600 mb-3">
-                      <div className="flex items-center">
-                        <Calendar className="h-3 w-3 mr-1" />
-                        {report.created}
-                      </div>
-                      <div>Experte: {report.expert}</div>
-                      <div>
-                        {report.size} • {report.format}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <Button variant="outline" size="sm">
-                        <Eye className="h-4 w-4 mr-1" />
-                        Anzeigen
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Download className="h-4 w-4 mr-1" />
-                        Download
-                      </Button>
-                    </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="lg:col-span-2">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                    <Input
+                      placeholder="Suche nach Bericht, Fall-ID oder Experte..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10"
+                    />
                   </div>
-                ))}
-              </div>
-
-              {filteredReports.length === 0 && (
-                <div className="text-center py-8">
-                  <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-slate-800 mb-2">Keine Berichte gefunden</h3>
-                  <p className="text-slate-600">
-                    Es wurden keine Berichte gefunden, die Ihren Suchkriterien entsprechen.
-                  </p>
                 </div>
-              )}
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Alle Status</SelectItem>
+                    <SelectItem value="Entwurf">Entwurf</SelectItem>
+                    <SelectItem value="Abgeschlossen">Abgeschlossen</SelectItem>
+                    <SelectItem value="Freigegeben">Freigegeben</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={typeFilter} onValueChange={setTypeFilter}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Typ" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Alle Typen</SelectItem>
+                    <SelectItem value="Gutachten">Gutachten</SelectItem>
+                    <SelectItem value="Vorabschätzung">Vorabschätzung</SelectItem>
+                    <SelectItem value="Abschlussbericht">Abschlussbericht</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </CardContent>
           </Card>
 
-          {/* Invoices */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Rechnungen ({invoices.length})</CardTitle>
-                  <CardDescription>Expertenrechnungen und Zahlungen</CardDescription>
-                </div>
-                <Button variant="outline" size="sm">
-                  <Download className="h-4 w-4 mr-2" />
-                  Export
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {invoices.map((invoice) => (
-                  <div key={invoice.id} className="border rounded-lg p-4 hover:bg-slate-50 transition-colors">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                          {getStatusIcon(invoice.status)}
-                        </div>
-                        <div>
-                          <div className="flex items-center space-x-2">
-                            <h3 className="font-semibold text-slate-800">Rechnung {invoice.number}</h3>
-                            <Badge className={getStatusColor(invoice.status)}>{invoice.status}</Badge>
-                          </div>
-                          <p className="text-sm text-slate-600">
-                            Fall: {invoice.claimId} • {invoice.expert}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-slate-800">{invoice.amount}</p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 text-sm text-slate-600 mb-3">
-                      <div className="flex items-center">
-                        <Calendar className="h-3 w-3 mr-1" />
-                        Erstellt: {invoice.created}
-                      </div>
-                      <div className="flex items-center">
-                        <Calendar className="h-3 w-3 mr-1" />
-                        Fällig: {invoice.due}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <Button variant="outline" size="sm">
-                        <Eye className="h-4 w-4 mr-1" />
-                        Anzeigen
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Download className="h-4 w-4 mr-1" />
-                        Download
-                      </Button>
-                    </div>
+          <div className="grid lg:grid-cols-2 gap-6">
+            {/* Reports */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Berichte ({filteredReports.length})</CardTitle>
+                    <CardDescription>Gutachten und Berichte von Experten</CardDescription>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+                  <Button variant="outline" size="sm">
+                    <Download className="h-4 w-4 mr-2" />
+                    Export
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {filteredReports.map((report) => (
+                    <div key={report.id} className="border rounded-lg p-4 hover:bg-slate-50 transition-colors">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                            {getStatusIcon(report.status)}
+                          </div>
+                          <div>
+                            <div className="flex items-center space-x-2">
+                              <h3 className="font-semibold text-slate-800">{report.name}</h3>
+                              <Badge className={getStatusColor(report.status)}>{report.status}</Badge>
+                            </div>
+                            <p className="text-sm text-slate-600">
+                              {report.type} • Fall: {report.claimId}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4 text-sm text-slate-600 mb-3">
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          {report.created}
+                        </div>
+                        <div>Experte: {report.expert}</div>
+                        <div>
+                          {report.size} • {report.format}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <Button variant="outline" size="sm">
+                          <Eye className="h-4 w-4 mr-1" />
+                          Anzeigen
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          <Download className="h-4 w-4 mr-1" />
+                          Download
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {filteredReports.length === 0 && (
+                  <div className="text-center py-8">
+                    <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-slate-800 mb-2">Keine Berichte gefunden</h3>
+                    <p className="text-slate-600">
+                      Es wurden keine Berichte gefunden, die Ihren Suchkriterien entsprechen.
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Invoices */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Rechnungen ({invoices.length})</CardTitle>
+                    <CardDescription>Expertenrechnungen und Zahlungen</CardDescription>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    <Download className="h-4 w-4 mr-2" />
+                    Export
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {invoices.map((invoice) => (
+                    <div key={invoice.id} className="border rounded-lg p-4 hover:bg-slate-50 transition-colors">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            {getStatusIcon(invoice.status)}
+                          </div>
+                          <div>
+                            <div className="flex items-center space-x-2">
+                              <h3 className="font-semibold text-slate-800">Rechnung {invoice.number}</h3>
+                              <Badge className={getStatusColor(invoice.status)}>{invoice.status}</Badge>
+                            </div>
+                            <p className="text-sm text-slate-600">
+                              Fall: {invoice.claimId} • {invoice.expert}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold text-slate-800">{invoice.amount}</p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4 text-sm text-slate-600 mb-3">
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          Erstellt: {invoice.created}
+                        </div>
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          Fällig: {invoice.due}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <Button variant="outline" size="sm">
+                          <Eye className="h-4 w-4 mr-1" />
+                          Anzeigen
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          <Download className="h-4 w-4 mr-1" />
+                          Download
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
       </div>
     </div>
   )

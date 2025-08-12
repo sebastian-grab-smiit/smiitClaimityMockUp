@@ -115,7 +115,7 @@ export default function ExpertDashboard() {
           <nav className="p-4 space-y-2">
             <Link
               href="/expert"
-              className="flex items-center space-x-2 px-3 py-2 bg-green-50 text-green-700 rounded-lg"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
               <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>

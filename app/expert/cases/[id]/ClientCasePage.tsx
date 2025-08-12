@@ -5,9 +5,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  MapPin, Clock, Phone, Mail, Upload, Camera, MessageSquare, Timer, FileText, Download,
+  ArrowLeft, MapPin, Clock, Phone, Mail, Upload, Camera, MessageSquare, Timer, FileText, Download,
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/page-header';
+import Link from "next/link"
 
 export default function ClientCasePage({ id }: { id: string }) {
   const [activeTab, setActiveTab] = useState('overview');
@@ -108,352 +109,400 @@ export default function ClientCasePage({ id }: { id: string }) {
     <div className="min-h-screen bg-slate-50">
       <PageHeader userType="expert" userName="Dr. Hans Müller" />
 
-      <div className="p-6">
-        {/* Case Header */}
-        <div className="bg-white rounded-lg p-6 mb-6">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <div className="flex items-center space-x-2 mb-2">
-                <h1 className="text-2xl font-bold text-slate-800">{caseData.id}</h1>
-                <Badge className={getStatusColor(caseData.status)}>{caseData.status}</Badge>
-                <Badge className={getPriorityColor(caseData.priority)}>{caseData.priority}</Badge>
-              </div>
-              <p className="text-lg text-slate-600 mb-2">
-                {caseData.insurer} • {caseData.type}
-              </p>
-              <p className="text-slate-600">{caseData.description}</p>
-            </div>
-            <div className="text-right">
-              <p className="text-2xl font-bold text-slate-800">{caseData.amount}</p>
-              <p className="text-sm text-slate-500">Fällig: {caseData.deadline}</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="flex items-center space-x-2 text-slate-600">
-              <MapPin className="h-4 w-4" />
-              <span>{caseData.location}</span>
-            </div>
-            <div className="flex items-center space-x-2 text-slate-600">
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-64 bg-white border-r min-h-screen">
+          <nav className="p-4 space-y-2">
+            <Link
+              href="/expert"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Dashboard</span>
+            </Link>
+            <Link
+              href="/expert/cases"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Meine Fälle</span>
+            </Link>
+            <Link
+              href="/expert/reports"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Upload className="h-4 w-4" />
+              <span>Berichte</span>
+            </Link>
+            <Link
+              href="/expert/calendar"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
               <Clock className="h-4 w-4" />
-              <span>Zugewiesen: {caseData.assignedDate}</span>
+              <span>Kalender</span>
+            </Link>
+            <Link
+              href="/expert/profile"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Profil</span>
+            </Link>
+          </nav>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 p-6">
+          <Link href="/expert/cases" className="flex items-center text-primary mb-3">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Zurück zur Übersicht
+          </Link>
+          {/* Case Header */}
+          <div className="bg-white rounded-lg p-6 mb-6">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <div className="flex items-center space-x-2 mb-2">
+                  <h1 className="text-2xl font-bold text-slate-800">{caseData.id}</h1>
+                  <Badge className={getStatusColor(caseData.status)}>{caseData.status}</Badge>
+                  <Badge className={getPriorityColor(caseData.priority)}>{caseData.priority}</Badge>
+                </div>
+                <p className="text-lg text-slate-600 mb-2">
+                  {caseData.insurer} • {caseData.type}
+                </p>
+                <p className="text-slate-600">{caseData.description}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-slate-800">{caseData.amount}</p>
+                <p className="text-sm text-slate-500">Fällig: {caseData.deadline}</p>
+              </div>
             </div>
-            <div className="flex items-center space-x-2 text-slate-600">
-              <Timer className="h-4 w-4" />
-              <span>Erfasst: {totalHours}h</span>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="flex items-center space-x-2 text-slate-600">
+                <MapPin className="h-4 w-4" />
+                <span>{caseData.location}</span>
+              </div>
+              <div className="flex items-center space-x-2 text-slate-600">
+                <Clock className="h-4 w-4" />
+                <span>Zugewiesen: {caseData.assignedDate}</span>
+              </div>
+              <div className="flex items-center space-x-2 text-slate-600">
+                <Timer className="h-4 w-4" />
+                <span>Erfasst: {totalHours}h</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Tabs */}
-        <div className="bg-white rounded-lg mb-6">
-          <div className="border-b">
-            <nav className="flex space-x-8 px-6">
-              {[
-                { id: "overview", label: "Übersicht" },
-                { id: "documents", label: "Dokumente" },
-                { id: "messages", label: "Nachrichten" },
-                { id: "time", label: "Zeiterfassung" },
-                { id: "report", label: "Bericht" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                    activeTab === tab.id
-                      ? "border-teal-500 text-teal-600"
-                      : "border-transparent text-slate-500 hover:text-slate-700"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </nav>
-          </div>
+          {/* Tabs */}
+          <div className="bg-white rounded-lg mb-6">
+            <div className="border-b">
+              <nav className="flex space-x-8 px-6">
+                {[
+                  { id: "overview", label: "Übersicht" },
+                  { id: "documents", label: "Dokumente" },
+                  { id: "messages", label: "Nachrichten" },
+                  { id: "time", label: "Zeiterfassung" },
+                  { id: "report", label: "Bericht" },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                      activeTab === tab.id
+                        ? "border-primary text-primary"
+                        : "border-transparent text-slate-500 hover:text-slate-700"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </nav>
+            </div>
 
-          <div className="p-6">
-            {activeTab === "overview" && (
-              <div className="space-y-6">
-                {/* Contact Info */}
-                <div>
-                  <h3 className="font-semibold text-slate-800 mb-3">Kontaktinformationen</h3>
-                  <div className="bg-slate-50 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-slate-800">{caseData.contact.name}</h4>
-                      <span className="text-sm text-slate-500">{caseData.contact.role}</span>
-                    </div>
-                    <div className="flex items-center space-x-4 text-sm text-slate-600">
-                      <div className="flex items-center space-x-1">
-                        <Phone className="h-4 w-4" />
-                        <span>{caseData.contact.phone}</span>
+            <div className="p-6">
+              {activeTab === "overview" && (
+                <div className="space-y-6">
+                  {/* Contact Info */}
+                  <div>
+                    <h3 className="font-semibold text-slate-800 mb-3">Kontaktinformationen</h3>
+                    <div className="bg-slate-50 rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-medium text-slate-800">{caseData.contact.name}</h4>
+                        <span className="text-sm text-slate-500">{caseData.contact.role}</span>
                       </div>
-                      <div className="flex items-center space-x-1">
-                        <Mail className="h-4 w-4" />
-                        <span>{caseData.contact.email}</span>
+                      <div className="flex items-center space-x-4 text-sm text-slate-600">
+                        <div className="flex items-center space-x-1">
+                          <Phone className="h-4 w-4" />
+                          <span>{caseData.contact.phone}</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <Mail className="h-4 w-4" />
+                          <span>{caseData.contact.email}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Timeline */}
-                <div>
-                  <h3 className="font-semibold text-slate-800 mb-3">Verlauf</h3>
-                  <div className="space-y-3">
-                    {caseData.timeline.map((item, index) => (
-                      <div key={index} className="flex items-start space-x-3">
-                        <div
-                          className={`w-2 h-2 rounded-full mt-2 ${
-                            item.type === "system"
-                              ? "bg-blue-500"
-                              : item.type === "expert"
-                                ? "bg-green-500"
-                                : "bg-purple-500"
-                          }`}
-                        ></div>
-                        <div>
-                          <p className="text-sm font-medium text-slate-800">{item.event}</p>
-                          <p className="text-xs text-slate-500">{item.date}</p>
+                  {/* Timeline */}
+                  <div>
+                    <h3 className="font-semibold text-slate-800 mb-3">Verlauf</h3>
+                    <div className="space-y-3">
+                      {caseData.timeline.map((item, index) => (
+                        <div key={index} className="flex items-start space-x-3">
+                          <div
+                            className={`w-2 h-2 rounded-full mt-2 ${
+                              item.type === "system"
+                                ? "bg-blue-500"
+                                : item.type === "expert"
+                                  ? "bg-green-500"
+                                  : "bg-purple-500"
+                            }`}
+                          ></div>
+                          <div>
+                            <p className="text-sm font-medium text-slate-800">{item.event}</p>
+                            <p className="text-xs text-slate-500">{item.date}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "documents" && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-slate-800">Dokumente</h3>
+                    <div className="flex space-x-2">
+                      <Button variant="outline" size="sm">
+                        <Camera className="h-4 w-4 mr-2" />
+                        Fotos aufnehmen
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        <Upload className="h-4 w-4 mr-2" />
+                        Hochladen
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {caseData.documents.map((doc, index) => (
+                      <div key={index} className="border rounded-lg p-4 hover:bg-slate-50">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center space-x-2">
+                            <FileText className="h-4 w-4 text-slate-400" />
+                            <span className="font-medium text-slate-800">{doc.name}</span>
+                          </div>
+                          <Button variant="ghost" size="sm">
+                            <Download className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        <div className="flex items-center justify-between text-sm text-slate-500">
+                          <span>{doc.size}</span>
+                          <span>{doc.uploaded}</span>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {activeTab === "documents" && (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-slate-800">Dokumente</h3>
-                  <div className="flex space-x-2">
-                    <Button variant="outline" size="sm">
-                      <Camera className="h-4 w-4 mr-2" />
-                      Fotos aufnehmen
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Hochladen
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {caseData.documents.map((doc, index) => (
-                    <div key={index} className="border rounded-lg p-4 hover:bg-slate-50">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center space-x-2">
-                          <FileText className="h-4 w-4 text-slate-400" />
-                          <span className="font-medium text-slate-800">{doc.name}</span>
-                        </div>
-                        <Button variant="ghost" size="sm">
-                          <Download className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <div className="flex items-center justify-between text-sm text-slate-500">
-                        <span>{doc.size}</span>
-                        <span>{doc.uploaded}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {activeTab === "messages" && (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-slate-800">Nachrichten</h3>
-                  <Button size="sm" className="">
-                    <MessageSquare className="h-4 w-4 mr-2" />
-                    Neue Nachricht
-                  </Button>
-                </div>
-
+              {activeTab === "messages" && (
                 <div className="space-y-4">
-                  {caseData.messages.map((msg) => (
-                    <div key={msg.id} className="border rounded-lg p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center space-x-2">
-                          <span className="font-medium text-slate-800">{msg.sender}</span>
-                          <Badge variant="outline" className="text-xs">
-                            {msg.role}
-                          </Badge>
-                        </div>
-                        <span className="text-sm text-slate-500">{msg.time}</span>
-                      </div>
-                      <p className="text-slate-700 mb-2">{msg.message}</p>
-                      {msg.attachments.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {msg.attachments.map((attachment, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
-                              📎 {attachment}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="border rounded-lg p-4">
-                  <Textarea
-                    placeholder="Nachricht eingeben..."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="mb-3"
-                  />
                   <div className="flex items-center justify-between">
-                    <Button variant="outline" size="sm">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Anhang
-                    </Button>
+                    <h3 className="font-semibold text-slate-800">Nachrichten</h3>
                     <Button size="sm" className="">
-                      Senden
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Neue Nachricht
                     </Button>
                   </div>
-                </div>
-              </div>
-            )}
 
-            {activeTab === "time" && (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-slate-800">Zeiterfassung</h3>
-                  <div className="text-sm text-slate-600">
-                    Gesamt: <span className="font-semibold">{totalHours}h</span>
+                  <div className="space-y-4">
+                    {caseData.messages.map((msg) => (
+                      <div key={msg.id} className="border rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center space-x-2">
+                            <span className="font-medium text-slate-800">{msg.sender}</span>
+                            <Badge variant="outline" className="text-xs">
+                              {msg.role}
+                            </Badge>
+                          </div>
+                          <span className="text-sm text-slate-500">{msg.time}</span>
+                        </div>
+                        <p className="text-slate-700 mb-2">{msg.message}</p>
+                        {msg.attachments.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {msg.attachments.map((attachment, index) => (
+                              <Badge key={index} variant="outline" className="text-xs">
+                                📎 {attachment}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                </div>
 
-                {/* Time Entries */}
-                <div className="space-y-3">
-                  {caseData.timeEntries.map((entry, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                      <div>
-                        <p className="font-medium text-slate-800">{entry.description}</p>
-                        <p className="text-sm text-slate-600">
-                          {entry.date} • {entry.type}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-slate-800">{entry.hours}h</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Add Time Entry */}
-                <div className="border rounded-lg p-4">
-                  <h4 className="font-medium text-slate-800 mb-3">Zeit erfassen</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
-                    <input
-                      type="date"
-                      className="px-3 py-2 border border-slate-300 rounded-lg"
-                      defaultValue={new Date().toISOString().split("T")[0]}
+                  <div className="border rounded-lg p-4">
+                    <Textarea
+                      placeholder="Nachricht eingeben..."
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      className="mb-3"
                     />
-                    <input
-                      type="number"
-                      step="0.5"
-                      placeholder="Stunden"
-                      className="px-3 py-2 border border-slate-300 rounded-lg"
-                    />
-                    <select className="px-3 py-2 border border-slate-300 rounded-lg">
-                      <option>Vor-Ort-Termin</option>
-                      <option>Büroarbeit</option>
-                      <option>Dokumentation</option>
-                      <option>Telefon/E-Mail</option>
-                      <option>Fahrtzeit</option>
-                    </select>
-                  </div>
-                  <Textarea
-                    placeholder="Beschreibung der Tätigkeit..."
-                    value={timeEntry}
-                    onChange={(e) => setTimeEntry(e.target.value)}
-                    className="mb-3"
-                  />
-                  <Button className="">
-                    <Timer className="h-4 w-4 mr-2" />
-                    Zeit erfassen
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {activeTab === "report" && (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-slate-800">Bericht erstellen</h3>
-                  <Badge className="bg-yellow-100 text-yellow-800">In Bearbeitung</Badge>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium text-slate-800 mb-3">Berichtsvorlagen</h4>
-                    <div className="space-y-2">
-                      <Button variant="outline" className="w-full justify-start bg-transparent">
-                        <FileText className="h-4 w-4 mr-2" />
-                        Fahrzeugschaden Standard
-                      </Button>
-                      <Button variant="outline" className="w-full justify-start bg-transparent">
-                        <FileText className="h-4 w-4 mr-2" />
-                        Kollisionsschaden Detailliert
-                      </Button>
-                      <Button variant="outline" className="w-full justify-start bg-transparent">
-                        <FileText className="h-4 w-4 mr-2" />
-                        Kostenvoranschlag
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-slate-800 mb-3">Checkliste</h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" defaultChecked />
-                        <span className="text-sm text-slate-700">Besichtigung durchgeführt</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" defaultChecked />
-                        <span className="text-sm text-slate-700">Fotos aufgenommen</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm text-slate-700">Kostenvoranschlag eingeholt</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm text-slate-700">Bericht erstellt</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm text-slate-700">Qualitätsprüfung</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="border rounded-lg p-4">
-                  <h4 className="font-medium text-slate-800 mb-3">Berichtsentwurf</h4>
-                  <Textarea
-                    placeholder="Hier können Sie Ihren Bericht verfassen oder eine Vorlage verwenden..."
-                    className="min-h-[200px] mb-3"
-                  />
-                  <div className="flex items-center justify-between">
-                    <div className="flex space-x-2">
+                    <div className="flex items-center justify-between">
                       <Button variant="outline" size="sm">
                         <Upload className="h-4 w-4 mr-2" />
-                        Anhänge
+                        Anhang
                       </Button>
-                      <Button variant="outline" size="sm">
-                        Entwurf speichern
+                      <Button size="sm" className="">
+                        Senden
                       </Button>
                     </div>
-                    <Button className="">Bericht einreichen</Button>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+
+              {activeTab === "time" && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-slate-800">Zeiterfassung</h3>
+                    <div className="text-sm text-slate-600">
+                      Gesamt: <span className="font-semibold">{totalHours}h</span>
+                    </div>
+                  </div>
+
+                  {/* Time Entries */}
+                  <div className="space-y-3">
+                    {caseData.timeEntries.map((entry, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                        <div>
+                          <p className="font-medium text-slate-800">{entry.description}</p>
+                          <p className="text-sm text-slate-600">
+                            {entry.date} • {entry.type}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold text-slate-800">{entry.hours}h</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Add Time Entry */}
+                  <div className="border rounded-lg p-4">
+                    <h4 className="font-medium text-slate-800 mb-3">Zeit erfassen</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+                      <input
+                        type="date"
+                        className="px-3 py-2 border border-slate-300 rounded-lg"
+                        defaultValue={new Date().toISOString().split("T")[0]}
+                      />
+                      <input
+                        type="number"
+                        step="0.5"
+                        placeholder="Stunden"
+                        className="px-3 py-2 border border-slate-300 rounded-lg"
+                      />
+                      <select className="px-3 py-2 border border-slate-300 rounded-lg">
+                        <option>Vor-Ort-Termin</option>
+                        <option>Büroarbeit</option>
+                        <option>Dokumentation</option>
+                        <option>Telefon/E-Mail</option>
+                        <option>Fahrtzeit</option>
+                      </select>
+                    </div>
+                    <Textarea
+                      placeholder="Beschreibung der Tätigkeit..."
+                      value={timeEntry}
+                      onChange={(e) => setTimeEntry(e.target.value)}
+                      className="mb-3"
+                    />
+                    <Button className="">
+                      <Timer className="h-4 w-4 mr-2" />
+                      Zeit erfassen
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "report" && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-slate-800">Bericht erstellen</h3>
+                    <Badge className="bg-yellow-100 text-yellow-800">In Bearbeitung</Badge>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-medium text-slate-800 mb-3">Berichtsvorlagen</h4>
+                      <div className="space-y-2">
+                        <Button variant="outline" className="w-full justify-start bg-transparent">
+                          <FileText className="h-4 w-4 mr-2" />
+                          Fahrzeugschaden Standard
+                        </Button>
+                        <Button variant="outline" className="w-full justify-start bg-transparent">
+                          <FileText className="h-4 w-4 mr-2" />
+                          Kollisionsschaden Detailliert
+                        </Button>
+                        <Button variant="outline" className="w-full justify-start bg-transparent">
+                          <FileText className="h-4 w-4 mr-2" />
+                          Kostenvoranschlag
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-medium text-slate-800 mb-3">Checkliste</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <input type="checkbox" className="rounded" defaultChecked />
+                          <span className="text-sm text-slate-700">Besichtigung durchgeführt</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input type="checkbox" className="rounded" defaultChecked />
+                          <span className="text-sm text-slate-700">Fotos aufgenommen</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input type="checkbox" className="rounded" />
+                          <span className="text-sm text-slate-700">Kostenvoranschlag eingeholt</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input type="checkbox" className="rounded" />
+                          <span className="text-sm text-slate-700">Bericht erstellt</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input type="checkbox" className="rounded" />
+                          <span className="text-sm text-slate-700">Qualitätsprüfung</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border rounded-lg p-4">
+                    <h4 className="font-medium text-slate-800 mb-3">Berichtsentwurf</h4>
+                    <Textarea
+                      placeholder="Hier können Sie Ihren Bericht verfassen oder eine Vorlage verwenden..."
+                      className="min-h-[200px] mb-3"
+                    />
+                    <div className="flex items-center justify-between">
+                      <div className="flex space-x-2">
+                        <Button variant="outline" size="sm">
+                          <Upload className="h-4 w-4 mr-2" />
+                          Anhänge
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          Entwurf speichern
+                        </Button>
+                      </div>
+                      <Button className="">Bericht einreichen</Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   )

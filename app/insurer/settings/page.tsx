@@ -65,7 +65,7 @@ export default function InsurerSettingsPage() {
             </Link>
             <Link
               href="/insurer/settings"
-              className="flex items-center space-x-2 px-3 py-2 bg-teal-50 text-teal-700 rounded-lg"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
               <Settings className="h-4 w-4" />
               <span>Einstellungen</span>
@@ -116,8 +116,8 @@ export default function InsurerSettingsPage() {
                         className="flex items-center justify-between p-4 border rounded-lg hover:bg-slate-50"
                       >
                         <div className="flex items-center space-x-4">
-                          <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
-                            <span className="text-teal-600 font-semibold">
+                          <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
+                            <span className="text-primary font-semibold">
                               {user.name
                                 .split(" ")
                                 .map((n) => n[0])
