@@ -65,16 +65,16 @@ export default function VerifyEmailPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-teal-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/signup" className="inline-flex items-center text-primary hover:text-primary mb-4">
+          {/* <Link href="/signup" className="inline-flex items-center text-primary hover:text-primary mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Zurück zur Registrierung
-          </Link>
+          </Link> */}
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Image
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
               alt="Claimity Logo"
-              width={95}
-              height={36}
+              width={135}
+              height={46}
               className="rounded-lg"
             />
           </div>

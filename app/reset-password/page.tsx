@@ -60,8 +60,8 @@ export default function ResetPasswordPage() {
             <Image
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
               alt="Claimity Logo"
-              width={115}
-              height={36}
+              width={135}
+              height={46}
               className="rounded-lg"
             />
           </div>
@@ -121,7 +121,7 @@ export default function ResetPasswordPage() {
         <Alert className="mt-4">
           <Shield className="h-4 w-4" />
           <AlertDescription>
-            Verwenden Sie ein starkes Passwort mit mindestens 8 Zeichen, Groß- und Kleinbuchstaben, Zahlen und
+            Verwenden Sie ein starkes Passwort mit mindestens 8 Zeichen, Gross- und Kleinbuchstaben, Zahlen und
             Sonderzeichen.
           </AlertDescription>
         </Alert>

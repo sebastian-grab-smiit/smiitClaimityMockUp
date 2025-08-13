@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Shield } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { PageHeader } from "@/components/shared/page-header"
 
 export default function LoginPage() {
@@ -38,14 +39,20 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-teal-50">
-      <PageHeader showAuth={false} />
-
-      <div className="flex items-center justify-center p-4 pt-8">
-        <div className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-teal-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-2xl">
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center space-x-2 mb-4">
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+              alt="Claimity Logo"
+              width={135}
+              height={46}
+              className="rounded-lg"
+            />
+          </div>
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-slate-800">Anmelden</h1>
-            <p className="text-slate-600">Melden Sie sich in Ihrem Konto an</p>
           </div>
 
           <Card>
@@ -122,12 +129,6 @@ export default function LoginPage() {
                   <Link href="/forgot-password" className="text-sm text-primary hover:text-primary block text-center">
                     Passwort vergessen?
                   </Link>
-                  <div className="text-center text-sm text-slate-600">
-                    Noch kein Konto?{" "}
-                    <Link href="/signup" className="text-primary hover:text-primary">
-                      Registrieren
-                    </Link>
-                  </div>
                 </div>
               )}
 

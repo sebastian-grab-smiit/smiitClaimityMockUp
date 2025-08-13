@@ -82,8 +82,8 @@ export default function Setup2FAPage() {
             <Image
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
               alt="Claimity Logo"
-              width={95}
-              height={36}
+              width={135}
+              height={46}
               className="rounded-lg"
             />
           </div>

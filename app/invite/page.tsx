@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
+import Image from "next/image"
 
 type UserType = "insurer" | "expert"
 type InvitePayload = {
@@ -37,13 +38,22 @@ function parseInviteToken(token: string | null): InvitePayload | null {
 
 export default function InvitePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-teal-50">
-      <PageHeader showBackButton backUrl="/" showAuth={false} />
-      <div className="flex items-center justify-center p-4 pt-8">
-        <div className="w-full max-w-2xl">
-          <div className="text-center mb-8">
+    <div className="bg-gradient-to-br from-slate-50 to-teal-50">
+      {/* If you have a header with h-16 (64px), use min-h-[calc(100vh-4rem)].
+         If not, just use min-h-screen. */}
+      <div className="flex min-h-screen items-center justify-center px-4 md:px-6 py-10">
+        <div className="w-full max-w-2xl flex flex-col items-center text-center gap-6">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+            alt="Claimity Logo"
+            width={135}
+            height={46}
+            className="rounded-lg"
+          />
+
+          <div>
             <h1 className="text-2xl font-bold text-slate-800">Einladung annehmen</h1>
-            <p className="text-slate-600">Schließen Sie Ihre Kontoerstellung für Claimity ab.</p>
+            <p className="text-slate-600">Schliessen Sie Ihre Kontoerstellung für Claimity ab.</p>
           </div>
 
           <Suspense fallback={<InviteSkeleton />}>
@@ -116,7 +126,7 @@ function InviteForm() {
     <Card>
       <CardHeader>
         <CardTitle>Ihre Einladung</CardTitle>
-        <CardDescription>Die folgenden Angaben stammen aus der Einladung.</CardDescription>
+        <CardDescription>{inviteError ? '' : 'Die folgenden Angaben stammen aus der Einladung.'}</CardDescription>
       </CardHeader>
       <CardContent>
         {inviteError && (

@@ -53,7 +53,7 @@ export function FileUpload({
 
       const validFiles = newFiles.filter((file) => {
         if (file.size > maxSize * 1024 * 1024) {
-          alert(`Datei ${file.name} ist zu groß. Maximum: ${maxSize}MB`)
+          alert(`Datei ${file.name} ist zu gross. Maximum: ${maxSize}MB`)
           return false
         }
         return true

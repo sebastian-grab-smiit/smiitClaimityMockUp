@@ -77,7 +77,7 @@ export default function HomePage() {
               </div>
               <h3 className="font-semibold text-slate-800 mb-2">Zertifizierte Fachleute</h3>
               <p className="text-sm text-slate-600">
-                Wir arbeiten ausschließlich mit zertifizierten und erfahrenen Sachverständigen zusammen, die höchste
+                Wir arbeiten ausschliesslich mit zertifizierten und erfahrenen Sachverständigen zusammen, die höchste
                 Qualitätsstandards in der Schadensbegutachtung gewährleisten.
               </p>
             </div>
