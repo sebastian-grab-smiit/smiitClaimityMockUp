@@ -22,7 +22,9 @@ export default function NewClaimPage() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [formData, setFormData] = useState({
     // Basic Info
+    claimCategory: "",
     policyNumber: "",
+    claimInsurance: "",
     claimType: "",
     incidentDate: "",
     reportDate: "",
@@ -43,11 +45,12 @@ export default function NewClaimPage() {
   })
 
   const steps = [
-    { number: 1, title: "Grunddaten", description: "Police und Schadenart" },
-    { number: 2, title: "Ort & Zeit", description: "Wo und wann ist der Schaden aufgetreten?" },
-    { number: 3, title: "Schadendetails", description: "Beschreibung und Schätzung" },
-    { number: 4, title: "Dokumente", description: "Fotos und Unterlagen hochladen" },
-    { number: 5, title: "Überprüfung", description: "Angaben kontrollieren" },
+    { number: 1, title: "Kategorie", detail: "Kategorie", description: "Kategorie des Falls" },
+    { number: 2, title: "Grunddaten", detail: "Grunddaten", description: "Police und Schadensart" },
+    { number: 3, title: "Ort & Zeit", detail: "Ort & Zeit", description: "Wo und wann ist der Schaden aufgetreten?" },
+    { number: 4, title: "Schadendetails", detail: "Schadendetails", description: "Beschreibung und Schätzung" },
+    { number: 5, title: "Dokumente", detail: "Dokumente (z.B. FZ-Ausweis, Unfallprotokoll, Fotos, Kostenvoranschlag, etc.)", description: "Fotos und Unterlagen hochladen" },
+    { number: 6, title: "Überprüfung", detail: "Überprüfung", description: "Angaben kontrollieren" },
   ]
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -207,15 +210,39 @@ export default function NewClaimPage() {
           <Card>
             <CardHeader>
               <CardTitle>
-                Schritt {currentStep}: {steps[currentStep - 1].title}
+                Schritt {currentStep}: {steps[currentStep - 1].detail}
               </CardTitle>
               <CardDescription>{steps[currentStep - 1].description}</CardDescription>
             </CardHeader>
             <CardContent>
-              {/* Step 1: Basic Info */}
+              {/* Step 1: Category */}
               {currentStep === 1 && (
                 <div className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid md:grid-cols-1 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="claimCategory">Kategorie *</Label>
+                      <Select
+                        value={formData.claimCategory}
+                        onValueChange={(value) => setFormData({ ...formData, claimCategory: value })}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Kategorie auswählen" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="vehicle">Fahrzeugschaden</SelectItem>
+                          <SelectItem value="property">Sachschaden</SelectItem>
+                          <SelectItem value="fraud">BVM</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 2: Basic Info */}
+              {currentStep === 2 && (
+                <div className="space-y-4">
+                  <div className="grid md:grid-cols-3 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="policyNumber">Schadensnummer *</Label>
                       <Input
@@ -227,37 +254,47 @@ export default function NewClaimPage() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="claimType">Schadenart *</Label>
+                      <Label htmlFor="claimInsurance">Sparte *</Label>
+                      <Select
+                        value={formData.claimInsurance}
+                        onValueChange={(value) => setFormData({ ...formData, claimInsurance: value })}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Sparte auswählen" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="hp">Haftpflicht</SelectItem>
+                          <SelectItem value="tk">Teilkasko</SelectItem>
+                          <SelectItem value="vk">Vollkasko</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="claimType">Schadensart</Label>
                       <Select
                         value={formData.claimType}
                         onValueChange={(value) => setFormData({ ...formData, claimType: value })}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Schadenart auswählen" />
+                          <SelectValue placeholder="Schadensart auswählen" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="vehicle">Fahrzeugschaden</SelectItem>
-                          <SelectItem value="property">Gebäudeschaden</SelectItem>
-                          <SelectItem value="liability">Haftpflichtschaden</SelectItem>
+                          <SelectItem value="vehicle">Feuer</SelectItem>
+                          <SelectItem value="property">Elementarereignis</SelectItem>
+                          <SelectItem value="liability">Schneerutsch</SelectItem>
                           <SelectItem value="theft">Diebstahl</SelectItem>
-                          <SelectItem value="water">Wasserschaden</SelectItem>
-                          <SelectItem value="fire">Brandschaden</SelectItem>
-                          <SelectItem value="other">Sonstiges</SelectItem>
+                          <SelectItem value="water">Kollision mit Tieren</SelectItem>
+                          <SelectItem value="fire">Marder- und Nagetierbiss</SelectItem>
+                          <SelectItem value="glas">Glasbruch</SelectItem>
+                          <SelectItem value="vand">Vandalismus</SelectItem>
+                          <SelectItem value="help">Hilfeleistungen</SelectItem>
+                          <SelectItem value="objects">Abstürzende Objekte</SelectItem>
+                          <SelectItem value="parking">Parkschaden</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="incidentDate">Schadensdatum *</Label>
-                      <Input
-                        id="incidentDate"
-                        type="date"
-                        value={formData.incidentDate}
-                        onChange={(e) => setFormData({ ...formData, incidentDate: e.target.value })}
-                        required
-                      />
-                    </div>
                     <div className="space-y-2">
                       <Label htmlFor="reportDate">Meldedatum</Label>
                       <Input
@@ -271,9 +308,10 @@ export default function NewClaimPage() {
                 </div>
               )}
 
-              {/* Step 2: Location */}
-              {currentStep === 2 && (
+              {/* Step 3: Location */}
+              {currentStep === 3 && (
                 <div className="space-y-4">
+                  <div className="grid md:grid-cols-3 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="address">Adresse *</Label>
                     <Input
@@ -284,7 +322,6 @@ export default function NewClaimPage() {
                       required
                     />
                   </div>
-                  <div className="grid md:grid-cols-3 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="postalCode">PLZ *</Label>
                       <Input
@@ -306,50 +343,21 @@ export default function NewClaimPage() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="canton">Kanton *</Label>
-                      <Select
-                        value={formData.canton}
-                        onValueChange={(value) => setFormData({ ...formData, canton: value })}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Kanton" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="ZH">Zürich</SelectItem>
-                          <SelectItem value="BE">Bern</SelectItem>
-                          <SelectItem value="LU">Luzern</SelectItem>
-                          <SelectItem value="UR">Uri</SelectItem>
-                          <SelectItem value="SZ">Schwyz</SelectItem>
-                          <SelectItem value="OW">Obwalden</SelectItem>
-                          <SelectItem value="NW">Nidwalden</SelectItem>
-                          <SelectItem value="GL">Glarus</SelectItem>
-                          <SelectItem value="ZG">Zug</SelectItem>
-                          <SelectItem value="FR">Freiburg</SelectItem>
-                          <SelectItem value="SO">Solothurn</SelectItem>
-                          <SelectItem value="BS">Basel-Stadt</SelectItem>
-                          <SelectItem value="BL">Basel-Landschaft</SelectItem>
-                          <SelectItem value="SH">Schaffhausen</SelectItem>
-                          <SelectItem value="AR">Appenzell A.Rh.</SelectItem>
-                          <SelectItem value="AI">Appenzell I.Rh.</SelectItem>
-                          <SelectItem value="SG">St. Gallen</SelectItem>
-                          <SelectItem value="GR">Graubünden</SelectItem>
-                          <SelectItem value="AG">Aargau</SelectItem>
-                          <SelectItem value="TG">Thurgau</SelectItem>
-                          <SelectItem value="TI">Tessin</SelectItem>
-                          <SelectItem value="VD">Waadt</SelectItem>
-                          <SelectItem value="VS">Wallis</SelectItem>
-                          <SelectItem value="NE">Neuenburg</SelectItem>
-                          <SelectItem value="GE">Genf</SelectItem>
-                          <SelectItem value="JU">Jura</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Label htmlFor="incidentDate">Schadensdatum *</Label>
+                      <Input
+                        id="incidentDate"
+                        type="date"
+                        value={formData.incidentDate}
+                        onChange={(e) => setFormData({ ...formData, incidentDate: e.target.value })}
+                        required
+                      />
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Step 3: Damage Details */}
-              {currentStep === 3 && (
+              {/* Step 4: Damage Details */}
+              {currentStep === 4 && (
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="damageDescription">Schadensbeschreibung *</Label>
@@ -394,8 +402,8 @@ export default function NewClaimPage() {
                 </div>
               )}
 
-              {/* Step 4: File Upload */}
-              {currentStep === 4 && (
+              {/* Step 5: File Upload */}
+              {currentStep === 5 && (
                 <div className="space-y-4">
                   <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center">
                     <Upload className="h-12 w-12 text-slate-400 mx-auto mb-4" />
@@ -442,8 +450,8 @@ export default function NewClaimPage() {
                 </div>
               )}
 
-              {/* Step 5: Review */}
-              {currentStep === 5 && (
+              {/* Step 6: Review */}
+              {currentStep === 6 && (
                 <div className="space-y-6">
                   <Alert>
                     <AlertCircle className="h-4 w-4" />
@@ -462,7 +470,7 @@ export default function NewClaimPage() {
                           <span className="font-medium">{formData.policyNumber}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-slate-600">Schadenart:</span>
+                          <span className="text-slate-600">Schadensart:</span>
                           <span className="font-medium">{formData.claimType}</span>
                         </div>
                         <div className="flex justify-between">
@@ -532,9 +540,9 @@ export default function NewClaimPage() {
                   Zurück
                 </Button>
 
-                {currentStep < 5 ? (
+                {currentStep < 6 ? (
                   <Button
-                    onClick={() => setCurrentStep(Math.min(5, currentStep + 1))}
+                    onClick={() => setCurrentStep(Math.min(6, currentStep + 1))}
                     className="bg-blue-500 hover:bg-blue-600"
                   >
                     Weiter
