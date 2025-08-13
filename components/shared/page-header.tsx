@@ -9,7 +9,7 @@ import { LanguageSelector } from "./language-selector"
 import Image from "next/image"
 
 interface PageHeaderProps {
-  userType?: "insurer" | "admin" | "expert"
+  userType?: "insurer" | "admin" | "expert-vehicle" | "expert-fraud" | "expert-appraiser" | "expert"
   userName?: string
   showBackButton?: boolean
   backUrl?: string
@@ -29,6 +29,12 @@ export function PageHeader({
         return "Versicherer Portal"
       case "admin":
         return "Admin Portal"
+      case "expert-fraud":
+        return "Betrugsermittler Portal"
+      case "expert-vehicle":
+        return "Fahrzeugexperte Portal"
+      case "expert-appraiser":
+        return "Schverständiger Portal"
       case "expert":
         return "Experten Portal"
       default:
@@ -83,11 +89,11 @@ export function PageHeader({
             {userName && <span className="text-sm text-slate-600 hidden md:block">{userName}</span>}
             <LanguageSelector />
             {userType && <NotificationCenter />}
-            <Link href={`/${userType}/settings`}>
+            {/* <Link href={`/${userType}/settings`}>
               <Button variant="ghost" size="sm">
                 <Settings className="h-4 w-4" />
               </Button>
-            </Link>
+            </Link> */}
             <Link href="/login">
               <Button variant="ghost" size="sm">
                 <LogOut className="h-4 w-4" />

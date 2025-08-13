@@ -118,42 +118,42 @@ export default function ExpertCasesPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <PageHeader userType="expert" userName="Dr. Hans Müller" />
+      <PageHeader userType="expert-fraud" userName="Dr. Hans Müller" />
 
       <div className="flex">
         {/* Sidebar */}
         <aside className="w-64 bg-white border-r min-h-screen">
           <nav className="p-4 space-y-2">
             <Link
-              href="/expert"
+              href="/expert/fraud"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <FileText className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
             <Link
-              href="/expert/cases"
+              href="/expert/fraud/cases"
               className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
               <FileText className="h-4 w-4" />
               <span>Meine Fälle</span>
             </Link>
             <Link
-              href="/expert/reports"
+              href="/expert/fraud/reports"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
             </Link>
             <Link
-              href="/expert/calendar"
+              href="/expert/fraud/calendar"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Clock className="h-4 w-4" />
               <span>Kalender</span>
             </Link>
             <Link
-              href="/expert/notifications"
+              href="/expert/fraud/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <MessageSquare className="h-4 w-4" />
@@ -161,7 +161,7 @@ export default function ExpertCasesPage() {
               {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
             </Link>
             <Link
-              href="/expert/settings"
+              href="/expert/fraud/settings"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Settings className="h-4 w-4" />
@@ -269,7 +269,7 @@ export default function ExpertCasesPage() {
                     <Button variant="outline" size="sm">
                       Kontakt
                     </Button>
-                    <Link href={`/expert/cases/${case_.id}`}>
+                    <Link href={`/expert/fraud/cases/${case_.id}`}>
                       <Button size="sm" className="">
                         Details anzeigen
                       </Button>

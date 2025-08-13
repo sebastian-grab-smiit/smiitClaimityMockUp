@@ -132,42 +132,42 @@ export default function ClientCasePage({ id }: { id: string }) {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <PageHeader userType="expert" userName="Dr. Hans Müller" />
+      <PageHeader userType="expert-vehicle" userName="Dr. Hans Müller" />
 
       <div className="flex">
         {/* Sidebar */}
         <aside className="w-64 bg-white border-r min-h-screen">
           <nav className="p-4 space-y-2">
             <Link
-              href="/expert"
+              href="/expert/vehicle"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <FileText className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
             <Link
-              href="/expert/cases"
+              href="/expert/vehicle/cases"
               className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
               <FileText className="h-4 w-4" />
               <span>Meine Fälle</span>
             </Link>
             <Link
-              href="/expert/reports"
+              href="/expert/vehicle/reports"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
             </Link>
             <Link
-              href="/expert/calendar"
+              href="/expert/vehicle/calendar"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Clock className="h-4 w-4" />
               <span>Kalender</span>
             </Link>
             <Link
-              href="/expert/notifications"
+              href="/expert/vehicle/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <MessageSquare className="h-4 w-4" />
@@ -175,7 +175,7 @@ export default function ClientCasePage({ id }: { id: string }) {
               {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
             </Link>
             <Link
-              href="/expert/settings"
+              href="/expert/vehicle/settings"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Settings className="h-4 w-4" />
@@ -186,7 +186,7 @@ export default function ClientCasePage({ id }: { id: string }) {
 
         {/* Main Content */}
         <main className="flex-1 p-6">
-          <Link href="/expert/cases" className="flex items-center text-primary mb-3">
+          <Link href="/expert/vehicle/cases" className="flex items-center text-primary mb-3">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Zurück zur Übersicht
           </Link>
