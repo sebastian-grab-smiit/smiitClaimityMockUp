@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { ArrowLeft, Upload, X, ImageIcon, Video, AlertCircle, FileText, CheckCircle, Settings, Users, Download, BarChart3, Plus } from "lucide-react"
+import { ArrowLeft, Upload, X, ImageIcon, Video, AlertCircle, FileText, CheckCircle, Settings, Users, Download, BarChart3, Plus, MessageSquare } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { PageHeader } from "@/components/shared/page-header"
@@ -155,6 +155,14 @@ export default function NewClaimPage() {
             >
               <Users className="h-4 w-4" />
               <span>Experten</span>
+            </Link>
+            <Link
+              href="/insurer/notifications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
             </Link>
             <Link
               href="/insurer/settings"

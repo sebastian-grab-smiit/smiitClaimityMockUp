@@ -5,15 +5,15 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { PageHeader } from "@/components/shared/page-header"
-import { FileText, Upload, ArrowLeft, User, MapPin, Star, Award, Settings, Save, Plus, Clock } from "lucide-react"
+import { FileText, Upload, ArrowLeft, User, MapPin, Star, Award, Settings, Save, Plus, Clock, MessageSquare } from "lucide-react"
 import Link from "next/link"
 
-export default function ExpertProfilePage() {
-  const [activeTab, setActiveTab] = useState("profile")
+export default function ExpertSettingsPage() {
+  const [activeTab, setActiveTab] = useState("settings")
   const [isEditing, setIsEditing] = useState(false)
 
-  // Mock profile data
-  const profile = {
+  // Mock settings data
+  const settings = {
     id: "EXP-001",
     name: "Dr. Hans Müller",
     email: "hans.mueller@expert.ch",
@@ -101,10 +101,18 @@ export default function ExpertProfilePage() {
               <span>Kalender</span>
             </Link>
             <Link
-              href="/expert/profile"
+              href="/expert/notifications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
+            </Link>
+            <Link
+              href="/expert/settings"
               className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
-              <FileText className="h-4 w-4" />
+              <Settings className="h-4 w-4" />
               <span>Profil</span>
             </Link>
           </nav>
@@ -140,18 +148,18 @@ export default function ExpertProfilePage() {
                   <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
                     <User className="h-10 w-10 text-white" />
                   </div>
-                  <h3 className="font-semibold text-slate-800">{profile.name}</h3>
-                  <p className="text-sm text-slate-600">ID: {profile.id}</p>
+                  <h3 className="font-semibold text-slate-800">{settings.name}</h3>
+                  <p className="text-sm text-slate-600">ID: {settings.id}</p>
                   <div className="flex items-center justify-center space-x-1 mt-2">
                     <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                    <span className="font-medium">{profile.rating}</span>
-                    <span className="text-sm text-slate-500">({profile.completedCases} Fälle)</span>
+                    <span className="font-medium">{settings.rating}</span>
+                    <span className="text-sm text-slate-500">({settings.completedCases} Fälle)</span>
                   </div>
                 </div>
 
                 <nav className="space-y-2">
                   {[
-                    { id: "profile", label: "Profil", icon: User },
+                    { id: "settings", label: "Profil", icon: User },
                     { id: "availability", label: "Verfügbarkeit", icon: MapPin },
                     { id: "notifications", label: "Benachrichtigungen", icon: Settings },
                     { id: "stats", label: "Statistiken", icon: Award },
@@ -179,7 +187,7 @@ export default function ExpertProfilePage() {
             {/* Main Content */}
             <div className="lg:col-span-3">
               <div className="bg-white rounded-lg p-6">
-                {activeTab === "profile" && (
+                {activeTab === "settings" && (
                   <div className="space-y-6">
                     <h2 className="text-xl font-semibold text-slate-800">Profil-Informationen</h2>
 
@@ -188,7 +196,7 @@ export default function ExpertProfilePage() {
                         <label className="block text-sm font-medium text-slate-700 mb-2">Name</label>
                         <input
                           type="text"
-                          defaultValue={profile.name}
+                          defaultValue={settings.name}
                           disabled={!isEditing}
                           className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary disabled:bg-slate-50"
                         />
@@ -197,7 +205,7 @@ export default function ExpertProfilePage() {
                         <label className="block text-sm font-medium text-slate-700 mb-2">E-Mail</label>
                         <input
                           type="email"
-                          defaultValue={profile.email}
+                          defaultValue={settings.email}
                           disabled={!isEditing}
                           className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary disabled:bg-slate-50"
                         />
@@ -206,7 +214,7 @@ export default function ExpertProfilePage() {
                         <label className="block text-sm font-medium text-slate-700 mb-2">Telefon</label>
                         <input
                           type="tel"
-                          defaultValue={profile.phone}
+                          defaultValue={settings.phone}
                           disabled={!isEditing}
                           className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary disabled:bg-slate-50"
                         />
@@ -214,7 +222,7 @@ export default function ExpertProfilePage() {
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">Kanton</label>
                         <select
-                          defaultValue={profile.canton}
+                          defaultValue={settings.canton}
                           disabled={!isEditing}
                           className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary disabled:bg-slate-50"
                         >
@@ -230,7 +238,7 @@ export default function ExpertProfilePage() {
                       <label className="block text-sm font-medium text-slate-700 mb-2">Adresse</label>
                       <input
                         type="text"
-                        defaultValue={profile.address}
+                        defaultValue={settings.address}
                         disabled={!isEditing}
                         className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary disabled:bg-slate-50"
                       />
@@ -239,7 +247,7 @@ export default function ExpertProfilePage() {
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">Über mich</label>
                       <Textarea
-                        defaultValue={profile.bio}
+                        defaultValue={settings.bio}
                         disabled={!isEditing}
                         className="min-h-[100px] disabled:bg-slate-50"
                       />
@@ -248,7 +256,7 @@ export default function ExpertProfilePage() {
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">Spezialisierungen</label>
                       <div className="flex flex-wrap gap-2 mb-2">
-                        {profile.specialties.map((specialty) => (
+                        {settings.specialties.map((specialty) => (
                           <Badge key={specialty} variant="outline">
                             {specialty}
                             {isEditing && <span className="ml-1 cursor-pointer">×</span>}
@@ -268,7 +276,7 @@ export default function ExpertProfilePage() {
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">Sprachen</label>
                         <div className="flex flex-wrap gap-2">
-                          {profile.languages.map((lang) => (
+                          {settings.languages.map((lang) => (
                             <Badge key={lang} className="bg-blue-100 text-blue-800">
                               {lang}
                             </Badge>
@@ -278,7 +286,7 @@ export default function ExpertProfilePage() {
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">Zertifizierungen</label>
                         <div className="flex flex-wrap gap-2">
-                          {profile.certifications.map((cert) => (
+                          {settings.certifications.map((cert) => (
                             <Badge key={cert} className="bg-green-100 text-green-800">
                               {cert}
                             </Badge>
@@ -294,7 +302,7 @@ export default function ExpertProfilePage() {
                     <h2 className="text-xl font-semibold text-slate-800">Verfügbarkeit & Arbeitszeiten</h2>
 
                     <div className="space-y-4">
-                      {Object.entries(profile.workingHours).map(([day, hours]) => (
+                      {Object.entries(settings.workingHours).map(([day, hours]) => (
                         <div
                           key={day}
                           className="flex items-center justify-between p-4 border border-slate-200 rounded-lg"
@@ -363,7 +371,7 @@ export default function ExpertProfilePage() {
                         </div>
                         <input
                           type="checkbox"
-                          checked={profile.preferences.emailNotifications}
+                          checked={settings.preferences.emailNotifications}
                           disabled={!isEditing}
                           className="rounded"
                         />
@@ -376,7 +384,7 @@ export default function ExpertProfilePage() {
                         </div>
                         <input
                           type="checkbox"
-                          checked={profile.preferences.smsNotifications}
+                          checked={settings.preferences.smsNotifications}
                           disabled={!isEditing}
                           className="rounded"
                         />
@@ -389,7 +397,7 @@ export default function ExpertProfilePage() {
                         </div>
                         <input
                           type="checkbox"
-                          checked={profile.preferences.pushNotifications}
+                          checked={settings.preferences.pushNotifications}
                           disabled={!isEditing}
                           className="rounded"
                         />
@@ -402,7 +410,7 @@ export default function ExpertProfilePage() {
                         </div>
                         <input
                           type="checkbox"
-                          checked={profile.preferences.weeklyReports}
+                          checked={settings.preferences.weeklyReports}
                           disabled={!isEditing}
                           className="rounded"
                         />
@@ -415,7 +423,7 @@ export default function ExpertProfilePage() {
                         </div>
                         <input
                           type="checkbox"
-                          checked={profile.preferences.caseAssignmentAlerts}
+                          checked={settings.preferences.caseAssignmentAlerts}
                           disabled={!isEditing}
                           className="rounded"
                         />
@@ -428,7 +436,7 @@ export default function ExpertProfilePage() {
                         </div>
                         <input
                           type="checkbox"
-                          checked={profile.preferences.deadlineReminders}
+                          checked={settings.preferences.deadlineReminders}
                           disabled={!isEditing}
                           className="rounded"
                         />
@@ -447,7 +455,7 @@ export default function ExpertProfilePage() {
                           <h3 className="font-semibold text-blue-800">Durchschnittliche Antwortzeit</h3>
                           <Clock className="h-5 w-5 text-blue-600" />
                         </div>
-                        <p className="text-2xl font-bold text-blue-900">{profile.stats.avgResponseTime}</p>
+                        <p className="text-2xl font-bold text-blue-900">{settings.stats.avgResponseTime}</p>
                         <p className="text-sm text-blue-700">Sehr gut (Ziel: {"<"} 4h)</p>
                       </div>
 
@@ -456,7 +464,7 @@ export default function ExpertProfilePage() {
                           <h3 className="font-semibold text-green-800">Pünktliche Lieferung</h3>
                           <Award className="h-5 w-5 text-green-600" />
                         </div>
-                        <p className="text-2xl font-bold text-green-900">{profile.stats.onTimeDelivery}</p>
+                        <p className="text-2xl font-bold text-green-900">{settings.stats.onTimeDelivery}</p>
                         <p className="text-sm text-green-700">Ausgezeichnet (Ziel: {">"} 90%)</p>
                       </div>
 
@@ -465,7 +473,7 @@ export default function ExpertProfilePage() {
                           <h3 className="font-semibold text-purple-800">Kundenzufriedenheit</h3>
                           <Star className="h-5 w-5 text-purple-600" />
                         </div>
-                        <p className="text-2xl font-bold text-purple-900">{profile.stats.customerSatisfaction}</p>
+                        <p className="text-2xl font-bold text-purple-900">{settings.stats.customerSatisfaction}</p>
                         <p className="text-sm text-purple-700">Hervorragend</p>
                       </div>
 
@@ -474,7 +482,7 @@ export default function ExpertProfilePage() {
                           <h3 className="font-semibold text-orange-800">Aktive Serie</h3>
                           <Settings className="h-5 w-5 text-orange-600" />
                         </div>
-                        <p className="text-2xl font-bold text-orange-900">{profile.stats.activeStreak}</p>
+                        <p className="text-2xl font-bold text-orange-900">{settings.stats.activeStreak}</p>
                         <p className="text-sm text-orange-700">Ohne Verspätung</p>
                       </div>
                     </div>

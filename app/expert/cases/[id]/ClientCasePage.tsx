@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  ArrowLeft, MapPin, Clock, Phone, Mail, Upload, Camera, MessageSquare, Timer, FileText, Download,
+  ArrowLeft, MapPin, Clock, Phone, Mail, Upload, Camera, MessageSquare, Timer, FileText, Download, Settings
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/page-header';
 import Link from "next/link"
@@ -14,6 +14,7 @@ export default function ClientCasePage({ id }: { id: string }) {
   const [activeTab, setActiveTab] = useState('overview');
   const [timeEntry, setTimeEntry] = useState('');
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState("insurer")
 
   // ---- your original mock data (kept) ----
   const caseData = {
@@ -53,6 +54,7 @@ export default function ClientCasePage({ id }: { id: string }) {
         id: 1,
         sender: 'Maria Schneider',
         role: 'Versicherer',
+        messageType: 'insurer',
         time: '17.01.2024 09:00',
         message:
           'Guten Tag, könnten Sie bitte eine Einschätzung der Reparaturkosten abgeben? Der Kunde fragt nach.',
@@ -62,10 +64,31 @@ export default function ClientCasePage({ id }: { id: string }) {
         id: 2,
         sender: 'Dr. Hans Müller',
         role: 'Experte',
+        messageType: 'insurer',
         time: '17.01.2024 11:30',
         message:
           'Hallo Frau Schneider, basierend auf meiner Besichtigung schätze ich die Reparaturkosten auf CHF 8,500-10,200. Detaillierter Kostenvoranschlag folgt bis morgen.',
         attachments: ['Kosteneinschaetzung_vorlaeufig.pdf'],
+      },
+      {
+        id: 3,
+        sender: 'Burim Kryeziu',
+        role: 'Admin',
+        messageType: 'admin',
+        time: '17.01.2024 09:00',
+        message:
+          'Ich bin ein Admin.',
+        attachments: [],
+      },
+      {
+        id: 4,
+        sender: 'Dr. Hans Müller',
+        role: 'Experte',
+        messageType: 'admin',
+        time: '17.01.2024 11:30',
+        message:
+          'Ich habe einen Doktortitel.',
+        attachments: [],
       },
     ],
     timeEntries: [
@@ -105,6 +128,8 @@ export default function ClientCasePage({ id }: { id: string }) {
 
   const totalHours = caseData.timeEntries.reduce((sum, entry) => sum + entry.hours, 0);
 
+  const filteredMessages = caseData.messages.filter((msg) => msg.messageType === messageType)
+
   return (
     <div className="min-h-screen bg-slate-50">
       <PageHeader userType="expert" userName="Dr. Hans Müller" />
@@ -142,10 +167,18 @@ export default function ClientCasePage({ id }: { id: string }) {
               <span>Kalender</span>
             </Link>
             <Link
-              href="/expert/profile"
+              href="/expert/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <FileText className="h-4 w-4" />
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
+            </Link>
+            <Link
+              href="/expert/settings"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Settings className="h-4 w-4" />
               <span>Profil</span>
             </Link>
           </nav>
@@ -311,14 +344,34 @@ export default function ClientCasePage({ id }: { id: string }) {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <h3 className="font-semibold text-slate-800">Nachrichten</h3>
-                    <Button size="sm" className="">
-                      <MessageSquare className="h-4 w-4 mr-2" />
-                      Neue Nachricht
-                    </Button>
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2 bg-slate-100 rounded-lg p-1">
+                          <button
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                              messageType === "insurer"
+                                ? "bg-white text-slate-900 shadow-sm"
+                                : "text-slate-600 hover:text-slate-900"
+                            }`}
+                            onClick={() => setMessageType("insurer")}
+                          >
+                            Mit Versicherer
+                          </button>
+                          <button
+                            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                              messageType === "admin"
+                                ? "bg-white text-slate-900 shadow-sm"
+                                : "text-slate-600 hover:text-slate-900"
+                            }`}
+                            onClick={() => setMessageType("admin")}
+                          >
+                            Mit Admin
+                          </button>
+                        </div>
+                    </div>
                   </div>
 
                   <div className="space-y-4">
-                    {caseData.messages.map((msg) => (
+                    {filteredMessages.map((msg) => (
                       <div key={msg.id} className="border rounded-lg p-4">
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center space-x-2">
@@ -439,15 +492,7 @@ export default function ClientCasePage({ id }: { id: string }) {
                       <div className="space-y-2">
                         <Button variant="outline" className="w-full justify-start bg-transparent">
                           <FileText className="h-4 w-4 mr-2" />
-                          Fahrzeugschaden Standard
-                        </Button>
-                        <Button variant="outline" className="w-full justify-start bg-transparent">
-                          <FileText className="h-4 w-4 mr-2" />
-                          Kollisionsschaden Detailliert
-                        </Button>
-                        <Button variant="outline" className="w-full justify-start bg-transparent">
-                          <FileText className="h-4 w-4 mr-2" />
-                          Kostenvoranschlag
+                          Standard Vorlage
                         </Button>
                       </div>
                     </div>
@@ -481,16 +526,16 @@ export default function ClientCasePage({ id }: { id: string }) {
 
                   <div className="border rounded-lg p-4">
                     <h4 className="font-medium text-slate-800 mb-3">Berichtsentwurf</h4>
-                    <Textarea
-                      placeholder="Hier können Sie Ihren Bericht verfassen oder eine Vorlage verwenden..."
-                      className="min-h-[200px] mb-3"
-                    />
+                    <Button className="w-full min-h-[200px] mb-3" variant="outline">
+                      <Upload className="h-4 w-4 mr-2" />
+                      Anhänge
+                    </Button>
                     <div className="flex items-center justify-between">
                       <div className="flex space-x-2">
-                        <Button variant="outline" size="sm">
+                        {/* <Button variant="outline" size="sm">
                           <Upload className="h-4 w-4 mr-2" />
                           Anhänge
-                        </Button>
+                        </Button> */}
                         <Button variant="outline" size="sm">
                           Entwurf speichern
                         </Button>

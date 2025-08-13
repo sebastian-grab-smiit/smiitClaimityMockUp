@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { PageHeader } from "@/components/shared/page-header"
-import { ArrowLeft, Search, Users, Plus, Settings, BarChart3, Download, FileText, Calendar, Eye, CheckCircle, Clock, AlertCircle } from "lucide-react"
+import { ArrowLeft, Search, Users, Plus, Settings, BarChart3, Download, FileText, Calendar, Eye, CheckCircle, Clock, AlertCircle, MessageSquare } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -168,6 +168,14 @@ export default function ReportsPage() {
             >
               <Users className="h-4 w-4" />
               <span>Experten</span>
+            </Link>
+            <Link
+              href="/insurer/notifications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
             </Link>
             <Link
               href="/insurer/settings"

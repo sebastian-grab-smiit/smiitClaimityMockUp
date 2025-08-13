@@ -81,14 +81,18 @@ export function PageHeader({
         {showAuth && (
           <div className="flex items-center space-x-2 md:space-x-4">
             {userName && <span className="text-sm text-slate-600 hidden md:block">{userName}</span>}
-            {userType === "insurer" && <LanguageSelector />}
+            <LanguageSelector />
             {userType && <NotificationCenter />}
-            <Button variant="ghost" size="sm">
-              <Settings className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm">
-              <LogOut className="h-4 w-4" />
-            </Button>
+            <Link href={`/${userType}/settings`}>
+              <Button variant="ghost" size="sm">
+                <Settings className="h-4 w-4" />
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button variant="ghost" size="sm">
+                <LogOut className="h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         )}
       </div>

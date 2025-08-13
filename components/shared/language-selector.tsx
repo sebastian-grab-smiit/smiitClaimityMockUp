@@ -27,11 +27,11 @@ export function LanguageSelector() {
   return (
     <div className="relative">
       <Button variant="ghost" size="sm" onClick={() => setIsOpen(!isOpen)} className="flex items-center space-x-2">
-        <Globe className="h-4 w-4" />
+        {/* <Globe className="h-4 w-4" /> */}
         <span className="text-sm">{currentLang?.flag}</span>
-        <Badge variant="outline" className="text-xs">
+        {/* <Badge variant="outline" className="text-xs">
           Phase 2
-        </Badge>
+        </Badge> */}
       </Button>
 
       {isOpen && (

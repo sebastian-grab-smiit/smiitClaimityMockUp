@@ -142,7 +142,15 @@ export default function ExpertDashboard() {
               <span>Kalender</span>
             </Link>
             <Link
-              href="/expert/profile"
+              href="/expert/notifications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
+            </Link>
+            <Link
+              href="/expert/settings"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Settings className="h-4 w-4" />

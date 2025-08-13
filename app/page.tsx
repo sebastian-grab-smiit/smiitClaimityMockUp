@@ -23,9 +23,6 @@ export default function HomePage() {
             <Link href="/login" className="text-slate-600 hover:text-primary">
               Login
             </Link>
-            <Link href="/signup" className="text-slate-600 hover:text-primary">
-              Registrierung
-            </Link>
             <select className="text-sm border rounded px-2 py-1">
               <option>DE</option>
               <option>FR</option>
@@ -49,7 +46,7 @@ export default function HomePage() {
             Sachverständigenbestellung und Begutachtung.
           </p>
           <Button size="lg" className=" text-white px-8 py-3">
-            <Link href="/signup" className="hover:text-white">
+            <Link href="/" className="hover:text-white">
               Kostenlos testen
             </Link>
             <ArrowRight className="ml-2 h-4 w-4" />
@@ -269,7 +266,7 @@ export default function HomePage() {
                 Jetzt anmelden
               </Button>
             </Link>
-            <Link href="/signup">
+            <Link href="/">
               <Button
                 size="lg"
                 variant="outline"
@@ -309,7 +306,7 @@ export default function HomePage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/signup" className="hover:text-white">
+                  <Link href="/" className="hover:text-white">
                     Registrierung
                   </Link>
                 </li>

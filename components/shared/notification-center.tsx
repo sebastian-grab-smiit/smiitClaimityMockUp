@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Bell, X, Check, AlertTriangle, Info } from "lucide-react"
+import Link from "next/link"
 
 interface Notification {
   id: string
@@ -87,7 +88,7 @@ export function NotificationCenter() {
               <h3 className="font-semibold text-slate-800">Benachrichtigungen</h3>
               {unreadCount > 0 && (
                 <Button variant="ghost" size="sm" onClick={markAllAsRead} className="text-xs">
-                  Alle als gelesen markieren
+                  Alle gelesen
                 </Button>
               )}
             </div>
@@ -130,9 +131,11 @@ export function NotificationCenter() {
           </div>
 
           <div className="p-4 border-t border-slate-200">
-            <Button variant="ghost" size="sm" className="w-full text-center" onClick={() => setIsOpen(false)}>
-              Alle Benachrichtigungen anzeigen
-            </Button>
+            <Link href="/expert/notifications">
+              <Button variant="ghost" size="sm" className="w-full text-center" onClick={() => setIsOpen(false)}>
+                Alle Benachrichtigungen anzeigen
+              </Button>
+            </Link>
           </div>
         </div>
       )}

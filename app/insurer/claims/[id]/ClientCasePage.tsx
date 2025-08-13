@@ -23,6 +23,7 @@ import {
   Settings,
   Plus,
   Users,
+  MessageSquare
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -31,6 +32,7 @@ import { PageHeader } from "@/components/shared/page-header"
 export default function ClaimDetailPage({ id }: { id: string }) {
   const [newMessage, setNewMessage] = useState("")
   const [activeTab, setActiveTab] = useState("overview")
+  const [messageType, setMessageType] = useState("expert")
 
   // Mock data - in real app, fetch based on params.id
   const claim = {
@@ -113,6 +115,7 @@ export default function ClaimDetailPage({ id }: { id: string }) {
       id: 1,
       sender: "Dr. Hans Müller",
       role: "Experte",
+      messageType: 'expert',
       message:
         "Guten Tag, ich habe den Fall erhalten und werde morgen vor Ort eine Begutachtung durchführen. Können Sie mir bitte bestätigen, ob das Fahrzeug noch am Unfallort steht?",
       timestamp: "16.01.2024 14:15",
@@ -120,12 +123,33 @@ export default function ClaimDetailPage({ id }: { id: string }) {
     },
     {
       id: 2,
-      sender: "Versicherer",
+      sender: "Helvetia Versicherung",
       role: "Versicherer",
+      messageType: 'expert',
       message:
         "Das Fahrzeug wurde bereits zur Garage Müller AG gebracht. Die Adresse ist: Industriestrasse 45, 8005 Zürich. Besten Dank für die schnelle Bearbeitung.",
       timestamp: "16.01.2024 15:30",
       attachments: ["Garage_Kontakt.pdf"],
+    },
+    {
+      id: 3,
+      sender: "Burim Kryeziu",
+      role: "Admin",
+      messageType: 'admin',
+      message:
+        "Ich bin ein Admin.",
+      timestamp: "16.01.2024 14:15",
+      attachments: [],
+    },
+    {
+      id: 4,
+      sender: "Helvetia Versicherung",
+      role: "Versicherer",
+      messageType: 'admin',
+      message:
+        "Ich bin ein Versicherer.",
+      timestamp: "16.01.2024 15:30",
+      attachments: [],
     },
   ]
 
@@ -183,6 +207,8 @@ export default function ClaimDetailPage({ id }: { id: string }) {
     }
   }
 
+  const filteredMessages = messages.filter((message) => message.messageType.toLowerCase() === messageType.toLowerCase())
+
   return (
     <div className="min-h-screen bg-slate-50">
       <PageHeader userType="insurer" userName="Helvetia Versicherung" />
@@ -225,6 +251,14 @@ export default function ClaimDetailPage({ id }: { id: string }) {
             >
               <Users className="h-4 w-4" />
               <span>Experten</span>
+            </Link>
+            <Link
+              href="/insurer/notifications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
             </Link>
             <Link
               href="/insurer/settings"
@@ -464,12 +498,40 @@ export default function ClaimDetailPage({ id }: { id: string }) {
             <TabsContent value="messages" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Nachrichten</CardTitle>
-                  <CardDescription>Kommunikation zwischen allen Beteiligten</CardDescription>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Nachrichten</CardTitle>
+                    <CardDescription>Kommunikation zwischen allen Beteiligten</CardDescription>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-2 bg-slate-100 rounded-lg p-1">
+                      <button
+                        className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                          messageType === "expert"
+                            ? "bg-white text-slate-900 shadow-sm"
+                            : "text-slate-600 hover:text-slate-900"
+                        }`}
+                        onClick={() => setMessageType("expert")}
+                      >
+                        Mit Experte
+                      </button>
+                      <button
+                        className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                          messageType === "admin"
+                            ? "bg-white text-slate-900 shadow-sm"
+                            : "text-slate-600 hover:text-slate-900"
+                        }`}
+                        onClick={() => setMessageType("admin")}
+                      >
+                        Mit Admin
+                      </button>
+                    </div>
+                  </div>
+                </div>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4 mb-6">
-                    {messages.map((message) => (
+                    {filteredMessages.map((message) => (
                       <div key={message.id} className="border rounded-lg p-4">
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex items-center space-x-2">
