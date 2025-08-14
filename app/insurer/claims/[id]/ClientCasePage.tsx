@@ -272,6 +272,10 @@ export default function ClaimDetailPage({ id }: { id: string }) {
 
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-6">
+          <Link href="/insurer/claims" className="flex items-center text-primary mb-3">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Zurück zur Übersicht
+          </Link>
 
         {/* <div className="max-w-7xl mx-auto p-6"> */}
           <Link href="/insurer/claims" className="flex items-center text-primary mb-3">

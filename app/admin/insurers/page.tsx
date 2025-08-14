@@ -25,54 +25,56 @@ import {
   Bell,
   Settings,
   Eye,
+  DollarSign,
+  Building2,
 } from "lucide-react"
 
 export default function AdminInsurersPage() {
   const [insurers, setInsurers] = useState([
     {
-      id: 1,
+      id: "INS-2024-001",
       name: "Zurich Insurance",
       contact: "Hans Müller",
       email: "contact@zurich.ch",
       phone: "+41 44 628 25 25",
       location: "Zürich",
-      status: "Active",
+      status: "Aktiv",
       activeCases: 15,
       totalCases: 142,
       avgAmount: "CHF 18,500",
     },
     {
-      id: 2,
+      id: "INS-2024-002",
       name: "AXA Switzerland",
       contact: "Maria Weber",
       email: "info@axa.ch",
       phone: "+41 58 215 91 11",
       location: "Winterthur",
-      status: "Active",
+      status: "Aktiv",
       activeCases: 8,
       totalCases: 89,
       avgAmount: "CHF 22,100",
     },
     {
-      id: 3,
+      id: "INS-2024-003",
       name: "Swiss Re",
       contact: "Peter Schmidt",
       email: "contact@swissre.com",
       phone: "+41 43 285 21 21",
       location: "Zürich",
-      status: "Active",
+      status: "Aktiv",
       activeCases: 12,
       totalCases: 67,
       avgAmount: "CHF 31,200",
     },
     {
-      id: 4,
+      id: "INS-2024-004",
       name: "Baloise",
       contact: "Anna Fischer",
       email: "info@baloise.ch",
       phone: "+41 58 285 85 85",
       location: "Basel",
-      status: "Inactive",
+      status: "Inaktiv",
       activeCases: 0,
       totalCases: 23,
       avgAmount: "CHF 15,800",
@@ -84,118 +86,73 @@ export default function AdminInsurersPage() {
       <PageHeader userType="admin" />
 
       <div className="flex">
-        <aside className="hidden md:flex md:w-64 md:flex-col">
-          <div className="flex flex-col flex-grow pt-5 bg-white overflow-y-auto border-r">
-            <div className="flex items-center flex-shrink-0 px-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
-                  <div className="w-4 h-4 bg-white rounded-sm"></div>
-                </div>
-                <span className="text-xl font-bold text-slate-800">Admin Portal</span>
-              </div>
-            </div>
-            <div className="mt-5 flex-grow flex flex-col">
-              <nav className="flex-1 px-2 space-y-1">
-                <Link
-                  href="/dashboard/admin"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <Home className="text-slate-400 mr-3 h-5 w-5" />
-                  Dashboard
-                </Link>
-                <Link
-                  href="/dashboard/admin/triage"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <FileText className="text-slate-400 mr-3 h-5 w-5" />
-                  Triage
-                </Link>
-                <Link
-                  href="/dashboard/admin/assignment"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <Users className="text-slate-400 mr-3 h-5 w-5" />
-                  Assignment
-                </Link>
-                <Link
-                  href="/dashboard/admin/cases"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <Briefcase className="text-slate-400 mr-3 h-5 w-5" />
-                  All Cases
-                </Link>
-                <Link
-                  href="/dashboard/admin/reports"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <BarChart3 className="text-slate-400 mr-3 h-5 w-5" />
-                  Reports
-                </Link>
-                <Link
-                  href="/dashboard/admin/invoicing"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <FileText className="text-slate-400 mr-3 h-5 w-5" />
-                  Invoicing
-                </Link>
-                <Link
-                  href="/dashboard/admin/experts"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <Users className="text-slate-400 mr-3 h-5 w-5" />
-                  Experts
-                </Link>
-                <Link
-                  href="/dashboard/admin/insurers"
-                  className="bg-red-50 border-r-4 border-red-500 text-red-700 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <Building className="text-red-500 mr-3 h-5 w-5" />
-                  Insurers
-                </Link>
-                <Link
-                  href="/dashboard/admin/communications"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <MessageSquare className="text-slate-400 mr-3 h-5 w-5" />
-                  Communications
-                </Link>
-                <Link
-                  href="/dashboard/admin/email-intake"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <Mail className="text-slate-400 mr-3 h-5 w-5" />
-                  Email Intake
-                </Link>
-                <Link
-                  href="/dashboard/admin/notifications"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <Bell className="text-slate-400 mr-3 h-5 w-5" />
-                  Notifications
-                </Link>
-                <Link
-                  href="/dashboard/admin/settings"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <Settings className="text-slate-400 mr-3 h-5 w-5" />
-                  Settings
-                </Link>
-              </nav>
-            </div>
-          </div>
+        {/* Sidebar */}
+        <aside className="w-64 bg-white border-r min-h-screen">
+          <nav className="p-4 space-y-2">
+            <Link
+              href="/admin"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>Dashboard</span>
+            </Link>
+            <Link
+              href="/admin/experts"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Users className="h-4 w-4" />
+              <span>Experten</span>
+            </Link>
+            <Link
+              href="/admin/insurers"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
+            >
+              <Building2 className="h-4 w-4" />
+              <span>Versicherer</span>
+            </Link>
+            <Link
+              href="/admin/cases"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Alle Fälle</span>
+            </Link>
+            <Link
+              href="/admin/invoicing"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <DollarSign className="h-4 w-4" />
+              <span>Rechnungen</span>
+            </Link>
+            <Link
+              href="/admin/communications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
+            </Link>
+            <Link
+              href="/admin/settings"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Settings className="h-4 w-4" />
+              <span>Einstellungen</span>
+            </Link>
+          </nav>
         </aside>
 
         <main className="flex-1 p-6">
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Insurer Management</h1>
-                <p className="text-gray-600">Manage insurance company partnerships and settings</p>
+                <h1 className="text-3xl font-bold text-gray-900">Versicherer</h1>
+                <p className="text-gray-600">Verwalten Sie Partnerschaften und Einstellungen von Versicherungsunternehmen.</p>
               </div>
-              <Link href="/dashboard/admin/insurers/new">
-                <Button className="bg-teal-600 hover:bg-teal-700">
+              <Link href="/admin/insurers/new">
+                <Button className="bg-primary">
                   <Plus className="h-4 w-4 mr-2" />
-                  Add Insurer
+                  Neuer Versicherer
                 </Button>
               </Link>
             </div>
@@ -205,10 +162,10 @@ export default function AdminInsurersPage() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Total Insurers</p>
+                      <p className="text-sm font-medium text-gray-600">Versicherer Gesamt</p>
                       <p className="text-2xl font-bold text-gray-900">{insurers.length}</p>
                     </div>
-                    <Building className="h-8 w-8 text-teal-600" />
+                    <Building className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -216,12 +173,12 @@ export default function AdminInsurersPage() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Active Insurers</p>
+                      <p className="text-sm font-medium text-gray-600">Aktive Versicherer</p>
                       <p className="text-2xl font-bold text-gray-900">
-                        {insurers.filter((i) => i.status === "Active").length}
+                        {insurers.filter((i) => i.status === "Aktiv").length}
                       </p>
                     </div>
-                    <Users className="h-8 w-8 text-green-600" />
+                    <Users className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -229,12 +186,12 @@ export default function AdminInsurersPage() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Total Cases</p>
+                      <p className="text-sm font-medium text-gray-600">Durchschnittlicher Umsatz</p>
                       <p className="text-2xl font-bold text-gray-900">
-                        {insurers.reduce((sum, i) => sum + i.totalCases, 0)}
+                        CHF 19,750
                       </p>
                     </div>
-                    <TrendingUp className="h-8 w-8 text-blue-600" />
+                    <TrendingUp className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -242,12 +199,12 @@ export default function AdminInsurersPage() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Active Cases</p>
+                      <p className="text-sm font-medium text-gray-600">Durchschnittlicher Gewinn</p>
                       <p className="text-2xl font-bold text-gray-900">
-                        {insurers.reduce((sum, i) => sum + i.activeCases, 0)}
+                        CHF 5,125
                       </p>
                     </div>
-                    <TrendingUp className="h-8 w-8 text-orange-600" />
+                    <TrendingUp className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -255,21 +212,21 @@ export default function AdminInsurersPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Insurance Companies</CardTitle>
-                <CardDescription>Manage partnerships and company settings</CardDescription>
+                <CardTitle>Alle Versicherer</CardTitle>
+                <CardDescription>Übersicht über alle Versicherungspartner</CardDescription>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Company</TableHead>
-                      <TableHead>Contact</TableHead>
-                      <TableHead>Location</TableHead>
+                      <TableHead>Versicherer</TableHead>
+                      <TableHead>Kontakt</TableHead>
+                      <TableHead>Standort</TableHead>
                       <TableHead>Status</TableHead>
-                      <TableHead>Active Cases</TableHead>
-                      <TableHead>Total Cases</TableHead>
-                      <TableHead>Avg Amount</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead>Aktive Fälle</TableHead>
+                      <TableHead>Fälle Gesamt</TableHead>
+                      <TableHead>Umsatz</TableHead>
+                      <TableHead>Aktionen</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -305,7 +262,7 @@ export default function AdminInsurersPage() {
                         <TableCell>
                           <Badge
                             className={
-                              insurer.status === "Active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+                              insurer.status === "Aktiv" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
                             }
                           >
                             {insurer.status}
@@ -316,7 +273,7 @@ export default function AdminInsurersPage() {
                         <TableCell className="font-medium">{insurer.avgAmount}</TableCell>
                         <TableCell>
                           <div className="flex items-center gap-2">
-                            <Link href={`/dashboard/admin/insurers/${insurer.id}`}>
+                            <Link href={`/admin/insurers/${insurer.id}`}>
                               <Button variant="ghost" size="sm">
                                 <Eye className="h-4 w-4" />
                               </Button>

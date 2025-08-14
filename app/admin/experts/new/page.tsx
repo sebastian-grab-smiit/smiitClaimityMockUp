@@ -9,8 +9,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { PageHeader } from "@/components/shared/page-header"
-import { ArrowLeft, Save, X, Home, Users } from "lucide-react"
+import { ArrowLeft, Save, X, Home, Users, BarChart3, Building2, DollarSign, FileText, MessageSquare, Settings } from "lucide-react"
 import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
 
 export default function NewExpertPage() {
   const [formData, setFormData] = useState({
@@ -59,58 +60,84 @@ export default function NewExpertPage() {
       <PageHeader userType="admin" />
 
       <div className="flex">
-        <aside className="hidden md:flex md:w-64 md:flex-col">
-          <div className="flex flex-col flex-grow pt-5 bg-white overflow-y-auto border-r">
-            <div className="flex items-center flex-shrink-0 px-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
-                  <div className="w-4 h-4 bg-white rounded-sm"></div>
-                </div>
-                <span className="text-xl font-bold text-slate-800">Admin Portal</span>
-              </div>
-            </div>
-            <div className="mt-5 flex-grow flex flex-col">
-              <nav className="flex-1 px-2 space-y-1">
-                <Link
-                  href="/dashboard/admin"
-                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <Home className="text-slate-400 mr-3 h-5 w-5" />
-                  Dashboard
-                </Link>
-                <Link
-                  href="/dashboard/admin/experts"
-                  className="bg-red-50 border-r-4 border-red-500 text-red-700 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                >
-                  <Users className="text-red-500 mr-3 h-5 w-5" />
-                  Experts
-                </Link>
-              </nav>
-            </div>
-          </div>
+        {/* Sidebar */}
+        <aside className="w-64 bg-white border-r min-h-screen">
+          <nav className="p-4 space-y-2">
+            <Link
+              href="/admin"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>Dashboard</span>
+            </Link>
+            <Link
+              href="/admin/experts"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
+            >
+              <Users className="h-4 w-4" />
+              <span>Experten</span>
+            </Link>
+            <Link
+              href="/admin/insurers"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Building2 className="h-4 w-4" />
+              <span>Versicherer</span>
+            </Link>
+            <Link
+              href="/admin/cases"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Alle Fälle</span>
+            </Link>
+            <Link
+              href="/admin/invoicing"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <DollarSign className="h-4 w-4" />
+              <span>Rechnungen</span>
+            </Link>
+            <Link
+              href="/admin/communications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
+            </Link>
+            <Link
+              href="/admin/settings"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Settings className="h-4 w-4" />
+              <span>Einstellungen</span>
+            </Link>
+          </nav>
         </aside>
 
+        {/* Main Content */}
         <main className="flex-1 p-6">
+          <Link href="/admin/experts" className="flex items-center text-primary mb-3">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Zurück zur Übersicht
+          </Link>
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <Link href="/dashboard/admin/experts" className="flex items-center text-slate-600 hover:text-slate-900">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Zurück zu Experten
-                </Link>
                 <div>
                   <h1 className="text-3xl font-bold text-gray-900">Neuen Experten hinzufügen</h1>
                   <p className="text-gray-600">Fügen Sie einen neuen Experten zur Plattform hinzu</p>
                 </div>
               </div>
               <div className="flex space-x-2">
-                <Link href="/dashboard/admin/experts">
+                <Link href="/admin/experts">
                   <Button variant="outline">
                     <X className="h-4 w-4 mr-2" />
                     Abbrechen
                   </Button>
                 </Link>
-                <Button className="bg-teal-600 hover:bg-teal-700">
+                <Button className="bg-primary">
                   <Save className="h-4 w-4 mr-2" />
                   Experten speichern
                 </Button>
@@ -123,7 +150,7 @@ export default function NewExpertPage() {
                   <CardTitle>Grunddaten</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="name">Name *</Label>
                     <Input
                       id="name"
@@ -132,7 +159,7 @@ export default function NewExpertPage() {
                       placeholder="Dr. Hans Müller"
                     />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="email">E-Mail *</Label>
                     <Input
                       id="email"
@@ -142,7 +169,7 @@ export default function NewExpertPage() {
                       placeholder="hans.mueller@expert.ch"
                     />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="phone">Telefon *</Label>
                     <Input
                       id="phone"
@@ -151,7 +178,7 @@ export default function NewExpertPage() {
                       placeholder="+41 44 123 45 67"
                     />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="address">Adresse *</Label>
                     <Textarea
                       id="address"
@@ -160,24 +187,6 @@ export default function NewExpertPage() {
                       placeholder="Musterstrasse 123, 8001 Zürich"
                       rows={3}
                     />
-                  </div>
-                  <div>
-                    <Label htmlFor="canton">Kanton *</Label>
-                    <Select
-                      value={formData.canton}
-                      onValueChange={(value) => setFormData({ ...formData, canton: value })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Kanton auswählen" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {cantons.map((canton) => (
-                          <SelectItem key={canton.value} value={canton.value}>
-                            {canton.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
                   </div>
                 </CardContent>
               </Card>
@@ -277,7 +286,7 @@ export default function NewExpertPage() {
                     </div>
                   </div>
 
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="experience">Berufserfahrung</Label>
                     <Input
                       id="experience"
@@ -294,23 +303,7 @@ export default function NewExpertPage() {
                   <CardTitle>Vertragsdaten</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="contractType">Vertragsart *</Label>
-                    <Select
-                      value={formData.contractType}
-                      onValueChange={(value) => setFormData({ ...formData, contractType: value })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Vertragsart auswählen" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="freelancer">Freelancer</SelectItem>
-                        <SelectItem value="employee">Festanstellung</SelectItem>
-                        <SelectItem value="contractor">Auftragnehmer</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="hourlyRate">Stundensatz</Label>
                     <Input
                       id="hourlyRate"
@@ -327,7 +320,7 @@ export default function NewExpertPage() {
                   <CardTitle>Zusätzliche Informationen</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="notes">Interne Notizen</Label>
                     <Textarea
                       id="notes"

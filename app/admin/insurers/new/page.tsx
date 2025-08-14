@@ -9,8 +9,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ArrowLeft, Building, Save } from "lucide-react"
+import { ArrowLeft, BarChart3, Building, Building2, DollarSign, FileText, MessageSquare, Save, Settings, Users } from "lucide-react"
 import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
 import { PageHeader } from "@/components/shared/page-header"
 
 export default function NewInsurerPage() {
@@ -44,17 +45,64 @@ export default function NewInsurerPage() {
         <aside className="w-64 bg-white border-r min-h-screen">
           <nav className="p-4 space-y-2">
             <Link
-              href="/dashboard/admin/insurers"
+              href="/admin"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <ArrowLeft className="h-4 w-4" />
-              <span>Zurück zu Versicherern</span>
+              <BarChart3 className="h-4 w-4" />
+              <span>Dashboard</span>
+            </Link>
+            <Link
+              href="/admin/experts"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Users className="h-4 w-4" />
+              <span>Experten</span>
+            </Link>
+            <Link
+              href="/admin/insurers"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
+            >
+              <Building2 className="h-4 w-4" />
+              <span>Versicherer</span>
+            </Link>
+            <Link
+              href="/admin/cases"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Alle Fälle</span>
+            </Link>
+            <Link
+              href="/admin/invoicing"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <DollarSign className="h-4 w-4" />
+              <span>Rechnungen</span>
+            </Link>
+            <Link
+              href="/admin/communications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
+            </Link>
+            <Link
+              href="/admin/settings"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Settings className="h-4 w-4" />
+              <span>Einstellungen</span>
             </Link>
           </nav>
         </aside>
 
         {/* Main Content */}
         <main className="flex-1 p-6">
+          <Link href="/admin/insurers" className="flex items-center text-primary mb-3">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Zurück zur Übersicht
+          </Link>
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-slate-800 mb-2">Neuen Versicherer hinzufügen</h1>
             <p className="text-slate-600">Erstellen Sie eine neue Versicherungspartnerschaft</p>
@@ -71,7 +119,7 @@ export default function NewInsurerPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="companyName">Firmenname *</Label>
                     <Input
                       id="companyName"
@@ -81,7 +129,7 @@ export default function NewInsurerPage() {
                       required
                     />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="website">Website</Label>
                     <Input
                       id="website"
@@ -93,7 +141,7 @@ export default function NewInsurerPage() {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="contactPerson">Hauptansprechpartner *</Label>
                     <Input
                       id="contactPerson"
@@ -103,7 +151,7 @@ export default function NewInsurerPage() {
                       required
                     />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="email">E-Mail *</Label>
                     <Input
                       id="email"
@@ -117,7 +165,7 @@ export default function NewInsurerPage() {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="phone">Telefon *</Label>
                     <Input
                       id="phone"
@@ -126,22 +174,6 @@ export default function NewInsurerPage() {
                       placeholder="+41 XX XXX XX XX"
                       required
                     />
-                  </div>
-                  <div>
-                    <Label htmlFor="contractType">Vertragstyp</Label>
-                    <Select
-                      value={formData.contractType}
-                      onValueChange={(value) => setFormData({ ...formData, contractType: value })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Vertragstyp auswählen" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="standard">Standard</SelectItem>
-                        <SelectItem value="premium">Premium</SelectItem>
-                        <SelectItem value="enterprise">Enterprise</SelectItem>
-                      </SelectContent>
-                    </Select>
                   </div>
                 </div>
               </CardContent>
@@ -153,7 +185,7 @@ export default function NewInsurerPage() {
                 <CardDescription>Geschäftsadresse des Versicherers</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="address">Adresse</Label>
                   <Input
                     id="address"
@@ -164,7 +196,7 @@ export default function NewInsurerPage() {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-4">
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="postalCode">PLZ</Label>
                     <Input
                       id="postalCode"
@@ -173,7 +205,7 @@ export default function NewInsurerPage() {
                       placeholder="8001"
                     />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="city">Stadt</Label>
                     <Input
                       id="city"
@@ -182,7 +214,7 @@ export default function NewInsurerPage() {
                       placeholder="Zürich"
                     />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="canton">Kanton</Label>
                     <Select
                       value={formData.canton}
@@ -212,7 +244,7 @@ export default function NewInsurerPage() {
                 <CardDescription>Weitere Details und Notizen</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="commissionRate">Provisionssatz (%)</Label>
                   <Input
                     id="commissionRate"
@@ -224,7 +256,7 @@ export default function NewInsurerPage() {
                   />
                 </div>
 
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="notes">Notizen</Label>
                   <Textarea
                     id="notes"
@@ -239,7 +271,7 @@ export default function NewInsurerPage() {
 
             <div className="flex justify-end space-x-4">
               <Button type="button" variant="outline" asChild>
-                <Link href="/dashboard/admin/insurers">Abbrechen</Link>
+                <Link href="/admin/insurers">Abbrechen</Link>
               </Button>
               <Button type="submit" className="bg-teal-600 hover:bg-teal-700">
                 <Save className="h-4 w-4 mr-2" />

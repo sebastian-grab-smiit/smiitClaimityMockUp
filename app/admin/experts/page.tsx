@@ -2,12 +2,12 @@
 
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Plus, Search, Eye, BarChart3, Building2, DollarSign, FileText, MessageSquare, Settings, Users } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
 
 export default function AdminExpertsPage() {
-  const [selectedExpert, setSelectedExpert] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [cantonFilter, setCantonFilter] = useState("all")
   const [statusFilter, setStatusFilter] = useState("all")
@@ -15,14 +15,12 @@ export default function AdminExpertsPage() {
   // Mock data
   const experts = [
     {
-      id: "EXP-001",
+      id: "EXP-2024-001",
       name: "Dr. Hans Müller",
       email: "hans.mueller@expert.ch",
       phone: "+41 44 123 45 67",
-      address: "Musterstrasse 123, 8001 Zürich",
       location: "Zürich, ZH",
       canton: "ZH",
-      coordinates: { lat: 47.3769, lng: 8.5417 },
       specialties: ["Fahrzeugschäden", "Maschinenschäden", "KFZ-Gutachten"],
       rating: 4.8,
       completedCases: 156,
@@ -35,32 +33,20 @@ export default function AdminExpertsPage() {
       joinDate: "2019-03-15",
       lastActive: "Vor 1 Stunde",
       workload: 60,
-      // Contract & Rates (Claimity-only visibility)
       contractType: "Freelancer",
       hourlyRate: "CHF 120/h",
-      flatRates: {
-        "Fahrzeugschaden Standard": "CHF 450",
-        "Fahrzeugschaden Komplex": "CHF 800",
-        Maschinenschaden: "CHF 650",
-      },
-      contractStart: "2019-03-15",
-      contractEnd: "2025-03-14",
-      paymentTerms: "30 Tage",
       status: "Aktiv",
       performanceScore: 92,
       qualityScore: 88,
       timelinessScore: 95,
-      notes: "Sehr zuverlässiger Experte mit ausgezeichneter Dokumentation.",
     },
     {
-      id: "EXP-002",
+      id: "EXP-2024-002",
       name: "Maria Weber",
       email: "maria.weber@expert.ch",
       phone: "+41 61 234 56 78",
-      address: "Hauptstrasse 45, 4001 Basel",
       location: "Basel, BS",
       canton: "BS",
-      coordinates: { lat: 47.5596, lng: 7.5886 },
       specialties: ["Gebäudeschäden", "Wasserschäden", "Brandschäden"],
       rating: 4.9,
       completedCases: 203,
@@ -75,29 +61,18 @@ export default function AdminExpertsPage() {
       workload: 85,
       contractType: "Festanstellung",
       hourlyRate: "CHF 140/h",
-      flatRates: {
-        "Gebäudeschaden Standard": "CHF 600",
-        Wasserschaden: "CHF 750",
-        Brandschaden: "CHF 1200",
-      },
-      contractStart: "2020-01-10",
-      contractEnd: "Unbefristet",
-      paymentTerms: "Monatlich",
       status: "Aktiv",
       performanceScore: 96,
       qualityScore: 94,
       timelinessScore: 98,
-      notes: "Top-Expertin für Gebäudeschäden. Sehr detaillierte Berichte.",
     },
     {
-      id: "EXP-003",
+      id: "EXP-2024-003",
       name: "Thomas Schneider",
       email: "thomas.schneider@expert.ch",
       phone: "+41 31 345 67 89",
-      address: "Industrieweg 78, 3001 Bern",
       location: "Bern, BE",
       canton: "BE",
-      coordinates: { lat: 46.9481, lng: 7.4474 },
       specialties: ["Brandschäden", "Haftpflichtschäden", "Industrieschäden"],
       rating: 4.7,
       completedCases: 89,
@@ -112,19 +87,10 @@ export default function AdminExpertsPage() {
       workload: 40,
       contractType: "Freelancer",
       hourlyRate: "CHF 150/h",
-      flatRates: {
-        "Brandschaden Standard": "CHF 900",
-        Industrieschaden: "CHF 1500",
-        Haftpflichtschaden: "CHF 700",
-      },
-      contractStart: "2021-06-01",
-      contractEnd: "2024-05-31",
-      paymentTerms: "15 Tage",
-      status: "Warnung",
+      status: "Inaktiv",
       performanceScore: 78,
       qualityScore: 82,
       timelinessScore: 74,
-      notes: "Gute fachliche Kompetenz, aber Verbesserung bei Termintreue erforderlich.",
     },
   ]
 
@@ -144,15 +110,15 @@ export default function AdminExpertsPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Aktiv":
-        return "bg-green-100 text-green-800"
+        return "bg-green-100 text-green-800 mr-2"
       case "Warnung":
-        return "bg-yellow-100 text-yellow-800"
+        return "bg-yellow-100 text-yellow-800 mr-2"
       case "Gesperrt":
-        return "bg-red-100 text-red-800"
+        return "bg-red-100 text-red-800 mr-2"
       case "Inaktiv":
-        return "bg-gray-100 text-gray-800"
+        return "bg-gray-100 text-gray-800 mr-2"
       default:
-        return "bg-gray-100 text-gray-800"
+        return "bg-gray-100 text-gray-800 mr-2"
     }
   }
 
@@ -161,8 +127,6 @@ export default function AdminExpertsPage() {
     if (score >= 75) return "text-yellow-600"
     return "text-red-600"
   }
-
-  const selectedExpertData = selectedExpert ? experts.find((e) => e.id === selectedExpert) : null
 
   const filteredExperts = experts.filter((expert) => {
     const matchesSearch =
@@ -177,54 +141,125 @@ export default function AdminExpertsPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link href="/admin" className="flex items-center text-purple-600 hover:text-purple-700">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Zurück zum Dashboard
-            </Link>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-white rounded-sm"></div>
-              </div>
-              <span className="text-xl font-bold text-slate-800">claimity</span>
-            </div>
-            <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-              Experten-Management
-            </Badge>
-          </div>
-        </div>
-      </header>
+      <PageHeader userType="admin" />
 
-      <div className="flex h-[calc(100vh-73px)]">
-        {/* Left Panel - Experts List */}
-        <div className="w-1/2 bg-white border-r overflow-y-auto">
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-64 bg-white border-r min-h-screen">
+          <nav className="p-4 space-y-2">
+            <Link
+              href="/admin"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>Dashboard</span>
+            </Link>
+            <Link
+              href="/admin/experts"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
+            >
+              <Users className="h-4 w-4" />
+              <span>Experten</span>
+            </Link>
+            <Link
+              href="/admin/insurers"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Building2 className="h-4 w-4" />
+              <span>Versicherer</span>
+            </Link>
+            <Link
+              href="/admin/cases"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Alle Fälle</span>
+            </Link>
+            <Link
+              href="/admin/invoicing"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <DollarSign className="h-4 w-4" />
+              <span>Rechnungen</span>
+            </Link>
+            <Link
+              href="/admin/communications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
+            </Link>
+            <Link
+              href="/admin/settings"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Settings className="h-4 w-4" />
+              <span>Einstellungen</span>
+            </Link>
+          </nav>
+        </aside>
+
+        {/* Main Content */}
+        <div className="flex-1 overflow-y-auto">
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h1 className="text-2xl font-bold text-slate-800">Experten-Verzeichnis</h1>
-              <div className="text-sm text-slate-600">
-                {filteredExperts.length} von {experts.length} Experten
+              <div>
+                <h1 className="text-2xl font-bold text-slate-800">Experten-Verzeichnis</h1>
+                <p className="text-slate-600">
+                  {filteredExperts.length} von {experts.length} Experten
+                </p>
+              </div>
+              <Link href="/admin/experts/new">
+                <Button className="bg-primary">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Neuer Experte
+                </Button>
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-4 gap-4 mb-6">
+              <div className="bg-white p-4 rounded-lg border">
+                <div className="text-2xl font-bold text-slate-800">{experts.length}</div>
+                <div className="text-sm text-slate-600">Gesamt Experten</div>
+              </div>
+              <div className="bg-white p-4 rounded-lg border">
+                <div className="text-2xl font-bold text-slate-800">
+                  {experts.filter((e) => e.status === "Aktiv").length}
+                </div>
+                <div className="text-sm text-slate-600">Aktive Experten</div>
+              </div>
+              <div className="bg-white p-4 rounded-lg border">
+                <div className="text-2xl font-bold text-slate-800">
+                  {experts.filter((e) => e.availability === "Verfügbar" && e.status === "Aktiv").length}
+                </div>
+                <div className="text-sm text-slate-600">Verfügbar</div>
+              </div>
+              <div className="bg-white p-4 rounded-lg border">
+                <div className="text-2xl font-bold text-slate-800">
+                  {Math.round(experts.reduce((acc, e) => acc + e.performanceScore, 0) / experts.length)}%
+                </div>
+                <div className="text-sm text-slate-600">Ø Performance</div>
               </div>
             </div>
 
             {/* Search and Filters */}
-            <div className="space-y-4 mb-6">
-              <div>
-                <input
-                  type="text"
-                  placeholder="Suche nach Name, Spezialisierung oder Ort..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                />
-              </div>
-              <div className="flex space-x-4">
+            <div className="bg-white p-4 rounded-lg border mb-6">
+              <div className="flex items-center space-x-4">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+                  <input
+                    type="text"
+                    placeholder="Suche nach Name, Spezialisierung oder Ort..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                </div>
                 <select
                   value={cantonFilter}
                   onChange={(e) => setCantonFilter(e.target.value)}
-                  className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                  className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="all">Alle Kantone</option>
                   <option value="ZH">Zürich</option>
@@ -235,229 +270,95 @@ export default function AdminExpertsPage() {
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                  className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="all">Alle Status</option>
                   <option value="Aktiv">Aktiv</option>
-                  <option value="Warnung">Warnung</option>
                   <option value="Gesperrt">Gesperrt</option>
                   <option value="Inaktiv">Inaktiv</option>
                 </select>
               </div>
             </div>
 
-            {/* Experts List */}
-            <div className="space-y-4">
-              {filteredExperts.map((expert) => (
-                <div
-                  key={expert.id}
-                  onClick={() => setSelectedExpert(expert.id)}
-                  className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-                    selectedExpert === expert.id
-                      ? "border-teal-500 bg-teal-50"
-                      : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
-                  }`}
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <h3 className="font-semibold text-slate-800">{expert.name}</h3>
-                      <p className="text-sm text-slate-600">{expert.location}</p>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Badge className={getAvailabilityColor(expert.availability)}>{expert.availability}</Badge>
-                      <Badge className={getStatusColor(expert.status)}>{expert.status}</Badge>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-4 text-sm text-slate-600 mb-2">
-                    <span>★ {expert.rating}</span>
-                    <span>{expert.completedCases} Fälle</span>
-                    <span>{expert.workload}% Auslastung</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1">
-                    {expert.specialties.slice(0, 2).map((specialty) => (
-                      <Badge key={specialty} variant="outline" className="text-xs">
-                        {specialty}
-                      </Badge>
+            <div className="bg-white rounded-lg border">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-slate-50 border-b">
+                    <tr>
+                      <th className="text-left p-4 font-medium text-slate-700">Experte</th>
+                      <th className="text-left p-4 font-medium text-slate-700">Standort</th>
+                      <th className="text-left p-4 font-medium text-slate-700">Spezialisierungen</th>
+                      <th className="text-left p-4 font-medium text-slate-700">Status</th>
+                      <th className="text-left p-4 font-medium text-slate-700">Performance</th>
+                      <th className="text-left p-4 font-medium text-slate-700">Fälle</th>
+                      <th className="text-left p-4 font-medium text-slate-700">Aktionen</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredExperts.map((expert) => (
+                      <tr key={expert.id} className="border-b hover:bg-slate-50">
+                        <td className="p-4">
+                          <div>
+                            <div className="font-medium text-slate-800">{expert.name}</div>
+                            <div className="text-sm text-slate-600">{expert.email}</div>
+                            <div className="text-xs text-slate-500">ID: {expert.id}</div>
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="text-sm text-slate-700">{expert.location}</div>
+                          <div className="text-xs text-slate-500">{expert.experience} Erfahrung</div>
+                        </td>
+                        <td className="p-4">
+                          <div className="flex flex-wrap gap-1">
+                            {expert.specialties.slice(0, 2).map((specialty) => (
+                              <Badge key={specialty} variant="outline" className="text-xs">
+                                {specialty}
+                              </Badge>
+                            ))}
+                            {expert.specialties.length > 2 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{expert.specialties.length - 2}
+                              </Badge>
+                            )}
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="space-y-1">
+                            <Badge className={getStatusColor(expert.status)}>{expert.status}</Badge>
+                            <Badge className={getAvailabilityColor(expert.availability)}>
+                              {expert.availability}
+                            </Badge>
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="space-y-1">
+                            <div className={`font-medium ${getScoreColor(expert.performanceScore)}`}>
+                              {expert.performanceScore}%
+                            </div>
+                            <div className="text-xs text-slate-500">★ {expert.rating}</div>
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="space-y-1">
+                            <div className="text-sm font-medium text-slate-700">{expert.completedCases}</div>
+                            <div className="text-xs text-slate-500">{expert.activeCases} aktiv</div>
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <Link href={`/admin/experts/${expert.id}`}>
+                            <Button variant="outline" size="sm">
+                              <Eye className="h-4 w-4 mr-1" />
+                              Details
+                            </Button>
+                          </Link>
+                        </td>
+                      </tr>
                     ))}
-                    {expert.specialties.length > 2 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{expert.specialties.length - 2}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Right Panel - Expert Details */}
-        <div className="w-1/2 bg-slate-50 overflow-y-auto">
-          {selectedExpertData ? (
-            <div className="p-6">
-              <div className="bg-white rounded-lg p-6 mb-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h2 className="text-2xl font-bold text-slate-800">{selectedExpertData.name}</h2>
-                    <p className="text-slate-600">{selectedExpertData.email}</p>
-                    <p className="text-slate-600">{selectedExpertData.phone}</p>
-                  </div>
-                  <div className="text-right">
-                    <Badge className={getStatusColor(selectedExpertData.status)} className="mb-2">
-                      {selectedExpertData.status}
-                    </Badge>
-                    <p className="text-sm text-slate-600">ID: {selectedExpertData.id}</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <h3 className="font-semibold text-slate-800 mb-2">Kontaktdaten</h3>
-                    <p className="text-sm text-slate-600 mb-1">{selectedExpertData.address}</p>
-                    <p className="text-sm text-slate-600">Sprachen: {selectedExpertData.languages.join(", ")}</p>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-slate-800 mb-2">Verfügbarkeit</h3>
-                    <Badge className={getAvailabilityColor(selectedExpertData.availability)} className="mb-2">
-                      {selectedExpertData.availability}
-                    </Badge>
-                    <p className="text-sm text-slate-600">Auslastung: {selectedExpertData.workload}%</p>
-                    <p className="text-sm text-slate-600">Aktive Fälle: {selectedExpertData.activeCases}</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  <div className="text-center p-4 bg-slate-50 rounded-lg">
-                    <div className="text-2xl font-bold text-slate-800">{selectedExpertData.rating}</div>
-                    <div className="text-sm text-slate-600">Bewertung</div>
-                  </div>
-                  <div className="text-center p-4 bg-slate-50 rounded-lg">
-                    <div className="text-2xl font-bold text-slate-800">{selectedExpertData.completedCases}</div>
-                    <div className="text-sm text-slate-600">Abgeschlossen</div>
-                  </div>
-                  <div className="text-center p-4 bg-slate-50 rounded-lg">
-                    <div className="text-2xl font-bold text-slate-800">{selectedExpertData.avgResponseTime}</div>
-                    <div className="text-sm text-slate-600">Ø Antwortzeit</div>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <h3 className="font-semibold text-slate-800 mb-2">Spezialisierungen</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedExpertData.specialties.map((specialty) => (
-                      <Badge key={specialty} variant="outline">
-                        {specialty}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <h3 className="font-semibold text-slate-800 mb-2">Zertifizierungen</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedExpertData.certifications.map((cert) => (
-                      <Badge key={cert} className="bg-blue-100 text-blue-800">
-                        {cert}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <h3 className="font-semibold text-slate-800 mb-2">Performance Scores</h3>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-sm text-slate-600">Gesamt</span>
-                        <span className={`font-semibold ${getScoreColor(selectedExpertData.performanceScore)}`}>
-                          {selectedExpertData.performanceScore}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-slate-200 rounded-full h-2">
-                        <div
-                          className="bg-teal-500 h-2 rounded-full"
-                          style={{ width: `${selectedExpertData.performanceScore}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-sm text-slate-600">Qualität</span>
-                        <span className={`font-semibold ${getScoreColor(selectedExpertData.qualityScore)}`}>
-                          {selectedExpertData.qualityScore}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-slate-200 rounded-full h-2">
-                        <div
-                          className="bg-blue-500 h-2 rounded-full"
-                          style={{ width: `${selectedExpertData.qualityScore}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-sm text-slate-600">Termintreue</span>
-                        <span className={`font-semibold ${getScoreColor(selectedExpertData.timelinessScore)}`}>
-                          {selectedExpertData.timelinessScore}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-slate-200 rounded-full h-2">
-                        <div
-                          className="bg-green-500 h-2 rounded-full"
-                          style={{ width: `${selectedExpertData.timelinessScore}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Contract & Rates Section - Claimity Internal Only */}
-                <div className="border-t pt-6">
-                  <div className="flex items-center mb-4">
-                    <h3 className="font-semibold text-slate-800">Vertrag & Konditionen</h3>
-                    <Badge className="ml-2 bg-red-100 text-red-800 text-xs">Claimity Intern</Badge>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-6 mb-4">
-                    <div>
-                      <h4 className="font-medium text-slate-700 mb-2">Vertragsdetails</h4>
-                      <div className="space-y-1 text-sm text-slate-600">
-                        <p>Typ: {selectedExpertData.contractType}</p>
-                        <p>Start: {selectedExpertData.contractStart}</p>
-                        <p>Ende: {selectedExpertData.contractEnd}</p>
-                        <p>Zahlungsziel: {selectedExpertData.paymentTerms}</p>
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-slate-700 mb-2">Stundensatz</h4>
-                      <p className="text-lg font-semibold text-slate-800">{selectedExpertData.hourlyRate}</p>
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <h4 className="font-medium text-slate-700 mb-2">Pauschaltarife</h4>
-                    <div className="space-y-2">
-                      {Object.entries(selectedExpertData.flatRates).map(([service, rate]) => (
-                        <div key={service} className="flex justify-between items-center py-2 px-3 bg-slate-50 rounded">
-                          <span className="text-sm text-slate-700">{service}</span>
-                          <span className="font-semibold text-slate-800">{rate}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-slate-700 mb-2">Interne Notizen</h4>
-                    <p className="text-sm text-slate-600 bg-slate-50 p-3 rounded">{selectedExpertData.notes}</p>
-                  </div>
-                </div>
+                  </tbody>
+                </table>
               </div>
             </div>
-          ) : (
-            <div className="p-6 text-center text-slate-500">
-              <p>Wählen Sie einen Experten aus der Liste aus, um Details anzuzeigen.</p>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
