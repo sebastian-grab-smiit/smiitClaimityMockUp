@@ -22,6 +22,8 @@ import {
   DollarSign,
   MessageSquare,
   Settings,
+  User,
+  Building,
 } from "lucide-react"
 import Link from "next/link"
 
@@ -204,23 +206,32 @@ export default function ExpertDetailPage({ id }: { id: string }) {
             Zurück zur Übersicht
           </Link>
           <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900">{expert.name}</h1>
-                  <p className="text-gray-600">Experten-ID: {expert.id}</p>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center">
+                <User className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-slate-800">{expert.name}</h1>
+                <div className="flex items-center space-x-4 mt-1">
+                  <Badge
+                    className={
+                      expert.status === "Aktiv" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+                    }
+                  >
+                    {expert.status}
+                  </Badge>
+                  <span className="text-slate-600">Seit {expert.joinDate}</span>
                 </div>
               </div>
-              <div className="flex space-x-2">
-                <Button variant="outline">
-                  <Edit className="h-4 w-4 mr-2" />
-                  Bearbeiten
-                </Button>
-                <Badge className={getStatusColor(expert.status)}>{expert.status}</Badge>
-              </div>
             </div>
+            <Button className="bg-primary">
+              <Edit className="h-4 w-4 mr-2" />
+              Bearbeiten
+            </Button>
+          </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
               <Card>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
@@ -228,7 +239,7 @@ export default function ExpertDetailPage({ id }: { id: string }) {
                       <p className="text-sm font-medium text-gray-600">Bewertung</p>
                       <p className="text-2xl font-bold text-gray-900">{expert.rating}</p>
                     </div>
-                    <Star className="h-8 w-8 text-yellow-500" />
+                    <Star className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -239,7 +250,7 @@ export default function ExpertDetailPage({ id }: { id: string }) {
                       <p className="text-sm font-medium text-gray-600">Abgeschlossene Fälle</p>
                       <p className="text-2xl font-bold text-gray-900">{expert.completedCases}</p>
                     </div>
-                    <CheckCircle className="h-8 w-8 text-green-600" />
+                    <CheckCircle className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -250,7 +261,7 @@ export default function ExpertDetailPage({ id }: { id: string }) {
                       <p className="text-sm font-medium text-gray-600">Aktive Fälle</p>
                       <p className="text-2xl font-bold text-gray-900">{expert.activeCases}</p>
                     </div>
-                    <FileText className="h-8 w-8 text-blue-600" />
+                    <FileText className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -261,7 +272,7 @@ export default function ExpertDetailPage({ id }: { id: string }) {
                       <p className="text-sm font-medium text-gray-600">Auslastung</p>
                       <p className="text-2xl font-bold text-gray-900">{expert.workload}%</p>
                     </div>
-                    <TrendingUp className="h-8 w-8 text-orange-600" />
+                    <TrendingUp className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -476,10 +487,6 @@ export default function ExpertDetailPage({ id }: { id: string }) {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Vertragsart:</span>
-                        <span className="font-medium">{expert.contractType}</span>
-                      </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Vertragsbeginn:</span>
                         <span className="font-medium">{expert.contractStart}</span>

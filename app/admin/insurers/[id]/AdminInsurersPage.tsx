@@ -36,7 +36,7 @@ export default function InsurerDetailPage({ id }: { id: string }) {
     phone: "+41 44 628 25 25",
     address: "Mythenquai 2, 8002 Zürich",
     website: "https://www.zurich.ch",
-    status: "Active",
+    status: "Aktiv",
     contractType: "Premium",
     commissionRate: "18.5%",
     joinDate: "2022-03-15",
@@ -168,7 +168,7 @@ export default function InsurerDetailPage({ id }: { id: string }) {
                 <div className="flex items-center space-x-4 mt-1">
                   <Badge
                     className={
-                      insurer.status === "Active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+                      insurer.status === "Aktiv" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
                     }
                   >
                     {insurer.status}

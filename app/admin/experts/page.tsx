@@ -3,9 +3,11 @@
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Plus, Search, Eye, BarChart3, Building2, DollarSign, FileText, MessageSquare, Settings, Users } from "lucide-react"
+import { Plus, Search, Eye, BarChart3, Building2, DollarSign, FileText, MessageSquare, Settings, Users, Activity, User, TrendingUp, Phone, Mail, MapPin, Trash2 } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 export default function AdminExpertsPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -201,14 +203,12 @@ export default function AdminExpertsPage() {
         </aside>
 
         {/* Main Content */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-6">
+        <main className="flex-1 p-6">
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-2xl font-bold text-slate-800">Experten-Verzeichnis</h1>
-                <p className="text-slate-600">
-                  {filteredExperts.length} von {experts.length} Experten
-                </p>
+                <h1 className="text-3xl font-bold text-gray-900">Experten</h1>
+                <p className="text-gray-600">Verwalten Sie Partnerschaften und Einstellungen von Experten.</p>
               </div>
               <Link href="/admin/experts/new">
                 <Button className="bg-primary">
@@ -218,33 +218,61 @@ export default function AdminExpertsPage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-4 gap-4 mb-6">
-              <div className="bg-white p-4 rounded-lg border">
-                <div className="text-2xl font-bold text-slate-800">{experts.length}</div>
-                <div className="text-sm text-slate-600">Gesamt Experten</div>
-              </div>
-              <div className="bg-white p-4 rounded-lg border">
-                <div className="text-2xl font-bold text-slate-800">
-                  {experts.filter((e) => e.status === "Aktiv").length}
-                </div>
-                <div className="text-sm text-slate-600">Aktive Experten</div>
-              </div>
-              <div className="bg-white p-4 rounded-lg border">
-                <div className="text-2xl font-bold text-slate-800">
-                  {experts.filter((e) => e.availability === "Verfügbar" && e.status === "Aktiv").length}
-                </div>
-                <div className="text-sm text-slate-600">Verfügbar</div>
-              </div>
-              <div className="bg-white p-4 rounded-lg border">
-                <div className="text-2xl font-bold text-slate-800">
-                  {Math.round(experts.reduce((acc, e) => acc + e.performanceScore, 0) / experts.length)}%
-                </div>
-                <div className="text-sm text-slate-600">Ø Performance</div>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Experten Gesamt</p>
+                      <p className="text-2xl font-bold text-gray-900">{experts.length}</p>
+                    </div>
+                    <Users className="h-8 w-8 text-primary" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Aktive Experten</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {experts.filter((i) => i.status === "Aktiv").length}
+                      </p>
+                    </div>
+                    <Activity className="h-8 w-8 text-primary" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Verfügbare Experten</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {experts.filter((e) => e.availability === "Verfügbar" && e.status === "Aktiv").length}
+                      </p>
+                    </div>
+                    <User className="h-8 w-8 text-primary" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Ø Performance</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {Math.round(experts.reduce((acc, e) => acc + e.performanceScore, 0) / experts.length)}%
+                      </p>
+                    </div>
+                    <TrendingUp className="h-8 w-8 text-primary" />
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Search and Filters */}
-            <div className="bg-white p-4 rounded-lg border mb-6">
+            <div className="bg-white p-4 rounded-lg border mb-6 shadow-sm">
               <div className="flex items-center space-x-4">
                 <div className="flex-1 relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
@@ -253,13 +281,13 @@ export default function AdminExpertsPage() {
                     placeholder="Suche nach Name, Spezialisierung oder Ort..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                   />
                 </div>
                 <select
                   value={cantonFilter}
                   onChange={(e) => setCantonFilter(e.target.value)}
-                  className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
                 >
                   <option value="all">Alle Kantone</option>
                   <option value="ZH">Zürich</option>
@@ -270,7 +298,7 @@ export default function AdminExpertsPage() {
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
                 >
                   <option value="all">Alle Status</option>
                   <option value="Aktiv">Aktiv</option>
@@ -280,35 +308,51 @@ export default function AdminExpertsPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg border">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-slate-50 border-b">
-                    <tr>
-                      <th className="text-left p-4 font-medium text-slate-700">Experte</th>
-                      <th className="text-left p-4 font-medium text-slate-700">Standort</th>
-                      <th className="text-left p-4 font-medium text-slate-700">Spezialisierungen</th>
-                      <th className="text-left p-4 font-medium text-slate-700">Status</th>
-                      <th className="text-left p-4 font-medium text-slate-700">Performance</th>
-                      <th className="text-left p-4 font-medium text-slate-700">Fälle</th>
-                      <th className="text-left p-4 font-medium text-slate-700">Aktionen</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+            <Card>
+              <CardHeader>
+                <CardTitle>Alle Experten</CardTitle>
+                <CardDescription>Übersicht über alle Experten</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Experte</TableHead>
+                      <TableHead>Standort</TableHead>
+                      <TableHead>Spezialisierung</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Performance</TableHead>
+                      <TableHead>Fälle</TableHead>
+                      <TableHead>Aktionen</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
                     {filteredExperts.map((expert) => (
-                      <tr key={expert.id} className="border-b hover:bg-slate-50">
-                        <td className="p-4">
+                      <TableRow key={expert.id}>
+                        <TableCell>
                           <div>
-                            <div className="font-medium text-slate-800">{expert.name}</div>
-                            <div className="text-sm text-slate-600">{expert.email}</div>
-                            <div className="text-xs text-slate-500">ID: {expert.id}</div>
+                            <div className="font-medium">
+                              {expert.name}
+                            </div>
+                            <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
+                              <span className="flex items-center gap-1">
+                                <Mail className="h-3 w-3" />
+                                {expert.email}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Phone className="h-3 w-3" />
+                                {expert.phone}
+                              </span>
+                            </div>
                           </div>
-                        </td>
-                        <td className="p-4">
-                          <div className="text-sm text-slate-700">{expert.location}</div>
-                          <div className="text-xs text-slate-500">{expert.experience} Erfahrung</div>
-                        </td>
-                        <td className="p-4">
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1">
+                            <MapPin className="h-4 w-4 text-gray-400" />
+                            {expert.location}
+                          </div>
+                        </TableCell>
+                        <TableCell>
                           <div className="flex flex-wrap gap-1">
                             {expert.specialties.slice(0, 2).map((specialty) => (
                               <Badge key={specialty} variant="outline" className="text-xs">
@@ -321,46 +365,51 @@ export default function AdminExpertsPage() {
                               </Badge>
                             )}
                           </div>
-                        </td>
-                        <td className="p-4">
+                        </TableCell>
+                        <TableCell>
                           <div className="space-y-1">
                             <Badge className={getStatusColor(expert.status)}>{expert.status}</Badge>
                             <Badge className={getAvailabilityColor(expert.availability)}>
                               {expert.availability}
                             </Badge>
                           </div>
-                        </td>
-                        <td className="p-4">
+                        </TableCell>
+                        <TableCell className="font-medium">
                           <div className="space-y-1">
                             <div className={`font-medium ${getScoreColor(expert.performanceScore)}`}>
                               {expert.performanceScore}%
                             </div>
                             <div className="text-xs text-slate-500">★ {expert.rating}</div>
                           </div>
-                        </td>
-                        <td className="p-4">
+                        </TableCell>
+                        <TableCell>
                           <div className="space-y-1">
                             <div className="text-sm font-medium text-slate-700">{expert.completedCases}</div>
                             <div className="text-xs text-slate-500">{expert.activeCases} aktiv</div>
                           </div>
-                        </td>
-                        <td className="p-4">
-                          <Link href={`/admin/experts/${expert.id}`}>
-                            <Button variant="outline" size="sm">
-                              <Eye className="h-4 w-4 mr-1" />
-                              Details
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Link href={`/admin/experts/${expert.id}`}>
+                              <Button variant="ghost" size="sm">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            </Link>
+                            <Button variant="ghost" size="sm">
+                              <Trash2 className="h-4 w-4 text-red-500" />
                             </Button>
-                          </Link>
-                        </td>
-                      </tr>
+                          </div>
+                        </TableCell>
+                      </TableRow>
                     ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   )
 }
+

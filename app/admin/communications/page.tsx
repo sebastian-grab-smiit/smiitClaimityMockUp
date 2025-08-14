@@ -342,12 +342,9 @@ export default function AdminCommunicationsPage() {
                       {filteredAdminMessages.map((message) => (
                         <TableRow key={message.id} className={message.status === "Unread" ? "bg-blue-50" : ""}>
                           <TableCell className="font-medium">
-                            <Link
-                              href={`/dashboard/admin/cases/${message.caseId}`}
-                              className="text-purple-600 hover:underline"
-                            >
-                              {message.caseId}
-                            </Link>
+                            <div>
+                              <p>{message.caseId}</p>
+                            </div>
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center gap-2">
@@ -382,7 +379,7 @@ export default function AdminCommunicationsPage() {
                           </TableCell>
                           <TableCell>
                             <Button variant="ghost" size="sm" asChild>
-                              <Link href={`/dashboard/admin/cases/${message.caseId}`}>
+                              <Link href={`/admin/cases/${message.caseId}`}>
                                 <ExternalLink className="h-4 w-4" />
                               </Link>
                             </Button>
@@ -410,12 +407,9 @@ export default function AdminCommunicationsPage() {
                       {filteredSystemMessages.map((message) => (
                         <TableRow key={message.id} className={message.status === "Unread" ? "bg-blue-50" : ""}>
                           <TableCell className="font-medium">
-                            <Link
-                              href={`/dashboard/admin/cases/${message.caseId}`}
-                              className="text-purple-600 hover:underline"
-                            >
-                              {message.caseId}
-                            </Link>
+                            <div>
+                              <p>{message.caseId}</p>
+                            </div>
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center gap-2">
@@ -444,7 +438,7 @@ export default function AdminCommunicationsPage() {
                           </TableCell>
                           <TableCell>
                             <Button variant="ghost" size="sm" asChild>
-                              <Link href={`/dashboard/admin/cases/${message.caseId}`}>
+                              <Link href={`/admin/cases/${message.caseId}`}>
                                 <ExternalLink className="h-4 w-4" />
                               </Link>
                             </Button>

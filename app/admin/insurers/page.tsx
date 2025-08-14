@@ -27,9 +27,14 @@ import {
   Eye,
   DollarSign,
   Building2,
+  Activity,
+  Search
 } from "lucide-react"
 
 export default function AdminInsurersPage() {
+  const [searchTerm, setSearchTerm] = useState("")
+  const [regionFilter, setRegionFilter] = useState("all")
+  const [statusFilter, setStatusFilter] = useState("all")
   const [insurers, setInsurers] = useState([
     {
       id: "INS-2024-001",
@@ -80,6 +85,16 @@ export default function AdminInsurersPage() {
       avgAmount: "CHF 15,800",
     },
   ])
+
+  const filteredInsurers = insurers.filter((insurer) => {
+    const matchesSearch =
+      insurer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      insurer.contact.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesRegion = regionFilter === "all" || insurer.location === regionFilter
+    const matchesStatus = statusFilter === "all" || insurer.status === statusFilter
+
+    return matchesSearch && matchesRegion && matchesStatus
+  })
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -178,7 +193,7 @@ export default function AdminInsurersPage() {
                         {insurers.filter((i) => i.status === "Aktiv").length}
                       </p>
                     </div>
-                    <Users className="h-8 w-8 text-primary" />
+                    <Activity className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -191,7 +206,7 @@ export default function AdminInsurersPage() {
                         CHF 19,750
                       </p>
                     </div>
-                    <TrendingUp className="h-8 w-8 text-primary" />
+                    <DollarSign className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
@@ -208,6 +223,42 @@ export default function AdminInsurersPage() {
                   </div>
                 </CardContent>
               </Card>
+            </div>
+
+            {/* Search and Filters */}
+            <div className="bg-white p-4 rounded-lg border mb-6 shadow-sm">
+              <div className="flex items-center space-x-4">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+                  <input
+                    type="text"
+                    placeholder="Suche nach Name oder Kontakt..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                </div>
+                <select
+                  value={regionFilter}
+                  onChange={(e) => setRegionFilter(e.target.value)}
+                  className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
+                >
+                  <option value="all">Alle Regionen</option>
+                  <option value="Zürich">Zürich</option>
+                  <option value="Winterthur">Winterthur</option>
+                  <option value="Basel">Basel</option>
+                  <option value="Genf">Genf</option>
+                </select>
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
+                >
+                  <option value="all">Alle Status</option>
+                  <option value="Aktiv">Aktiv</option>
+                  <option value="Inaktiv">Inaktiv</option>
+                </select>
+              </div>
             </div>
 
             <Card>
@@ -230,16 +281,13 @@ export default function AdminInsurersPage() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {insurers.map((insurer) => (
+                    {filteredInsurers.map((insurer) => (
                       <TableRow key={insurer.id}>
                         <TableCell>
                           <div>
-                            <Link
-                              href={`/dashboard/admin/insurers/${insurer.id}`}
-                              className="font-medium hover:text-teal-600"
-                            >
+                            <div className="font-medium">
                               {insurer.name}
-                            </Link>
+                            </div>
                             <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
                               <span className="flex items-center gap-1">
                                 <Mail className="h-3 w-3" />
@@ -278,9 +326,6 @@ export default function AdminInsurersPage() {
                                 <Eye className="h-4 w-4" />
                               </Button>
                             </Link>
-                            <Button variant="ghost" size="sm">
-                              <Edit className="h-4 w-4" />
-                            </Button>
                             <Button variant="ghost" size="sm">
                               <Trash2 className="h-4 w-4 text-red-500" />
                             </Button>

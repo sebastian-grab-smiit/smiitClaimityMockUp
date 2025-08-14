@@ -184,7 +184,7 @@ export default function AdminAllCasesPage() {
                   </TableCell>
                   <TableCell>{case_.created}</TableCell>
                     <TableCell>
-                      <Link href={`/dashboard/admin/cases/${case_.id}`}>
+                      <Link href={`/admin/cases/${case_.id}`}>
                         <Button variant="ghost" size="sm">
                           <Eye className="h-4 w-4" />
                         </Button>

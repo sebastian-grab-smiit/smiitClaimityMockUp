@@ -187,28 +187,21 @@ export default function AdminSettingsPage() {
                         <h4 className="font-medium text-slate-800">Super Admin</h4>
                         <p className="text-sm text-slate-600">Vollzugriff auf alle Funktionen</p>
                       </div>
-                      <Badge className="bg-red-100 text-red-800">2 Benutzer</Badge>
-                    </div>
-                    <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
-                      <div>
-                        <h4 className="font-medium text-slate-800">Admin</h4>
-                        <p className="text-sm text-slate-600">Verwaltung von Fällen und Experten</p>
-                      </div>
-                      <Badge className="bg-blue-100 text-blue-800">5 Benutzer</Badge>
+                      <Badge className="bg-slate-100 text-primary">2 Benutzer</Badge>
                     </div>
                     <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
                       <div>
                         <h4 className="font-medium text-slate-800">Versicherer</h4>
                         <p className="text-sm text-slate-600">Fallverwaltung und Berichte</p>
                       </div>
-                      <Badge className="bg-green-100 text-green-800">23 Benutzer</Badge>
+                      <Badge className="bg-slate-100 text-primary">23 Benutzer</Badge>
                     </div>
                     <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
                       <div>
                         <h4 className="font-medium text-slate-800">Experte</h4>
                         <p className="text-sm text-slate-600">Fallbearbeitung und Berichte</p>
                       </div>
-                      <Badge className="bg-purple-100 text-purple-800">156 Benutzer</Badge>
+                      <Badge className="bg-slate-100 text-primary">156 Benutzer</Badge>
                     </div>
                   </div>
                 </section>
@@ -216,10 +209,6 @@ export default function AdminSettingsPage() {
                 <section className="bg-white rounded-lg p-6">
                   <h3 className="font-semibold text-slate-800 mb-4">Berechtigungen</h3>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-700">Neue Benutzer können sich selbst registrieren</span>
-                      <input type="checkbox" className="rounded" />
-                    </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-slate-700">E-Mail-Verifizierung erforderlich</span>
                       <input type="checkbox" className="rounded" defaultChecked />
@@ -237,7 +226,12 @@ export default function AdminSettingsPage() {
                 <h1 className="text-2xl font-bold text-slate-800">Daten & Backup</h1>
 
                 <section className="bg-white rounded-lg p-6">
-                  <h3 className="font-semibold text-slate-800 mb-4">Backup-Verwaltung</h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-slate-800 mb-4">Backup-Verwaltung</h3>
+                    <Button className="bg-primary w-full md:w-auto">
+                      Manuelles Backup starten
+                    </Button>
+                  </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">Geplante Backups</label>
@@ -248,11 +242,6 @@ export default function AdminSettingsPage() {
                       </select>
                       <p className="text-xs text-slate-500 mt-1">Backups werden in der Schweiz gespeichert.</p>
                     </div>
-                    <div className="flex items-end">
-                      <Button className="bg-teal-600 hover:bg-teal-700 w-full md:w-auto">
-                        Manuelles Backup starten
-                      </Button>
-                    </div>
                   </div>
                 </section>
 
@@ -260,7 +249,7 @@ export default function AdminSettingsPage() {
                   <h3 className="font-semibold text-slate-800 mb-4">Datenexporte</h3>
                   <div className="flex items-center justify-between">
                     <p className="text-sm text-slate-700">Exporte für Fälle, Berichte, Rechnungen</p>
-                    <Button variant="outline" className="border-teal-200 text-teal-700 hover:bg-teal-50">
+                    <Button variant="outline" className="border-primary text-primary hover:bg-teal-50">
                       <Download className="h-4 w-4 mr-2" />
                       Export starten
                     </Button>
@@ -367,7 +356,7 @@ export default function AdminSettingsPage() {
                 <section className="bg-white rounded-lg p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-semibold text-slate-800">Revisionssichere Protokollierung</h3>
-                    <Button className="bg-teal-600 hover:bg-teal-700">
+                    <Button className="bg-primary">
                       <Download className="h-4 w-4 mr-2" />
                       Export
                     </Button>
