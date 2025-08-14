@@ -3,20 +3,29 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Plus, Building, Mail, Phone, MapPin, Edit, Trash2, Users, TrendingUp } from "lucide-react"
 import { PageHeader } from "@/components/shared/page-header"
+import Link from "next/link"
+import {
+  Plus,
+  Building,
+  Mail,
+  Phone,
+  MapPin,
+  Edit,
+  Trash2,
+  Users,
+  TrendingUp,
+  Home,
+  FileText,
+  Briefcase,
+  BarChart3,
+  MessageSquare,
+  Bell,
+  Settings,
+  Eye,
+} from "lucide-react"
 
 export default function AdminInsurersPage() {
   const [insurers, setInsurers] = useState([
@@ -71,177 +80,264 @@ export default function AdminInsurersPage() {
   ])
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Insurer Management</h1>
-          <p className="text-gray-600">Manage insurance company partnerships and settings</p>
-        </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="bg-teal-600 hover:bg-teal-700">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Insurer
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Add New Insurer</DialogTitle>
-              <DialogDescription>Add a new insurance company to the platform</DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="company-name">Company Name</Label>
-                <Input id="company-name" placeholder="Insurance Company Name" />
-              </div>
-              <div>
-                <Label htmlFor="contact-person">Primary Contact</Label>
-                <Input id="contact-person" placeholder="Contact Person Name" />
-              </div>
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="contact@company.ch" />
-              </div>
-              <div>
-                <Label htmlFor="phone">Phone</Label>
-                <Input id="phone" placeholder="+41 XX XXX XX XX" />
-              </div>
-              <div>
-                <Label htmlFor="location">Location</Label>
-                <Input id="location" placeholder="City, Canton" />
-              </div>
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline">Cancel</Button>
-                <Button className="bg-teal-600 hover:bg-teal-700">Add Insurer</Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>
+    <div className="min-h-screen bg-slate-50">
+      <PageHeader userType="admin" />
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Insurers</p>
-                <p className="text-2xl font-bold text-gray-900">{insurers.length}</p>
+      <div className="flex">
+        <aside className="hidden md:flex md:w-64 md:flex-col">
+          <div className="flex flex-col flex-grow pt-5 bg-white overflow-y-auto border-r">
+            <div className="flex items-center flex-shrink-0 px-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
+                  <div className="w-4 h-4 bg-white rounded-sm"></div>
+                </div>
+                <span className="text-xl font-bold text-slate-800">Admin Portal</span>
               </div>
-              <Building className="h-8 w-8 text-teal-600" />
             </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Active Insurers</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {insurers.filter((i) => i.status === "Active").length}
-                </p>
-              </div>
-              <Users className="h-8 w-8 text-green-600" />
+            <div className="mt-5 flex-grow flex flex-col">
+              <nav className="flex-1 px-2 space-y-1">
+                <Link
+                  href="/dashboard/admin"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <Home className="text-slate-400 mr-3 h-5 w-5" />
+                  Dashboard
+                </Link>
+                <Link
+                  href="/dashboard/admin/triage"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <FileText className="text-slate-400 mr-3 h-5 w-5" />
+                  Triage
+                </Link>
+                <Link
+                  href="/dashboard/admin/assignment"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <Users className="text-slate-400 mr-3 h-5 w-5" />
+                  Assignment
+                </Link>
+                <Link
+                  href="/dashboard/admin/cases"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <Briefcase className="text-slate-400 mr-3 h-5 w-5" />
+                  All Cases
+                </Link>
+                <Link
+                  href="/dashboard/admin/reports"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <BarChart3 className="text-slate-400 mr-3 h-5 w-5" />
+                  Reports
+                </Link>
+                <Link
+                  href="/dashboard/admin/invoicing"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <FileText className="text-slate-400 mr-3 h-5 w-5" />
+                  Invoicing
+                </Link>
+                <Link
+                  href="/dashboard/admin/experts"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <Users className="text-slate-400 mr-3 h-5 w-5" />
+                  Experts
+                </Link>
+                <Link
+                  href="/dashboard/admin/insurers"
+                  className="bg-red-50 border-r-4 border-red-500 text-red-700 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <Building className="text-red-500 mr-3 h-5 w-5" />
+                  Insurers
+                </Link>
+                <Link
+                  href="/dashboard/admin/communications"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <MessageSquare className="text-slate-400 mr-3 h-5 w-5" />
+                  Communications
+                </Link>
+                <Link
+                  href="/dashboard/admin/email-intake"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <Mail className="text-slate-400 mr-3 h-5 w-5" />
+                  Email Intake
+                </Link>
+                <Link
+                  href="/dashboard/admin/notifications"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <Bell className="text-slate-400 mr-3 h-5 w-5" />
+                  Notifications
+                </Link>
+                <Link
+                  href="/dashboard/admin/settings"
+                  className="text-slate-600 hover:bg-slate-50 hover:text-slate-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                >
+                  <Settings className="text-slate-400 mr-3 h-5 w-5" />
+                  Settings
+                </Link>
+              </nav>
             </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Cases</p>
-                <p className="text-2xl font-bold text-gray-900">{insurers.reduce((sum, i) => sum + i.totalCases, 0)}</p>
-              </div>
-              <TrendingUp className="h-8 w-8 text-blue-600" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Active Cases</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {insurers.reduce((sum, i) => sum + i.activeCases, 0)}
-                </p>
-              </div>
-              <TrendingUp className="h-8 w-8 text-orange-600" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </aside>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Insurance Companies</CardTitle>
-          <CardDescription>Manage partnerships and company settings</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Company</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Active Cases</TableHead>
-                <TableHead>Total Cases</TableHead>
-                <TableHead>Avg Amount</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {insurers.map((insurer) => (
-                <TableRow key={insurer.id}>
-                  <TableCell>
+        <main className="flex-1 p-6">
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Insurer Management</h1>
+                <p className="text-gray-600">Manage insurance company partnerships and settings</p>
+              </div>
+              <Link href="/dashboard/admin/insurers/new">
+                <Button className="bg-teal-600 hover:bg-teal-700">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Insurer
+                </Button>
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium">{insurer.name}</p>
-                      <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
-                        <span className="flex items-center gap-1">
-                          <Mail className="h-3 w-3" />
-                          {insurer.email}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Phone className="h-3 w-3" />
-                          {insurer.phone}
-                        </span>
-                      </div>
+                      <p className="text-sm font-medium text-gray-600">Total Insurers</p>
+                      <p className="text-2xl font-bold text-gray-900">{insurers.length}</p>
                     </div>
-                  </TableCell>
-                  <TableCell>{insurer.contact}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="h-4 w-4 text-gray-400" />
-                      {insurer.location}
+                    <Building className="h-8 w-8 text-teal-600" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Active Insurers</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {insurers.filter((i) => i.status === "Active").length}
+                      </p>
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      className={
-                        insurer.status === "Active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
-                      }
-                    >
-                      {insurer.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="font-medium">{insurer.activeCases}</TableCell>
-                  <TableCell>{insurer.totalCases}</TableCell>
-                  <TableCell className="font-medium">{insurer.avgAmount}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="sm">
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button variant="ghost" size="sm">
-                        <Trash2 className="h-4 w-4 text-red-500" />
-                      </Button>
+                    <Users className="h-8 w-8 text-green-600" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Total Cases</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {insurers.reduce((sum, i) => sum + i.totalCases, 0)}
+                      </p>
                     </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+                    <TrendingUp className="h-8 w-8 text-blue-600" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Active Cases</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {insurers.reduce((sum, i) => sum + i.activeCases, 0)}
+                      </p>
+                    </div>
+                    <TrendingUp className="h-8 w-8 text-orange-600" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Insurance Companies</CardTitle>
+                <CardDescription>Manage partnerships and company settings</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Company</TableHead>
+                      <TableHead>Contact</TableHead>
+                      <TableHead>Location</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Active Cases</TableHead>
+                      <TableHead>Total Cases</TableHead>
+                      <TableHead>Avg Amount</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {insurers.map((insurer) => (
+                      <TableRow key={insurer.id}>
+                        <TableCell>
+                          <div>
+                            <Link
+                              href={`/dashboard/admin/insurers/${insurer.id}`}
+                              className="font-medium hover:text-teal-600"
+                            >
+                              {insurer.name}
+                            </Link>
+                            <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
+                              <span className="flex items-center gap-1">
+                                <Mail className="h-3 w-3" />
+                                {insurer.email}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Phone className="h-3 w-3" />
+                                {insurer.phone}
+                              </span>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>{insurer.contact}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1">
+                            <MapPin className="h-4 w-4 text-gray-400" />
+                            {insurer.location}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            className={
+                              insurer.status === "Active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+                            }
+                          >
+                            {insurer.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="font-medium">{insurer.activeCases}</TableCell>
+                        <TableCell>{insurer.totalCases}</TableCell>
+                        <TableCell className="font-medium">{insurer.avgAmount}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Link href={`/dashboard/admin/insurers/${insurer.id}`}>
+                              <Button variant="ghost" size="sm">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            </Link>
+                            <Button variant="ghost" size="sm">
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm">
+                              <Trash2 className="h-4 w-4 text-red-500" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+      </div>
     </div>
   )
 }

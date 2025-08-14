@@ -20,6 +20,11 @@ import {
   Calendar,
   User,
   FileText,
+  BarChart3,
+  Building2,
+  MessageSquare,
+  Settings,
+  Users,
 } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
@@ -159,439 +164,476 @@ export default function InvoicingPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link href="/admin" className="flex items-center text-purple-600 hover:text-purple-700">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Zurück zum Dashboard
+      <PageHeader userType="admin" />
+
+      <div className="flex">
+        {/* Left app navigation (kept) */}
+        <aside className="w-64 bg-white border-r min-h-screen">
+          <nav className="p-4 space-y-2">
+            <Link
+              href="/admin"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>Dashboard</span>
             </Link>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-white rounded-sm"></div>
-              </div>
-              <span className="text-xl font-bold text-slate-800">claimity</span>
+            <Link
+              href="/admin/experts"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Users className="h-4 w-4" />
+              <span>Experten</span>
+            </Link>
+            <Link
+              href="/admin/insurers"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Building2 className="h-4 w-4" />
+              <span>Versicherer</span>
+            </Link>
+            <Link
+              href="/admin/cases"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Alle Fälle</span>
+            </Link>
+            <Link
+              href="/admin/invoicing"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
+            >
+              <DollarSign className="h-4 w-4" />
+              <span>Rechnungen</span>
+            </Link>
+            <Link
+              href="/admin/communications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              <Badge className="bg-red-500 text-white text-xs">2</Badge>
+            </Link>
+            <Link
+              href="/admin/settings"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Settings className="h-4 w-4" />
+              <span>Einstellungen</span>
+            </Link>
+          </nav>
+        </aside>
+
+        <main className="flex-1">
+          <div className="max-w-7xl mx-auto p-6">
+            <div className="mb-6">
+              <h1 className="text-2xl font-bold text-slate-800 mb-2">Rechnungsmanagement</h1>
+              <p className="text-slate-600">Verwaltung von Expertenrechnungen und Zahlungsüberwachung</p>
             </div>
-            <Badge variant="secondary" className="bg-green-100 text-green-800">
-              Rechnungsmanagement
-            </Badge>
-          </div>
-          <Button className="bg-green-500 hover:bg-green-600">
-            <Download className="h-4 w-4 mr-2" />
-            Export
-          </Button>
-        </div>
-      </header>
 
-      <div className="max-w-7xl mx-auto p-6">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-slate-800 mb-2">Rechnungsmanagement</h1>
-          <p className="text-slate-600">Verwaltung von Expertenrechnungen und Zahlungsüberwachung</p>
-        </div>
+            <Tabs defaultValue="invoices" className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="invoices">Rechnungen</TabsTrigger>
+                <TabsTrigger value="dunning">Mahnwesen</TabsTrigger>
+                <TabsTrigger value="pricing">Preise & Margen</TabsTrigger>
+              </TabsList>
 
-        <Tabs defaultValue="invoices" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="invoices">Rechnungen</TabsTrigger>
-            <TabsTrigger value="dunning">Mahnwesen</TabsTrigger>
-            <TabsTrigger value="pricing">Preise & Margen</TabsTrigger>
-          </TabsList>
-
-          {/* Invoices Tab */}
-          <TabsContent value="invoices" className="space-y-6">
-            <div className="grid lg:grid-cols-3 gap-6">
-              {/* Invoices List */}
-              <div className="lg:col-span-1">
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-lg">Rechnungen ({filteredInvoices.length})</CardTitle>
-                    </div>
-                    <div className="flex space-x-2">
-                      <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
-                        <Input
-                          placeholder="Suchen..."
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                          className="pl-10"
-                        />
-                      </div>
-                      <Select value={statusFilter} onValueChange={setStatusFilter}>
-                        <SelectTrigger className="w-32">
-                          <SelectValue placeholder="Status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">Alle</SelectItem>
-                          <SelectItem value="Offen">Offen</SelectItem>
-                          <SelectItem value="Bezahlt">Bezahlt</SelectItem>
-                          <SelectItem value="Überfällig">Überfällig</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {filteredInvoices.map((invoice) => (
-                        <div
-                          key={invoice.id}
-                          className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                            selectedInvoice === invoice.id ? "bg-green-50 border-green-200" : "hover:bg-slate-50"
-                          }`}
-                          onClick={() => setSelectedInvoice(invoice.id)}
-                        >
-                          <div className="flex items-start justify-between mb-2">
-                            <div>
-                              <h3 className="font-semibold text-sm text-slate-800">Rechnung {invoice.number}</h3>
-                              <p className="text-xs text-slate-600">{invoice.claimId}</p>
-                            </div>
-                            <Badge className={getStatusColor(invoice.status)}>{invoice.status}</Badge>
-                          </div>
-                          <div className="space-y-1 text-xs text-slate-500">
-                            <div className="flex items-center">
-                              <User className="h-3 w-3 mr-1" />
-                              {invoice.expert}
-                            </div>
-                            <div className="flex items-center">
-                              <DollarSign className="h-3 w-3 mr-1" />
-                              {invoice.amount}
-                            </div>
-                            <div className="flex items-center">
-                              <Calendar className="h-3 w-3 mr-1" />
-                              Fällig: {new Date(invoice.due).toLocaleDateString("de-CH")}
-                            </div>
-                          </div>
-                          {invoice.status === "Überfällig" && invoice.overdueDays && (
-                            <div className="mt-2 flex items-center space-x-1">
-                              <div className={`w-2 h-2 rounded-full ${getDunningLevel(invoice.overdueDays).color}`} />
-                              <span className="text-xs text-red-600">{invoice.overdueDays} Tage überfällig</span>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Invoice Details */}
-              <div className="lg:col-span-2">
-                {selectedInvoiceData ? (
-                  <Card>
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <CardTitle className="flex items-center space-x-2">
-                            <span>Rechnung {selectedInvoiceData.number}</span>
-                            <Badge className={getStatusColor(selectedInvoiceData.status)}>
-                              {selectedInvoiceData.status}
-                            </Badge>
-                          </CardTitle>
-                          <CardDescription>
-                            Fall: {selectedInvoiceData.claimId} • {selectedInvoiceData.insurer}
-                          </CardDescription>
+              {/* Invoices Tab */}
+              <TabsContent value="invoices" className="space-y-6">
+                <div className="grid lg:grid-cols-3 gap-6">
+                  {/* Invoices List */}
+                  <div className="lg:col-span-1">
+                    <Card>
+                      <CardHeader>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-lg">Rechnungen ({filteredInvoices.length})</CardTitle>
                         </div>
                         <div className="flex space-x-2">
-                          <Button
-                            onClick={() => handleApprove(selectedInvoiceData.id)}
-                            className="bg-green-500 hover:bg-green-600"
-                          >
-                            <CheckCircle className="h-4 w-4 mr-2" />
-                            Freigeben
-                          </Button>
-                          <Button variant="outline">
-                            <Eye className="h-4 w-4 mr-2" />
-                            Anzeigen
-                          </Button>
-                          <Button variant="outline">
-                            <Download className="h-4 w-4 mr-2" />
-                            PDF
-                          </Button>
+                          <div className="relative flex-1">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                            <Input
+                              placeholder="Suchen..."
+                              value={searchTerm}
+                              onChange={(e) => setSearchTerm(e.target.value)}
+                              className="pl-10"
+                            />
+                          </div>
+                          <Select value={statusFilter} onValueChange={setStatusFilter}>
+                            <SelectTrigger className="w-32">
+                              <SelectValue placeholder="Status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="all">Alle</SelectItem>
+                              <SelectItem value="Offen">Offen</SelectItem>
+                              <SelectItem value="Bezahlt">Bezahlt</SelectItem>
+                              <SelectItem value="Überfällig">Überfällig</SelectItem>
+                            </SelectContent>
+                          </Select>
                         </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-4">
-                          <div>
-                            <h3 className="font-semibold text-slate-800 mb-3">Rechnungsdetails</h3>
-                            <div className="space-y-2 text-sm">
-                              <div className="flex justify-between">
-                                <span className="text-slate-600">Experte:</span>
-                                <span className="font-medium">{selectedInvoiceData.expert}</span>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-3">
+                          {filteredInvoices.map((invoice) => (
+                            <div
+                              key={invoice.id}
+                              className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                                selectedInvoice === invoice.id ? "bg-green-50 border-green-200" : "hover:bg-slate-50"
+                              }`}
+                              onClick={() => setSelectedInvoice(invoice.id)}
+                            >
+                              <div className="flex items-start justify-between mb-2">
+                                <div>
+                                  <h3 className="font-semibold text-sm text-slate-800">Rechnung {invoice.number}</h3>
+                                  <p className="text-xs text-slate-600">{invoice.claimId}</p>
+                                </div>
+                                <Badge className={getStatusColor(invoice.status)}>{invoice.status}</Badge>
                               </div>
-                              <div className="flex justify-between">
-                                <span className="text-slate-600">Betrag:</span>
-                                <span className="font-medium text-lg">{selectedInvoiceData.amount}</span>
+                              <div className="space-y-1 text-xs text-slate-500">
+                                <div className="flex items-center">
+                                  <User className="h-3 w-3 mr-1" />
+                                  {invoice.expert}
+                                </div>
+                                <div className="flex items-center">
+                                  <DollarSign className="h-3 w-3 mr-1" />
+                                  {invoice.amount}
+                                </div>
+                                <div className="flex items-center">
+                                  <Calendar className="h-3 w-3 mr-1" />
+                                  Fällig: {new Date(invoice.due).toLocaleDateString("de-CH")}
+                                </div>
                               </div>
-                              <div className="flex justify-between">
-                                <span className="text-slate-600">Abrechnungsart:</span>
-                                <span className="font-medium">
-                                  {selectedInvoiceData.flatFee
-                                    ? "Pauschal"
-                                    : `${selectedInvoiceData.hours}h à ${selectedInvoiceData.expertRate}`}
-                                </span>
+                              {invoice.status === "Überfällig" && invoice.overdueDays && (
+                                <div className="mt-2 flex items-center space-x-1">
+                                  <div className={`w-2 h-2 rounded-full ${getDunningLevel(invoice.overdueDays).color}`} />
+                                  <span className="text-xs text-red-600">{invoice.overdueDays} Tage überfällig</span>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Invoice Details */}
+                  <div className="lg:col-span-2">
+                    {selectedInvoiceData ? (
+                      <Card>
+                        <CardHeader>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <CardTitle className="flex items-center space-x-2">
+                                <span>Rechnung {selectedInvoiceData.number}</span>
+                                <Badge className={getStatusColor(selectedInvoiceData.status)}>
+                                  {selectedInvoiceData.status}
+                                </Badge>
+                              </CardTitle>
+                              <CardDescription>
+                                Fall: {selectedInvoiceData.claimId} • {selectedInvoiceData.insurer}
+                              </CardDescription>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button
+                                onClick={() => handleApprove(selectedInvoiceData.id)}
+                                className="bg-green-500 hover:bg-green-600"
+                              >
+                                <CheckCircle className="h-4 w-4 mr-2" />
+                                Freigeben
+                              </Button>
+                              <Button variant="outline">
+                                <Eye className="h-4 w-4 mr-2" />
+                                Anzeigen
+                              </Button>
+                              <Button variant="outline">
+                                <Download className="h-4 w-4 mr-2" />
+                                PDF
+                              </Button>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="grid md:grid-cols-2 gap-6">
+                            <div className="space-y-4">
+                              <div>
+                                <h3 className="font-semibold text-slate-800 mb-3">Rechnungsdetails</h3>
+                                <div className="space-y-2 text-sm">
+                                  <div className="flex justify-between">
+                                    <span className="text-slate-600">Experte:</span>
+                                    <span className="font-medium">{selectedInvoiceData.expert}</span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-slate-600">Betrag:</span>
+                                    <span className="font-medium text-lg">{selectedInvoiceData.amount}</span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-slate-600">Abrechnungsart:</span>
+                                    <span className="font-medium">
+                                      {selectedInvoiceData.flatFee
+                                        ? "Pauschal"
+                                        : `${selectedInvoiceData.hours}h à ${selectedInvoiceData.expertRate}`}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-slate-600">Erstellt:</span>
+                                    <span className="font-medium">
+                                      {new Date(selectedInvoiceData.created).toLocaleDateString("de-CH")}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-slate-600">Fällig:</span>
+                                    <span className="font-medium">
+                                      {new Date(selectedInvoiceData.due).toLocaleDateString("de-CH")}
+                                    </span>
+                                  </div>
+                                  {selectedInvoiceData.paid && (
+                                    <div className="flex justify-between">
+                                      <span className="text-slate-600">Bezahlt:</span>
+                                      <span className="font-medium text-green-600">
+                                        {new Date(selectedInvoiceData.paid).toLocaleDateString("de-CH")}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
-                              <div className="flex justify-between">
-                                <span className="text-slate-600">Erstellt:</span>
-                                <span className="font-medium">
-                                  {new Date(selectedInvoiceData.created).toLocaleDateString("de-CH")}
-                                </span>
+
+                              <div>
+                                <h4 className="font-medium text-slate-800 mb-2">Leistungen</h4>
+                                <ul className="text-sm text-slate-600 space-y-1">
+                                  {selectedInvoiceData.services.map((service, index) => (
+                                    <li key={index}>• {service}</li>
+                                  ))}
+                                </ul>
                               </div>
-                              <div className="flex justify-between">
-                                <span className="text-slate-600">Fällig:</span>
-                                <span className="font-medium">
-                                  {new Date(selectedInvoiceData.due).toLocaleDateString("de-CH")}
-                                </span>
+                            </div>
+
+                            <div className="space-y-4">
+                              <div className="bg-slate-50 p-4 rounded-lg">
+                                <h3 className="font-semibold text-slate-800 mb-3">Margen-Kalkulation</h3>
+                                <div className="space-y-2 text-sm">
+                                  <div className="flex justify-between">
+                                    <span className="text-slate-600">Expertenkosten:</span>
+                                    <span className="font-medium">{selectedInvoiceData.amount}</span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-slate-600">Marge ({selectedInvoiceData.marginPercent}%):</span>
+                                    <span className="font-medium">
+                                      CHF{" "}
+                                      {(
+                                        Number.parseFloat(selectedInvoiceData.amount.replace("CHF ", "")) *
+                                        (selectedInvoiceData.marginPercent / 100)
+                                      ).toFixed(2)}
+                                    </span>
+                                  </div>
+                                  <div className="border-t pt-2 flex justify-between">
+                                    <span className="text-slate-600 font-medium">Versicherer-Rechnung:</span>
+                                    <span className="font-semibold text-lg">{selectedInvoiceData.insurerRate}</span>
+                                  </div>
+                                </div>
                               </div>
-                              {selectedInvoiceData.paid && (
-                                <div className="flex justify-between">
-                                  <span className="text-slate-600">Bezahlt:</span>
-                                  <span className="font-medium text-green-600">
-                                    {new Date(selectedInvoiceData.paid).toLocaleDateString("de-CH")}
-                                  </span>
+
+                              {selectedInvoiceData.status === "Überfällig" && (
+                                <div className="bg-red-50 p-4 rounded-lg">
+                                  <div className="flex items-center space-x-2 mb-2">
+                                    <AlertTriangle className="h-5 w-5 text-red-600" />
+                                    <h4 className="font-medium text-red-800">Überfällige Rechnung</h4>
+                                  </div>
+                                  <p className="text-sm text-red-700 mb-3">
+                                    {selectedInvoiceData.overdueDays} Tage überfällig
+                                  </p>
+                                  <Button
+                                    onClick={() => handleSendReminder(selectedInvoiceData.id)}
+                                    size="sm"
+                                    className="bg-red-500 hover:bg-red-600"
+                                  >
+                                    <Send className="h-4 w-4 mr-2" />
+                                    Mahnung senden
+                                  </Button>
                                 </div>
                               )}
                             </div>
                           </div>
-
-                          <div>
-                            <h4 className="font-medium text-slate-800 mb-2">Leistungen</h4>
-                            <ul className="text-sm text-slate-600 space-y-1">
-                              {selectedInvoiceData.services.map((service, index) => (
-                                <li key={index}>• {service}</li>
-                              ))}
-                            </ul>
+                        </CardContent>
+                      </Card>
+                    ) : (
+                      <Card>
+                        <CardContent className="flex items-center justify-center h-96">
+                          <div className="text-center">
+                            <DollarSign className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                            <h3 className="text-lg font-semibold text-slate-800 mb-2">Keine Rechnung ausgewählt</h3>
+                            <p className="text-slate-600">
+                              Wählen Sie eine Rechnung aus der Liste aus, um Details anzuzeigen.
+                            </p>
                           </div>
-                        </div>
+                        </CardContent>
+                      </Card>
+                    )}
+                  </div>
+                </div>
+              </TabsContent>
 
-                        <div className="space-y-4">
-                          <div className="bg-slate-50 p-4 rounded-lg">
-                            <h3 className="font-semibold text-slate-800 mb-3">Margen-Kalkulation</h3>
-                            <div className="space-y-2 text-sm">
-                              <div className="flex justify-between">
-                                <span className="text-slate-600">Expertenkosten:</span>
-                                <span className="font-medium">{selectedInvoiceData.amount}</span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="text-slate-600">Marge ({selectedInvoiceData.marginPercent}%):</span>
-                                <span className="font-medium">
-                                  CHF{" "}
-                                  {(
-                                    Number.parseFloat(selectedInvoiceData.amount.replace("CHF ", "")) *
-                                    (selectedInvoiceData.marginPercent / 100)
-                                  ).toFixed(2)}
-                                </span>
-                              </div>
-                              <div className="border-t pt-2 flex justify-between">
-                                <span className="text-slate-600 font-medium">Versicherer-Rechnung:</span>
-                                <span className="font-semibold text-lg">{selectedInvoiceData.insurerRate}</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          {selectedInvoiceData.status === "Überfällig" && (
-                            <div className="bg-red-50 p-4 rounded-lg">
-                              <div className="flex items-center space-x-2 mb-2">
-                                <AlertTriangle className="h-5 w-5 text-red-600" />
-                                <h4 className="font-medium text-red-800">Überfällige Rechnung</h4>
-                              </div>
-                              <p className="text-sm text-red-700 mb-3">
-                                {selectedInvoiceData.overdueDays} Tage überfällig
-                              </p>
-                              <Button
-                                onClick={() => handleSendReminder(selectedInvoiceData.id)}
-                                size="sm"
-                                className="bg-red-500 hover:bg-red-600"
-                              >
-                                <Send className="h-4 w-4 mr-2" />
-                                Mahnung senden
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ) : (
+              {/* Dunning Tab */}
+              <TabsContent value="dunning" className="space-y-6">
+                {/* Dunning Stats */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                   <Card>
-                    <CardContent className="flex items-center justify-center h-96">
-                      <div className="text-center">
-                        <DollarSign className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold text-slate-800 mb-2">Keine Rechnung ausgewählt</h3>
-                        <p className="text-slate-600">
-                          Wählen Sie eine Rechnung aus der Liste aus, um Details anzuzeigen.
-                        </p>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-slate-600">Überfällige Summe</p>
+                          <p className="text-2xl font-bold text-red-600">{dunningStats.totalOverdue}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-red-500">
+                          <AlertTriangle className="h-6 w-6 text-white" />
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
-                )}
-              </div>
-            </div>
-          </TabsContent>
-
-          {/* Dunning Tab */}
-          <TabsContent value="dunning" className="space-y-6">
-            {/* Dunning Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-slate-600">Überfällige Summe</p>
-                      <p className="text-2xl font-bold text-red-600">{dunningStats.totalOverdue}</p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-red-500">
-                      <AlertTriangle className="h-6 w-6 text-white" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-slate-600">Überfällige Rechnungen</p>
-                      <p className="text-2xl font-bold text-slate-800">{dunningStats.overdueCount}</p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-yellow-500">
-                      <FileText className="h-6 w-6 text-white" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-slate-600">Kritische Fälle</p>
-                      <p className="text-2xl font-bold text-slate-800">{dunningStats.criticalCount}</p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-red-500">
-                      <Clock className="h-6 w-6 text-white" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-slate-600">Ø Zahlungsverzug</p>
-                      <p className="text-2xl font-bold text-slate-800">{dunningStats.averagePaymentDelay} Tage</p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-blue-500">
-                      <Calendar className="h-6 w-6 text-white" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Dunning Heatmap */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Mahnwesen Ampel-System</CardTitle>
-                <CardDescription>Übersicht über überfällige Rechnungen nach Dringlichkeit</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <h3 className="font-semibold text-green-800">Grün (7-13 Tage)</h3>
-                    </div>
-                    <p className="text-2xl font-bold text-green-600">2</p>
-                    <p className="text-sm text-green-700">Erste Mahnung</p>
-                  </div>
-                  <div className="bg-yellow-50 p-4 rounded-lg">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <h3 className="font-semibold text-yellow-800">Gelb (14-29 Tage)</h3>
-                    </div>
-                    <p className="text-2xl font-bold text-yellow-600">4</p>
-                    <p className="text-sm text-yellow-700">Zweite Mahnung</p>
-                  </div>
-                  <div className="bg-red-50 p-4 rounded-lg">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <h3 className="font-semibold text-red-800">Rot (30+ Tage)</h3>
-                    </div>
-                    <p className="text-2xl font-bold text-red-600">2</p>
-                    <p className="text-sm text-red-700">Inkasso/Rechtlich</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Pricing Tab */}
-          <TabsContent value="pricing" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Preise & Margen (Vertraulich)</CardTitle>
-                <CardDescription>Interne Preisgestaltung und Margen-Konfiguration</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="bg-yellow-50 p-4 rounded-lg mb-6">
-                  <div className="flex items-center space-x-2">
-                    <AlertTriangle className="h-5 w-5 text-yellow-600" />
-                    <p className="text-yellow-800 font-medium">Vertrauliche Informationen</p>
-                  </div>
-                  <p className="text-sm text-yellow-700 mt-1">
-                    Diese Preise und Margen sind nur für interne Claimity-Mitarbeiter sichtbar.
-                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-slate-600">Überfällige Rechnungen</p>
+                          <p className="text-2xl font-bold text-slate-800">{dunningStats.overdueCount}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-yellow-500">
+                          <FileText className="h-6 w-6 text-white" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-slate-600">Kritische Fälle</p>
+                          <p className="text-2xl font-bold text-slate-800">{dunningStats.criticalCount}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-red-500">
+                          <Clock className="h-6 w-6 text-white" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-slate-600">Ø Zahlungsverzug</p>
+                          <p className="text-2xl font-bold text-slate-800">{dunningStats.averagePaymentDelay} Tage</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-blue-500">
+                          <Calendar className="h-6 w-6 text-white" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-semibold text-slate-800 mb-4">Standard-Margen</h3>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <span className="text-slate-700">Fahrzeugschäden</span>
-                        <span className="font-semibold">15%</span>
+                {/* Dunning Heatmap */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Mahnwesen Ampel-System</CardTitle>
+                    <CardDescription>Übersicht über überfällige Rechnungen nach Dringlichkeit</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <div className="bg-green-50 p-4 rounded-lg">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                          <h3 className="font-semibold text-green-800">Grün (7-13 Tage)</h3>
+                        </div>
+                        <p className="text-2xl font-bold text-green-600">2</p>
+                        <p className="text-sm text-green-700">Erste Mahnung</p>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <span className="text-slate-700">Gebäudeschäden</span>
-                        <span className="font-semibold">18%</span>
+                      <div className="bg-yellow-50 p-4 rounded-lg">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                          <h3 className="font-semibold text-yellow-800">Gelb (14-29 Tage)</h3>
+                        </div>
+                        <p className="text-2xl font-bold text-yellow-600">4</p>
+                        <p className="text-sm text-yellow-700">Zweite Mahnung</p>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <span className="text-slate-700">Brandschäden</span>
-                        <span className="font-semibold">20%</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <span className="text-slate-700">Komplexe Fälle</span>
-                        <span className="font-semibold">25%</span>
+                      <div className="bg-red-50 p-4 rounded-lg">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                          <h3 className="font-semibold text-red-800">Rot (30+ Tage)</h3>
+                        </div>
+                        <p className="text-2xl font-bold text-red-600">2</p>
+                        <p className="text-sm text-red-700">Inkasso/Rechtlich</p>
                       </div>
                     </div>
-                  </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-                  <div>
-                    <h3 className="font-semibold text-slate-800 mb-4">Experten-Stundensätze</h3>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <span className="text-slate-700">Junior Experte</span>
-                        <span className="font-semibold">CHF 80-100/h</span>
+              {/* Pricing Tab */}
+              <TabsContent value="pricing" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Preise & Margen (Vertraulich)</CardTitle>
+                    <CardDescription>Interne Preisgestaltung und Margen-Konfiguration</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="bg-yellow-50 p-4 rounded-lg mb-6">
+                      <div className="flex items-center space-x-2">
+                        <AlertTriangle className="h-5 w-5 text-yellow-600" />
+                        <p className="text-yellow-800 font-medium">Vertrauliche Informationen</p>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <span className="text-slate-700">Senior Experte</span>
-                        <span className="font-semibold">CHF 120-150/h</span>
+                      <p className="text-sm text-yellow-700 mt-1">
+                        Diese Preise und Margen sind nur für interne Claimity-Mitarbeiter sichtbar.
+                      </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h3 className="font-semibold text-slate-800 mb-4">Standard-Margen</h3>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="text-slate-700">Fahrzeugschäden</span>
+                            <span className="font-semibold">15%</span>
+                          </div>
+                          <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="text-slate-700">Gebäudeschäden</span>
+                            <span className="font-semibold">18%</span>
+                          </div>
+                          <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="text-slate-700">Brandschäden</span>
+                            <span className="font-semibold">20%</span>
+                          </div>
+                          <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="text-slate-700">Komplexe Fälle</span>
+                            <span className="font-semibold">25%</span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <span className="text-slate-700">Spezialist</span>
-                        <span className="font-semibold">CHF 180-220/h</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                        <span className="text-slate-700">Pauschalpreise</span>
-                        <span className="font-semibold">CHF 500-2000</span>
+
+                      <div>
+                        <h3 className="font-semibold text-slate-800 mb-4">Experten-Stundensätze</h3>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="text-slate-700">Junior Experte</span>
+                            <span className="font-semibold">CHF 80-100/h</span>
+                          </div>
+                          <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="text-slate-700">Senior Experte</span>
+                            <span className="font-semibold">CHF 120-150/h</span>
+                          </div>
+                          <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="text-slate-700">Spezialist</span>
+                            <span className="font-semibold">CHF 180-220/h</span>
+                          </div>
+                          <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="text-slate-700">Pauschalpreise</span>
+                            <span className="font-semibold">CHF 500-2000</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
+        </main>
       </div>
     </div>
   )

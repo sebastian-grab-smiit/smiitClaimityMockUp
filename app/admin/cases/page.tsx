@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Search, Filter, Download, Eye, Clock, Building, User } from "lucide-react"
 import { PageHeader } from "@/components/shared/page-header"
+import Link from "next/link"
 
 export default function AdminAllCasesPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -182,11 +183,13 @@ export default function AdminAllCasesPage() {
                     </Badge>
                   </TableCell>
                   <TableCell>{case_.created}</TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="sm">
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
+                    <TableCell>
+                      <Link href={`/dashboard/admin/cases/${case_.id}`}>
+                        <Button variant="ghost" size="sm">
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </TableCell>
                 </TableRow>
               ))}
             </TableBody>

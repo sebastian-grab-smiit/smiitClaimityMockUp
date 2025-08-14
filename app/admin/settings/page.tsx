@@ -1,84 +1,135 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Shield, Users, Database, Bell, Key, Download } from "lucide-react"
-import Link from "next/link"
+import {
+  Shield,
+  Users,
+  Database,
+  Bell,
+  Key,
+  Download,
+  BarChart3,
+  Building2,
+  DollarSign,
+  FileText,
+  MessageSquare,
+  Settings,
+} from "lucide-react"
 import { PageHeader } from "@/components/shared/page-header"
 
-export default function AdminSettingsPage() {
-  const [activeTab, setActiveTab] = useState("system")
+type TabId = "system" | "users" | "data" | "notifications" | "security" | "audit"
 
-  const tabs = [
-    { id: "system", label: "System", icon: Shield },
-    { id: "users", label: "Benutzer & Rollen", icon: Users },
-    { id: "data", label: "Daten & Backup", icon: Database },
-    { id: "notifications", label: "Benachrichtigungen", icon: Bell },
-    { id: "security", label: "Sicherheit", icon: Key },
-    { id: "audit", label: "Audit Logs", icon: Download },
+export default function AdminSettingsPage() {
+  const [activeTab, setActiveTab] = useState<TabId>("system")
+
+  const tabs: { id: TabId; label: string; icon: React.ElementType }[] = [
+    { id: "system",         label: "System",               icon: Shield },
+    { id: "users",          label: "Benutzer & Rollen",    icon: Users },
+    { id: "data",           label: "Daten & Backup",       icon: Database },
+    { id: "notifications",  label: "Benachrichtigungen",   icon: Bell },
+    { id: "security",       label: "Sicherheit",           icon: Key },
+    { id: "audit",          label: "Audit Logs",           icon: Download },
   ]
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link href="/admin" className="flex items-center text-purple-600 hover:text-purple-700">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Zurück zum Dashboard
+      {/* Top app header (kept) */}
+      <PageHeader userType="admin" />
+
+      <div className="flex">
+        {/* Left app navigation (kept) */}
+        <aside className="w-64 bg-white border-r min-h-screen">
+          <nav className="p-4 space-y-2">
+            <Link
+              href="/admin"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>Dashboard</span>
             </Link>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-white rounded-sm"></div>
+            <Link
+              href="/admin/experts"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Users className="h-4 w-4" />
+              <span>Experten</span>
+            </Link>
+            <Link
+              href="/admin/insurers"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Building2 className="h-4 w-4" />
+              <span>Versicherer</span>
+            </Link>
+            <Link
+              href="/admin/cases"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <FileText className="h-4 w-4" />
+              <span>Alle Fälle</span>
+            </Link>
+            <Link
+              href="/admin/invoicing"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <DollarSign className="h-4 w-4" />
+              <span>Rechnungen</span>
+            </Link>
+            <Link
+              href="/admin/communications"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              <Badge className="bg-red-500 text-white text-xs">2</Badge>
+            </Link>
+            <Link
+              href="/admin/settings"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
+            >
+              <Settings className="h-4 w-4" />
+              <span>Einstellungen</span>
+            </Link>
+          </nav>
+        </aside>
+
+        {/* Main area with horizontal tabs */}
+        <main className="flex-1">
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as TabId)} className="w-full">
+            {/* Sticky tab header */}
+            <div className="sticky top-0 z-10 bg-white border-b">
+              <div className="px-6 pt-4">
+                <h2 className="text-lg font-semibold text-slate-800 mb-3">Einstellungen</h2>
               </div>
-              <span className="text-xl font-bold text-slate-800">claimity</span>
+              <div className="px-4 pb-3">
+                <TabsList className="grid w-full grid-cols-6">
+                  {tabs.map(({ id, label, icon: Icon }) => (
+                    <TabsTrigger
+                      key={id}
+                      value={id}
+                      className="gap-2 data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:border data-[state=active]:border-primary"
+                    >
+                      <Icon className="h-4 w-4" />
+                      {label}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </div>
             </div>
-            <Badge variant="secondary" className="bg-red-100 text-red-800">
-              System-Einstellungen
-            </Badge>
-          </div>
-        </div>
-      </header>
 
-      <div className="flex h-[calc(100vh-73px)]">
-        {/* Left Sidebar - Tabs */}
-        <div className="w-64 bg-white border-r">
-          <div className="p-4">
-            <h2 className="font-semibold text-slate-800 mb-4">Einstellungen</h2>
-            <nav className="space-y-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                      activeTab === tab.id
-                        ? "bg-teal-50 text-teal-700 border border-teal-200"
-                        : "text-slate-600 hover:bg-slate-50"
-                    }`}
-                  >
-                    <Icon className="h-4 w-4" />
-                    <span className="text-sm">{tab.label}</span>
-                  </button>
-                )
-              })}
-            </nav>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="p-6">
-            {activeTab === "system" && (
-              <div className="space-y-6">
+            {/* Tab contents */}
+            <div className="p-6">
+              {/* System */}
+              <TabsContent value="system" className="space-y-6">
                 <h1 className="text-2xl font-bold text-slate-800">System-Einstellungen</h1>
 
-                <div className="bg-white rounded-lg p-6">
+                <section className="bg-white rounded-lg p-6">
                   <h3 className="font-semibold text-slate-800 mb-4">Hosting & Infrastruktur</h3>
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">Hosting-Standort</label>
                       <select className="w-full px-3 py-2 border border-slate-300 rounded-lg">
@@ -96,11 +147,11 @@ export default function AdminSettingsPage() {
                       </select>
                     </div>
                   </div>
-                </div>
+                </section>
 
-                <div className="bg-white rounded-lg p-6">
+                <section className="bg-white rounded-lg p-6">
                   <h3 className="font-semibold text-slate-800 mb-4">Datenaufbewahrung</h3>
-                  <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">
                         Aufbewahrungsdauer für Fälle
@@ -121,15 +172,14 @@ export default function AdminSettingsPage() {
                       </select>
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
+                </section>
+              </TabsContent>
 
-            {activeTab === "users" && (
-              <div className="space-y-6">
+              {/* Users */}
+              <TabsContent value="users" className="space-y-6">
                 <h1 className="text-2xl font-bold text-slate-800">Benutzer & Rollen</h1>
 
-                <div className="bg-white rounded-lg p-6">
+                <section className="bg-white rounded-lg p-6">
                   <h3 className="font-semibold text-slate-800 mb-4">Rollen-Management</h3>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
@@ -161,9 +211,9 @@ export default function AdminSettingsPage() {
                       <Badge className="bg-purple-100 text-purple-800">156 Benutzer</Badge>
                     </div>
                   </div>
-                </div>
+                </section>
 
-                <div className="bg-white rounded-lg p-6">
+                <section className="bg-white rounded-lg p-6">
                   <h3 className="font-semibold text-slate-800 mb-4">Berechtigungen</h3>
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -179,15 +229,87 @@ export default function AdminSettingsPage() {
                       <input type="checkbox" className="rounded" defaultChecked />
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
+                </section>
+              </TabsContent>
 
-            {activeTab === "security" && (
-              <div className="space-y-6">
+              {/* Data & Backup */}
+              <TabsContent value="data" className="space-y-6">
+                <h1 className="text-2xl font-bold text-slate-800">Daten & Backup</h1>
+
+                <section className="bg-white rounded-lg p-6">
+                  <h3 className="font-semibold text-slate-800 mb-4">Backup-Verwaltung</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Geplante Backups</label>
+                      <select className="w-full px-3 py-2 border border-slate-300 rounded-lg">
+                        <option>Täglich um 02:00</option>
+                        <option>Alle 6 Stunden</option>
+                        <option>Alle 12 Stunden</option>
+                      </select>
+                      <p className="text-xs text-slate-500 mt-1">Backups werden in der Schweiz gespeichert.</p>
+                    </div>
+                    <div className="flex items-end">
+                      <Button className="bg-teal-600 hover:bg-teal-700 w-full md:w-auto">
+                        Manuelles Backup starten
+                      </Button>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="bg-white rounded-lg p-6">
+                  <h3 className="font-semibold text-slate-800 mb-4">Datenexporte</h3>
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm text-slate-700">Exporte für Fälle, Berichte, Rechnungen</p>
+                    <Button variant="outline" className="border-teal-200 text-teal-700 hover:bg-teal-50">
+                      <Download className="h-4 w-4 mr-2" />
+                      Export starten
+                    </Button>
+                  </div>
+                </section>
+              </TabsContent>
+
+              {/* Notifications */}
+              <TabsContent value="notifications" className="space-y-6">
+                <h1 className="text-2xl font-bold text-slate-800">Benachrichtigungen</h1>
+
+                <section className="bg-white rounded-lg p-6">
+                  <h3 className="font-semibold text-slate-800 mb-4">Kanäle</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-700">E-Mail</span>
+                      <input type="checkbox" className="rounded" defaultChecked />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-700">In-App</span>
+                      <input type="checkbox" className="rounded" defaultChecked />
+                    </div>
+                  </div>
+                </section>
+
+                <section className="bg-white rounded-lg p-6">
+                  <h3 className="font-semibold text-slate-800 mb-4">Ereignisse</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-700">Neuer Fall eingegangen</span>
+                      <input type="checkbox" className="rounded" defaultChecked />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-700">Bericht eingereicht</span>
+                      <input type="checkbox" className="rounded" defaultChecked />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-700">Rechnung überfällig</span>
+                      <input type="checkbox" className="rounded" defaultChecked />
+                    </div>
+                  </div>
+                </section>
+              </TabsContent>
+
+              {/* Security */}
+              <TabsContent value="security" className="space-y-6">
                 <h1 className="text-2xl font-bold text-slate-800">Sicherheits-Einstellungen</h1>
 
-                <div className="bg-white rounded-lg p-6">
+                <section className="bg-white rounded-lg p-6">
                   <h3 className="font-semibold text-slate-800 mb-4">Zwei-Faktor-Authentifizierung</h3>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -203,9 +325,9 @@ export default function AdminSettingsPage() {
                       <input type="checkbox" className="rounded" defaultChecked />
                     </div>
                   </div>
-                </div>
+                </section>
 
-                <div className="bg-white rounded-lg p-6">
+                <section className="bg-white rounded-lg p-6">
                   <h3 className="font-semibold text-slate-800 mb-4">Passwort-Richtlinien</h3>
                   <div className="space-y-4">
                     <div>
@@ -235,15 +357,14 @@ export default function AdminSettingsPage() {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
+                </section>
+              </TabsContent>
 
-            {activeTab === "audit" && (
-              <div className="space-y-6">
+              {/* Audit */}
+              <TabsContent value="audit" className="space-y-6">
                 <h1 className="text-2xl font-bold text-slate-800">Audit Logs</h1>
 
-                <div className="bg-white rounded-lg p-6">
+                <section className="bg-white rounded-lg p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-semibold text-slate-800">Revisionssichere Protokollierung</h3>
                     <Button className="bg-teal-600 hover:bg-teal-700">
@@ -278,11 +399,11 @@ export default function AdminSettingsPage() {
                       Export-Funktionen stehen für Compliance-Audits zur Verfügung.
                     </p>
                   </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+                </section>
+              </TabsContent>
+            </div>
+          </Tabs>
+        </main>
       </div>
     </div>
   )

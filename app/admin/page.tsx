@@ -16,6 +16,13 @@ import {
   TrendingUp,
   Calendar,
   Eye,
+  Building2,
+  MessageSquare,
+  Mail,
+  Bell,
+  Euro,
+  Percent,
+  Target,
 } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
@@ -25,13 +32,6 @@ export default function AdminDashboard() {
   const [priorityFilter, setPriorityFilter] = useState("all")
 
   // Mock data
-  const stats = [
-    { title: "Offene Fälle", value: "47", icon: FileText, color: "bg-blue-500", trend: "+12%" },
-    { title: "Engpässe", value: "8", icon: AlertTriangle, color: "bg-red-500", trend: "-5%" },
-    { title: "SLA Verletzungen", value: "3", icon: Clock, color: "bg-yellow-500", trend: "+2%" },
-    { title: "Aktive Experten", value: "156", icon: Users, color: "bg-green-500", trend: "+8%" },
-  ]
-
   const incomingCases = [
     {
       id: "CLM-2024-048",
@@ -92,6 +92,119 @@ export default function AdminDashboard() {
     },
   ]
 
+  const highLevelStats = [
+    {
+      title: "Experten",
+      value: "156",
+      icon: Users,
+      color: "bg-teal-500",
+      trend: "+8%",
+      description: "Aktive Experten",
+    },
+    {
+      title: "Versicherer",
+      value: "24",
+      icon: Building2,
+      color: "bg-blue-500",
+      trend: "+3%",
+      description: "Partner Versicherer",
+    },
+    {
+      title: "Fälle (Total)",
+      value: "1,247",
+      icon: FileText,
+      color: "bg-purple-500",
+      trend: "+15%",
+      description: "Alle Fälle",
+    },
+    {
+      title: "Offene Fälle",
+      value: "47",
+      icon: AlertTriangle,
+      color: "bg-orange-500",
+      trend: "+12%",
+      description: "In Bearbeitung",
+    },
+  ]
+
+  const financialStats = [
+    {
+      title: "Umsatz (Monat)",
+      value: "CHF 48K",
+      icon: Euro,
+      color: "bg-green-500",
+      trend: "+18%",
+      description: "Monatlicher Umsatz",
+    },
+    {
+      title: "Gewinn (Monat)",
+      value: "CHF 12K",
+      icon: TrendingUp,
+      color: "bg-emerald-500",
+      trend: "+22%",
+      description: "Monatlicher Gewinn",
+    },
+    {
+      title: "Gewinnmarge",
+      value: "26.2%",
+      icon: Percent,
+      color: "bg-cyan-500",
+      trend: "+1.8%",
+      description: "Durchschnittliche Marge",
+    },
+    {
+      title: "SLA Performance",
+      value: "92%",
+      icon: Target,
+      color: "bg-yellow-500",
+      trend: "+5%",
+      description: "SLA Einhaltung",
+    },
+  ]
+
+  const recentActivity = [
+    {
+      id: "CLM-2024-048",
+      insurer: "Helvetia Versicherung",
+      expert: "Dr. Hans Müller",
+      type: "Fahrzeugschaden",
+      amount: "CHF 15,000",
+      status: "Zugewiesen",
+      time: "Vor 15 Min",
+    },
+    {
+      id: "CLM-2024-049",
+      insurer: "AXA Schweiz",
+      expert: "Maria Weber",
+      type: "Gebäudeschaden",
+      amount: "CHF 45,000",
+      status: "In Bearbeitung",
+      time: "Vor 32 Min",
+    },
+    {
+      id: "CLM-2024-050",
+      insurer: "Zurich Insurance",
+      expert: "Thomas Schneider",
+      type: "Wasserschaden",
+      amount: "CHF 8,500",
+      status: "Abgeschlossen",
+      time: "Vor 1 Std",
+    },
+  ]
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Zugewiesen":
+        return "bg-blue-100 text-blue-800"
+      case "In Bearbeitung":
+        return "bg-yellow-100 text-yellow-800"
+      case "Abgeschlossen":
+        return "bg-green-100 text-green-800"
+      default:
+        return "bg-gray-100 text-gray-800"
+    }
+  }
+
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "Hoch":
@@ -128,31 +241,31 @@ export default function AdminDashboard() {
           <nav className="p-4 space-y-2">
             <Link
               href="/admin"
-              className="flex items-center space-x-2 px-3 py-2 bg-purple-50 text-purple-700 rounded-lg"
+              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
               <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
             <Link
-              href="/admin/triage"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
-              <AlertTriangle className="h-4 w-4" />
-              <span>Triage</span>
-            </Link>
-            <Link
-              href="/admin/assignment"
+              href="/admin/experts"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Users className="h-4 w-4" />
-              <span>Zuweisung</span>
+              <span>Experten</span>
             </Link>
             <Link
-              href="/admin/reports"
+              href="/admin/insurers"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Building2 className="h-4 w-4" />
+              <span>Versicherer</span>
+            </Link>
+            <Link
+              href="/admin/cases"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <FileText className="h-4 w-4" />
-              <span>Berichte</span>
+              <span>Alle Fälle</span>
             </Link>
             <Link
               href="/admin/invoicing"
@@ -162,11 +275,12 @@ export default function AdminDashboard() {
               <span>Rechnungen</span>
             </Link>
             <Link
-              href="/admin/experts"
+              href="/admin/communications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <Users className="h-4 w-4" />
-              <span>Experten</span>
+              <MessageSquare className="h-4 w-4" />
+              <span>Nachrichten</span>
+              {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
             </Link>
             <Link
               href="/admin/settings"
@@ -185,151 +299,115 @@ export default function AdminDashboard() {
             <p className="text-slate-600">Globale Übersicht und Fallmanagement</p>
           </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {stats.map((stat, index) => (
-              <Card key={index}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-slate-600">{stat.title}</p>
-                      <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
-                      <div className="flex items-center mt-1">
-                        <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
-                        <span className="text-xs text-green-600">{stat.trend}</span>
+          {/* High-Level Business Stats */}
+          <div className="mb-8">
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">Geschäftsübersicht</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {highLevelStats.map((stat, index) => (
+                <Card key={index}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-slate-600">{stat.title}</p>
+                        <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
+                        <p className="text-xs text-slate-500 mt-1">{stat.description}</p>
+                        <div className="flex items-center mt-2">
+                          <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+                          <span className="text-xs text-green-600">{stat.trend}</span>
+                        </div>
+                      </div>
+                      <div className={`p-3 rounded-lg ${stat.color}`}>
+                        <stat.icon className="h-6 w-6 text-white" />
                       </div>
                     </div>
-                    <div className={`p-3 rounded-lg ${stat.color}`}>
-                      <stat.icon className="h-6 w-6 text-white" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 mb-8">
-            {/* Incoming Cases */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center">
-                      <AlertTriangle className="h-5 w-5 mr-2 text-orange-600" />
-                      Eingehende Fälle (Triage)
-                    </CardTitle>
-                    <CardDescription>Neue Fälle zur Überprüfung und Priorisierung</CardDescription>
-                  </div>
-                  <Button size="sm" className="bg-orange-500 hover:bg-orange-600">
-                    Alle anzeigen
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {incomingCases.map((case_) => (
-                    <div
-                      key={case_.id}
-                      className="flex items-center justify-between p-3 border rounded-lg hover:bg-slate-50"
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                          <FileText className="h-4 w-4 text-orange-600" />
-                        </div>
-                        <div>
-                          <div className="flex items-center space-x-2">
-                            <h4 className="font-semibold text-sm text-slate-800">{case_.id}</h4>
-                            <Badge className={getPriorityColor(case_.priority)}>{case_.priority}</Badge>
-                          </div>
-                          <p className="text-xs text-slate-600">
-                            {case_.insurer} • {case_.type}
-                          </p>
-                          <div className="flex items-center space-x-2 text-xs text-slate-500 mt-1">
-                            <span className="flex items-center">
-                              <MapPin className="h-3 w-3 mr-1" />
-                              {case_.location}
-                            </span>
-                            <span className="flex items-center">
-                              <Clock className="h-3 w-3 mr-1" />
-                              {case_.received}
-                            </span>
-                          </div>
+          {/* Financial Metrics */}
+          <div className="mb-8">
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">Finanzmetriken</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {financialStats.map((stat, index) => (
+                <Card key={index}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-slate-600">{stat.title}</p>
+                        <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
+                        <p className="text-xs text-slate-500 mt-1">{stat.description}</p>
+                        <div className="flex items-center mt-2">
+                          <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+                          <span className="text-xs text-green-600">{stat.trend}</span>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-sm font-semibold text-slate-800">{case_.amount}</p>
-                        <Button variant="ghost" size="sm" className="mt-1">
-                          <Eye className="h-3 w-3 mr-1" />
-                          Prüfen
-                        </Button>
+                      <div className={`p-3 rounded-lg ${stat.color}`}>
+                        <stat.icon className="h-6 w-6 text-white" />
                       </div>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Expert Assignment Board */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center">
-                      <Users className="h-5 w-5 mr-2 text-teal-600" />
-                      Expertenzuweisung
-                    </CardTitle>
-                    <CardDescription>Verfügbare Experten und aktuelle Auslastung</CardDescription>
-                  </div>
-                  <Button size="sm" className="">
-                    Zuweisen
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {expertAssignments.map((expert, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between p-3 border rounded-lg hover:bg-slate-50"
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center">
-                          <Users className="h-4 w-4 text-teal-600" />
-                        </div>
-                        <div>
-                          <div className="flex items-center space-x-2">
-                            <h4 className="font-semibold text-sm text-slate-800">{expert.expert}</h4>
-                            <Badge className={getAvailabilityColor(expert.availability)}>{expert.availability}</Badge>
-                          </div>
-                          <p className="text-xs text-slate-600">{expert.specialty}</p>
-                          <div className="flex items-center space-x-2 text-xs text-slate-500 mt-1">
-                            <span className="flex items-center">
-                              <MapPin className="h-3 w-3 mr-1" />
-                              {expert.location}
-                            </span>
-                            <span>★ {expert.rating}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm font-semibold text-slate-800">{expert.activeCases} Fälle</p>
-                        <Button variant="ghost" size="sm" className="mt-1">
-                          Zuweisen
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
+
+          {/* Recent Activity */}
+          <Card className="mb-8">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center">
+                    <Clock className="h-5 w-5 mr-2 text-slate-600" />
+                    Aktuelle Aktivitäten
+                  </CardTitle>
+                  <CardDescription>Neueste Fallaktivitäten und Zuweisungen</CardDescription>
+                </div>
+                <Button size="sm" variant="outline">
+                  <Eye className="h-4 w-4 mr-2" />
+                  Alle anzeigen
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {recentActivity.map((activity) => (
+                  <div
+                    key={activity.id}
+                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-slate-50 cursor-pointer"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                        <FileText className="h-5 w-5 text-slate-600" />
+                      </div>
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <h4 className="font-semibold text-slate-800">{activity.id}</h4>
+                          <Badge className={getStatusColor(activity.status)}>{activity.status}</Badge>
+                        </div>
+                        <p className="text-sm text-slate-600">
+                          {activity.insurer} → {activity.expert}
+                        </p>
+                        <p className="text-xs text-slate-500">{activity.type}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-slate-800">{activity.amount}</p>
+                      <p className="text-xs text-slate-500">{activity.time}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* SLA Monitor */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Clock className="h-5 w-5 mr-2 text-blue-600" />
-                SLA-Monitor & Dunning Heatmap
+                SLA-Monitor
               </CardTitle>
               <CardDescription>Überwachung von Bearbeitungszeiten und kritischen Fällen</CardDescription>
             </CardHeader>
