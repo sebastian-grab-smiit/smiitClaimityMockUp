@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowRight, Shield, Users, FileText, Clock, CheckCircle } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import logo from "../../public/logo.png"
+import logo from "../public/logo.png"
 
 export default function HomePage() {
   return (
