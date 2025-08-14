@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Plus, Search, Eye, BarChart3, Building2, DollarSign, FileText, MessageSquare, Settings, Users, Activity, User, TrendingUp, Phone, Mail, MapPin, Trash2 } from "lucide-react"
+import { Plus, Search, Eye, BarChart3, Building2, DollarSign, FileText, MessageSquare, Settings, Users, Activity, User, TrendingUp, Phone, Mail, MapPin, Trash2, File, LucideMap } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -142,12 +142,12 @@ export default function AdminExpertsPage() {
   })
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="admin" />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r min-h-screen">
+        <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
               href="/admin"
@@ -178,6 +178,21 @@ export default function AdminExpertsPage() {
               <span>Alle Fälle</span>
             </Link>
             <Link
+              href="/admin/assignment"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <LucideMap className="h-4 w-4" />
+              <span>Zuordnung</span>
+            </Link>
+            <Link
+              href="/admin/reports"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <File className="h-4 w-4" />
+              <span>Berichte</span>
+              <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
+            </Link>
+            <Link
               href="/admin/invoicing"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -203,11 +218,11 @@ export default function AdminExpertsPage() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 overflow-y-auto p-6">
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Experten</h1>
+                <h1 className="text-2xl font-bold text-gray-900">Experten</h1>
                 <p className="text-gray-600">Verwalten Sie Partnerschaften und Einstellungen von Experten.</p>
               </div>
               <Link href="/admin/experts/new">

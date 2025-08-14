@@ -131,12 +131,12 @@ export default function ClientCasePage({ id }: { id: string }) {
   const filteredMessages = caseData.messages.filter((msg) => msg.messageType === messageType)
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="expert-fraud" userName="Dr. Hans Müller" />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r min-h-screen">
+        <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
               href="/expert/fraud"
@@ -185,7 +185,7 @@ export default function ClientCasePage({ id }: { id: string }) {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 overflow-y-auto p-6">
           <Link href="/expert/fraud/cases" className="flex items-center text-primary mb-3">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Zurück zur Übersicht

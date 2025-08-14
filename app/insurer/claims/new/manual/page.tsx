@@ -117,12 +117,12 @@ export default function NewClaimPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="insurer" userName="Helvetia Versicherung" />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r min-h-screen hidden md:block">
+        <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
               href="/insurer"
@@ -178,9 +178,8 @@ export default function NewClaimPage() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 md:p-6">
-
-      {/* <div className="max-w-4xl mx-auto p-6"> */}
+        <main className="flex-1 overflow-y-auto p-6">
+        
           {/* Progress Steps */}
           <div className="mb-8">
             <div className="flex items-center justify-between ml-15 mr-15">

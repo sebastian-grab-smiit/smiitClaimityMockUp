@@ -154,12 +154,12 @@ export default function ClaimsListPage() {
   })
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="insurer" userName="Helvetia Versicherung" />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r min-h-screen hidden md:block">
+        <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
               href="/insurer"
@@ -214,7 +214,7 @@ export default function ClaimsListPage() {
           </nav>
         </aside>
 
-        <main className="flex-1 p-4 md:p-6">
+        <main className="flex-1 overflow-y-auto p-6">
           <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-2xl font-bold text-slate-800 mb-1">Alle Schadensfälle</h1>

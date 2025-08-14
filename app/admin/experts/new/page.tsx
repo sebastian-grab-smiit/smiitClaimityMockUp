@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { PageHeader } from "@/components/shared/page-header"
-import { ArrowLeft, Save, X, Home, Users, BarChart3, Building2, DollarSign, FileText, MessageSquare, Settings } from "lucide-react"
+import { ArrowLeft, Save, X, Home, Users, BarChart3, Building2, DollarSign, FileText, MessageSquare, Settings, LucideMap, File } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 
@@ -56,12 +56,12 @@ export default function NewExpertPage() {
   const certificationOptions = ["SIA", "SVKG", "TÜV", "VKF", "SVIT"]
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="admin" />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r min-h-screen">
+        <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
               href="/admin"
@@ -92,6 +92,21 @@ export default function NewExpertPage() {
               <span>Alle Fälle</span>
             </Link>
             <Link
+              href="/admin/assignment"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <LucideMap className="h-4 w-4" />
+              <span>Zuordnung</span>
+            </Link>
+            <Link
+              href="/admin/reports"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <File className="h-4 w-4" />
+              <span>Berichte</span>
+              <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
+            </Link>
+            <Link
               href="/admin/invoicing"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -117,7 +132,7 @@ export default function NewExpertPage() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 overflow-y-auto p-6">
           <Link href="/admin/experts" className="flex items-center text-primary mb-3">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Zurück zur Übersicht
@@ -126,7 +141,7 @@ export default function NewExpertPage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">Neuen Experten hinzufügen</h1>
+                  <h1 className="text-2xl font-bold text-gray-900">Neuen Experten hinzufügen</h1>
                   <p className="text-gray-600">Fügen Sie einen neuen Experten zur Plattform hinzu</p>
                 </div>
               </div>

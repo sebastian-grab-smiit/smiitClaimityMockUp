@@ -61,12 +61,12 @@ export default function ApiImportPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="insurer" userName="Helvetia Versicherung" />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r min-h-screen hidden md:block">
+        <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
               href="/insurer"
@@ -121,152 +121,154 @@ export default function ApiImportPage() {
           </nav>
         </aside>
 
-        <div className="max-w-4xl mx-auto p-6">
-          <div className="mb-8 text-center">
-            <Zap className="h-16 w-16 text-purple-500 mx-auto mb-4" />
-            <h1 className="text-3xl font-bold text-slate-800 mb-4">API Import</h1>
-            <p className="text-lg text-slate-600">Importieren Sie Schadensfälle direkt aus Ihrem bestehenden System</p>
-          </div>
+        <main className="flex-1 overflow-y-auto max-w-4xl mx-auto p-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8 text-center">
+              <Zap className="h-16 w-16 text-purple-500 mx-auto mb-4" />
+              <h1 className="text-2xl font-bold text-slate-800 mb-4">API Import</h1>
+              <p className="text-lg text-slate-600">Importieren Sie Schadensfälle direkt aus Ihrem bestehenden System</p>
+            </div>
 
-          {!isConnected ? (
-            <Card>
-              <CardHeader>
-                <CardTitle>System-Verbindung einrichten</CardTitle>
-                <CardDescription>Wählen Sie Ihr System aus und geben Sie die Verbindungsdaten ein</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-2">
-                  <Label>System auswählen</Label>
-                  <Select value={selectedSystem} onValueChange={setSelectedSystem}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="System auswählen" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {supportedSystems.map((system) => (
-                        <SelectItem key={system.id} value={system.id}>
-                          <div>
-                            <div className="font-medium">{system.name}</div>
-                            <div className="text-sm text-slate-500">{system.description}</div>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {selectedSystem && (
-                  <>
-                    <div className="space-y-2">
-                      <Label htmlFor="endpoint">API Endpoint</Label>
-                      <Input
-                        id="endpoint"
-                        placeholder="https://api.ihrsystem.com/claims"
-                        value={endpoint}
-                        onChange={(e) => setEndpoint(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="apiKey">API Schlüssel</Label>
-                      <Input
-                        id="apiKey"
-                        type="password"
-                        placeholder="Ihr API Schlüssel"
-                        value={apiKey}
-                        onChange={(e) => setApiKey(e.target.value)}
-                      />
-                    </div>
-
-                    <Alert>
-                      <Key className="h-4 w-4" />
-                      <AlertDescription>
-                        Ihre API-Daten werden verschlüsselt gespeichert und nur für den Import verwendet.
-                      </AlertDescription>
-                    </Alert>
-
-                    <Button
-                      onClick={handleConnect}
-                      disabled={isConnecting || !apiKey || !endpoint}
-                      className="w-full bg-purple-500 hover:bg-purple-600"
-                    >
-                      {isConnecting ? (
-                        <>
-                          <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                          Verbindung wird hergestellt...
-                        </>
-                      ) : (
-                        <>
-                          <Database className="mr-2 h-4 w-4" />
-                          Verbindung testen
-                        </>
-                      )}
-                    </Button>
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="space-y-6">
-              <Alert>
-                <CheckCircle className="h-4 w-4" />
-                <AlertDescription>
-                  Verbindung erfolgreich hergestellt! {importData.length} Schadensfälle gefunden.
-                </AlertDescription>
-              </Alert>
-
+            {!isConnected ? (
               <Card>
                 <CardHeader>
-                  <CardTitle>Verfügbare Schadensfälle</CardTitle>
-                  <CardDescription>Wählen Sie die Fälle aus, die Sie importieren möchten</CardDescription>
+                  <CardTitle>System-Verbindung einrichten</CardTitle>
+                  <CardDescription>Wählen Sie Ihr System aus und geben Sie die Verbindungsdaten ein</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {importData.map((claim) => (
-                      <div key={claim.id} className="flex items-center space-x-4 p-4 border rounded-lg">
-                        <input
-                          type="checkbox"
-                          id={claim.id}
-                          checked={selectedClaims.includes(claim.id)}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              setSelectedClaims([...selectedClaims, claim.id])
-                            } else {
-                              setSelectedClaims(selectedClaims.filter((id) => id !== claim.id))
-                            }
-                          }}
-                          className="rounded"
-                        />
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <span className="font-medium">{claim.policyNumber}</span>
-                            <Badge variant="secondary">{claim.claimType}</Badge>
-                            <Badge variant="outline">{claim.status}</Badge>
-                          </div>
-                          <div className="text-sm text-slate-600">
-                            Schadensdatum: {claim.incidentDate} • Betrag: CHF {claim.amount}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                <CardContent className="space-y-6">
+                  <div className="space-y-2">
+                    <Label>System auswählen</Label>
+                    <Select value={selectedSystem} onValueChange={setSelectedSystem}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="System auswählen" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {supportedSystems.map((system) => (
+                          <SelectItem key={system.id} value={system.id}>
+                            <div>
+                              <div className="font-medium">{system.name}</div>
+                              <div className="text-sm text-slate-500">{system.description}</div>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
-                  <div className="flex justify-between mt-6 pt-6 border-t">
-                    <Button variant="outline" onClick={() => setIsConnected(false)}>
-                      Neue Verbindung
-                    </Button>
-                    <Button
-                      onClick={handleImport}
-                      disabled={selectedClaims.length === 0}
-                      className="bg-purple-500 hover:bg-purple-600"
-                    >
-                      {selectedClaims.length} Fälle importieren
-                    </Button>
-                  </div>
+                  {selectedSystem && (
+                    <>
+                      <div className="space-y-2">
+                        <Label htmlFor="endpoint">API Endpoint</Label>
+                        <Input
+                          id="endpoint"
+                          placeholder="https://api.ihrsystem.com/claims"
+                          value={endpoint}
+                          onChange={(e) => setEndpoint(e.target.value)}
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="apiKey">API Schlüssel</Label>
+                        <Input
+                          id="apiKey"
+                          type="password"
+                          placeholder="Ihr API Schlüssel"
+                          value={apiKey}
+                          onChange={(e) => setApiKey(e.target.value)}
+                        />
+                      </div>
+
+                      <Alert>
+                        <Key className="h-4 w-4" />
+                        <AlertDescription>
+                          Ihre API-Daten werden verschlüsselt gespeichert und nur für den Import verwendet.
+                        </AlertDescription>
+                      </Alert>
+
+                      <Button
+                        onClick={handleConnect}
+                        disabled={isConnecting || !apiKey || !endpoint}
+                        className="w-full bg-purple-500 hover:bg-purple-600"
+                      >
+                        {isConnecting ? (
+                          <>
+                            <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                            Verbindung wird hergestellt...
+                          </>
+                        ) : (
+                          <>
+                            <Database className="mr-2 h-4 w-4" />
+                            Verbindung testen
+                          </>
+                        )}
+                      </Button>
+                    </>
+                  )}
                 </CardContent>
               </Card>
-            </div>
-          )}
-        </div>
+            ) : (
+              <div className="space-y-6">
+                <Alert>
+                  <CheckCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    Verbindung erfolgreich hergestellt! {importData.length} Schadensfälle gefunden.
+                  </AlertDescription>
+                </Alert>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Verfügbare Schadensfälle</CardTitle>
+                    <CardDescription>Wählen Sie die Fälle aus, die Sie importieren möchten</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {importData.map((claim) => (
+                        <div key={claim.id} className="flex items-center space-x-4 p-4 border rounded-lg">
+                          <input
+                            type="checkbox"
+                            id={claim.id}
+                            checked={selectedClaims.includes(claim.id)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setSelectedClaims([...selectedClaims, claim.id])
+                              } else {
+                                setSelectedClaims(selectedClaims.filter((id) => id !== claim.id))
+                              }
+                            }}
+                            className="rounded"
+                          />
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2 mb-2">
+                              <span className="font-medium">{claim.policyNumber}</span>
+                              <Badge variant="secondary">{claim.claimType}</Badge>
+                              <Badge variant="outline">{claim.status}</Badge>
+                            </div>
+                            <div className="text-sm text-slate-600">
+                              Schadensdatum: {claim.incidentDate} • Betrag: CHF {claim.amount}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex justify-between mt-6 pt-6 border-t">
+                      <Button variant="outline" onClick={() => setIsConnected(false)}>
+                        Neue Verbindung
+                      </Button>
+                      <Button
+                        onClick={handleImport}
+                        disabled={selectedClaims.length === 0}
+                        className="bg-purple-500 hover:bg-purple-600"
+                      >
+                        {selectedClaims.length} Fälle importieren
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+          </div>
+        </main>
       </div>
     </div>
   )

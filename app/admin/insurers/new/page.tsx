@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ArrowLeft, BarChart3, Building, Building2, DollarSign, FileText, MessageSquare, Save, Settings, Users } from "lucide-react"
+import { ArrowLeft, BarChart3, Building, Building2, DollarSign, FileText, LucideMap, MessageSquare, Save, Settings, Users, File } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { PageHeader } from "@/components/shared/page-header"
@@ -37,12 +37,12 @@ export default function NewInsurerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="admin" />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r min-h-screen">
+        <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
               href="/admin"
@@ -73,6 +73,21 @@ export default function NewInsurerPage() {
               <span>Alle Fälle</span>
             </Link>
             <Link
+              href="/admin/assignment"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <LucideMap className="h-4 w-4" />
+              <span>Zuordnung</span>
+            </Link>
+            <Link
+              href="/admin/reports"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <File className="h-4 w-4" />
+              <span>Berichte</span>
+              <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
+            </Link>
+            <Link
               href="/admin/invoicing"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -98,13 +113,13 @@ export default function NewInsurerPage() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 overflow-y-auto p-6">
           <Link href="/admin/insurers" className="flex items-center text-primary mb-3">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Zurück zur Übersicht
           </Link>
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-slate-800 mb-2">Neuen Versicherer hinzufügen</h1>
+            <h1 className="text-2xl font-bold text-slate-800 mb-2">Neuen Versicherer hinzufügen</h1>
             <p className="text-slate-600">Erstellen Sie eine neue Versicherungspartnerschaft</p>
           </div>
 

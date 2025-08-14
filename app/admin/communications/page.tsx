@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Search, MessageSquare, AlertCircle, Clock, User, Building, ExternalLink, Settings, Mail, DollarSign, FileText, Building2, BarChart3, Users } from "lucide-react"
+import { Search, MessageSquare, AlertCircle, Clock, User, Building, ExternalLink, Settings, Mail, DollarSign, FileText, Building2, BarChart3, Users, LucideMap, File } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
 
@@ -145,12 +145,12 @@ export default function AdminCommunicationsPage() {
   })
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="admin" />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r min-h-screen">
+        <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
               href="/admin"
@@ -181,6 +181,21 @@ export default function AdminCommunicationsPage() {
               <span>Alle Fälle</span>
             </Link>
             <Link
+              href="/admin/assignment"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <LucideMap className="h-4 w-4" />
+              <span>Zuordnung</span>
+            </Link>
+            <Link
+              href="/admin/reports"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <File className="h-4 w-4" />
+              <span>Berichte</span>
+              <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
+            </Link>
+            <Link
               href="/admin/invoicing"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -206,65 +221,11 @@ export default function AdminCommunicationsPage() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 overflow-y-auto p-6">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-slate-800 mb-2">Kommunikation Monitor</h1>
+            <h1 className="text-2xl font-bold text-slate-800 mb-2">Kommunikation Monitor</h1>
             <p className="text-slate-600">Nachrichten an Admin und Systemmeldungen</p>
           </div>
-
-          {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-slate-600">Ungelesene Nachrichten</p>
-                    <p className="text-2xl font-bold text-slate-800">
-                      {adminMessages.filter((m) => m.status === "Unread").length +
-                        systemMessages.filter((m) => m.status === "Unread").length}
-                    </p>
-                  </div>
-                  <MessageSquare className="h-8 w-8 text-red-600" />
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-slate-600">Von Experten</p>
-                    <p className="text-2xl font-bold text-slate-800">
-                      {adminMessages.filter((m) => m.fromType === "expert").length}
-                    </p>
-                  </div>
-                  <User className="h-8 w-8 text-teal-600" />
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-slate-600">Von Versicherern</p>
-                    <p className="text-2xl font-bold text-slate-800">
-                      {adminMessages.filter((m) => m.fromType === "insurer").length}
-                    </p>
-                  </div>
-                  <Building className="h-8 w-8 text-blue-600" />
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-slate-600">Systemmeldungen</p>
-                    <p className="text-2xl font-bold text-slate-800">{systemMessages.length}</p>
-                  </div>
-                  <AlertCircle className="h-8 w-8 text-orange-600" />
-                </div>
-              </CardContent>
-            </Card>
-          </div> */}
 
           <Card>
             <CardHeader>

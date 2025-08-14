@@ -42,12 +42,12 @@ export default function NewClaimSelectionPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="insurer" userName="Helvetia Versicherung" />
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r min-h-screen hidden md:block">
+        <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
               href="/insurer"
@@ -102,71 +102,73 @@ export default function NewClaimSelectionPage() {
           </nav>
         </aside>
 
-        <div className="max-w-4xl mx-auto p-6">
-          <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold text-slate-800 mb-4">Neuen Fall erstellen</h1>
-            <p className="text-lg text-slate-600">Wählen Sie aus, wie Sie Ihren neuen Schadenfall erfassen möchten</p>
-          </div>
+        <main className="flex-1 overflow-y-auto p-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8 text-center">
+              <h1 className="text-2xl font-bold text-slate-800 mb-4">Neuen Fall erstellen</h1>
+              <p className="text-lg text-slate-600">Wählen Sie aus, wie Sie Ihren neuen Schadenfall erfassen möchten</p>
+            </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {options.map((option) => {
-              const IconComponent = option.icon
-              return (
-                <Card key={option.id} className="relative hover:shadow-lg transition-shadow">
-                  {option.recommended && (
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">Empfohlen</span>
-                    </div>
-                  )}
-                  <CardHeader className="text-center pb-4">
-                    <div
-                      className={`w-16 h-16 ${option.color} rounded-full flex items-center justify-center mx-auto mb-4`}
-                    >
-                      <IconComponent className="h-8 w-8 text-white" />
-                    </div>
-                    <CardTitle className="text-xl">{option.title}</CardTitle>
-                    <CardDescription className="text-base">{option.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <Button asChild className={`w-full ${option.color} ${option.hoverColor} text-white`}>
-                      <Link href={option.href} className="flex items-center justify-center">
-                        Auswählen
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {options.map((option) => {
+                const IconComponent = option.icon
+                return (
+                  <Card key={option.id} className="relative hover:shadow-lg transition-shadow">
+                    {option.recommended && (
+                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <span className="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">Empfohlen</span>
+                      </div>
+                    )}
+                    <CardHeader className="text-center pb-4">
+                      <div
+                        className={`w-16 h-16 ${option.color} rounded-full flex items-center justify-center mx-auto mb-4`}
+                      >
+                        <IconComponent className="h-8 w-8 text-white" />
+                      </div>
+                      <CardTitle className="text-xl">{option.title}</CardTitle>
+                      <CardDescription className="text-base">{option.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <Button asChild className={`w-full ${option.color} ${option.hoverColor} text-white`}>
+                        <Link href={option.href} className="flex items-center justify-center">
+                          Auswählen
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+            </div>
 
-          <div className="mt-12 bg-white rounded-lg p-6 border">
-            <h2 className="text-xl font-semibold text-slate-800 mb-4">Welche Option ist die richtige für Sie?</h2>
-            <div className="grid md:grid-cols-3 gap-6 text-sm">
-              <div>
-                <h3 className="font-medium text-slate-800 mb-2">📝 Manuell erfassen</h3>
-                <p className="text-slate-600">
-                  Ideal für einfache Fälle oder wenn Sie alle Details selbst eingeben möchten. Vollständige Kontrolle über
-                  alle Eingaben.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-medium text-slate-800 mb-2">⚡ API Import</h3>
-                <p className="text-slate-600">
-                  Perfekt wenn Sie bereits ein System haben, das Schadensdaten verwaltet. Schneller Import grosser
-                  Datenmengen.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-medium text-slate-800 mb-2">📄 PDF Upload mit OCR</h3>
-                <p className="text-slate-600">
-                  Zeitersparend bei vorhandenen PDF-Dokumenten. Automatische Texterkennung und intelligente
-                  Felderzuordnung.
-                </p>
+            <div className="mt-12 bg-white rounded-lg p-6 border">
+              <h2 className="text-xl font-semibold text-slate-800 mb-4">Welche Option ist die richtige für Sie?</h2>
+              <div className="grid md:grid-cols-3 gap-6 text-sm">
+                <div>
+                  <h3 className="font-medium text-slate-800 mb-2">📝 Manuell erfassen</h3>
+                  <p className="text-slate-600">
+                    Ideal für einfache Fälle oder wenn Sie alle Details selbst eingeben möchten. Vollständige Kontrolle über
+                    alle Eingaben.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-medium text-slate-800 mb-2">⚡ API Import</h3>
+                  <p className="text-slate-600">
+                    Perfekt wenn Sie bereits ein System haben, das Schadensdaten verwaltet. Schneller Import grosser
+                    Datenmengen.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-medium text-slate-800 mb-2">📄 PDF Upload mit OCR</h3>
+                  <p className="text-slate-600">
+                    Zeitersparend bei vorhandenen PDF-Dokumenten. Automatische Texterkennung und intelligente
+                    Felderzuordnung.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   )

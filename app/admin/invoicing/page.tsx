@@ -25,6 +25,8 @@ import {
   MessageSquare,
   Settings,
   Users,
+  LucideMap,
+  File
 } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
@@ -163,12 +165,12 @@ export default function InvoicingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="admin" />
 
-      <div className="flex">
-        {/* Left app navigation (kept) */}
-        <aside className="w-64 bg-white border-r min-h-screen">
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar */}
+        <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
               href="/admin"
@@ -199,6 +201,21 @@ export default function InvoicingPage() {
               <span>Alle Fälle</span>
             </Link>
             <Link
+              href="/admin/assignment"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <LucideMap className="h-4 w-4" />
+              <span>Zuordnung</span>
+            </Link>
+            <Link
+              href="/admin/reports"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <File className="h-4 w-4" />
+              <span>Berichte</span>
+              <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
+            </Link>
+            <Link
               href="/admin/invoicing"
               className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
@@ -223,11 +240,11 @@ export default function InvoicingPage() {
           </nav>
         </aside>
 
-        <main className="flex-1">
+        <main className="flex-1 overflow-y-auto p-6">
           <div className="max-w-7xl mx-auto p-6">
             <div className="mb-6">
               <h1 className="text-2xl font-bold text-slate-800 mb-2">Rechnungsmanagement</h1>
-              <p className="text-slate-600">Verwaltung von Expertenrechnungen und Zahlungsüberwachung</p>
+              <p className="text-slate-600">Verwaltung von Rechnungen und Zahlungsüberwachung</p>
             </div>
 
             <Tabs defaultValue="invoices" className="w-full">
