@@ -180,186 +180,187 @@ export default function ExpertsPage() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-slate-800 mb-2">Experten-Verzeichnis</h1>
-            <p className="text-slate-600">Finden Sie den passenden Experten für Ihren Schadenfall</p>
-          </div>
-
-          {/* Filters */}
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="text-lg">Filter & Suche</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div>
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
-                    <Input
-                      placeholder="Name, Spezialisierung oder Ort..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-                <Select value={cantonFilter} onValueChange={setCantonFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Kanton" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Alle Kantone</SelectItem>
-                    <SelectItem value="ZH">Zürich</SelectItem>
-                    <SelectItem value="BE">Bern</SelectItem>
-                    <SelectItem value="BS">Basel-Stadt</SelectItem>
-                    <SelectItem value="SG">St. Gallen</SelectItem>
-                    <SelectItem value="AG">Aargau</SelectItem>
-                    <SelectItem value="VD">Waadt</SelectItem>
-                    <SelectItem value="GE">Genf</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={specialtyFilter} onValueChange={setSpecialtyFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Spezialisierung" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Alle Spezialisierungen</SelectItem>
-                    <SelectItem value="Fahrzeugschäden">Fahrzeugschäden</SelectItem>
-                    <SelectItem value="Gebäudeschäden">Gebäudeschäden</SelectItem>
-                    <SelectItem value="Wasserschäden">Wasserschäden</SelectItem>
-                    <SelectItem value="Brandschäden">Brandschäden</SelectItem>
-                    <SelectItem value="Haftpflichtschäden">Haftpflichtschäden</SelectItem>
-                    <SelectItem value="Maschinenschäden">Maschinenschäden</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={availabilityFilter} onValueChange={setAvailabilityFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Verfügbarkeit" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Alle</SelectItem>
-                    <SelectItem value="Verfügbar">Verfügbar</SelectItem>
-                    <SelectItem value="Beschäftigt">Beschäftigt</SelectItem>
-                  </SelectContent>
-                </Select>
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Experten-Verzeichnis</h1>
+                <p className="text-gray-600">Finden Sie den passenden Experten für Ihren Schadenfall</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Experts Grid */}
-          <div className="grid lg:grid-cols-2 gap-6">
-            {filteredExperts.map((expert) => (
-              <Card key={expert.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center">
-                        <User className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-slate-800">{expert.name}</h3>
-                        <div className="flex items-center space-x-2 mt-1">
-                          <MapPin className="h-3 w-3 text-slate-500" />
-                          <span className="text-sm text-slate-600">{expert.location}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <Badge className={getAvailabilityColor(expert.availability)}>
-                      {getAvailabilityIcon(expert.availability)}
-                      <span className="ml-1">{expert.availability}</span>
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {/* Rating and Stats */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-1">
-                        <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                        <span className="font-semibold">{expert.rating}</span>
-                        <span className="text-sm text-slate-500">({expert.completedCases} Fälle)</span>
-                      </div>
-                      <div className="text-sm text-slate-600">Ø {expert.avgResponseTime} Antwortzeit</div>
-                    </div>
-
-                    {/* Specialties */}
-                    <div>
-                      <p className="text-sm text-slate-500 mb-2">Spezialisierungen:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {expert.specialties.map((specialty, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
-                            {specialty}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Languages and Certifications */}
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="text-slate-500 mb-1">Sprachen:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {expert.languages.map((lang, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
-                              {lang}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-slate-500 mb-1">Zertifizierungen:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {expert.certifications.map((cert, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
-                              <Award className="h-3 w-3 mr-1" />
-                              {cert}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Contact Info */}
-                    <div className="pt-4 border-t">
-                      <div className="flex items-center justify-between text-sm">
-                        <div className="flex items-center space-x-4">
-                          <div className="flex items-center space-x-1 text-slate-600">
-                            <Mail className="h-3 w-3" />
-                            <span>{expert.email}</span>
-                          </div>
-                          <div className="flex items-center space-x-1 text-slate-600">
-                            <Phone className="h-3 w-3" />
-                            <span>{expert.phone}</span>
-                          </div>
-                        </div>
-                        <span className="text-slate-500">{expert.experience} Erfahrung</span>
-                      </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex items-center space-x-2 pt-2">
-                      <Button variant="outline" size="sm" className="flex-1 bg-transparent">
-                        Profil anzeigen
-                      </Button>
-                      <Button size="sm" className="flex-1 ">
-                        Kontaktieren
-                      </Button>
+            {/* Filters */}
+            <Card className="mb-6">
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div>
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                      <Input
+                        placeholder="Name, Spezialisierung oder Ort..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10"
+                      />
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {filteredExperts.length === 0 && (
-            <Card>
-              <CardContent className="text-center py-8">
-                <User className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-slate-800 mb-2">Keine Experten gefunden</h3>
-                <p className="text-slate-600">Es wurden keine Experten gefunden, die Ihren Suchkriterien entsprechen.</p>
+                  <Select value={cantonFilter} onValueChange={setCantonFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Kanton" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Alle Kantone</SelectItem>
+                      <SelectItem value="ZH">Zürich</SelectItem>
+                      <SelectItem value="BE">Bern</SelectItem>
+                      <SelectItem value="BS">Basel-Stadt</SelectItem>
+                      <SelectItem value="SG">St. Gallen</SelectItem>
+                      <SelectItem value="AG">Aargau</SelectItem>
+                      <SelectItem value="VD">Waadt</SelectItem>
+                      <SelectItem value="GE">Genf</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={specialtyFilter} onValueChange={setSpecialtyFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Spezialisierung" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Alle Spezialisierungen</SelectItem>
+                      <SelectItem value="Fahrzeugschäden">Fahrzeugschäden</SelectItem>
+                      <SelectItem value="Gebäudeschäden">Gebäudeschäden</SelectItem>
+                      <SelectItem value="Wasserschäden">Wasserschäden</SelectItem>
+                      <SelectItem value="Brandschäden">Brandschäden</SelectItem>
+                      <SelectItem value="Haftpflichtschäden">Haftpflichtschäden</SelectItem>
+                      <SelectItem value="Maschinenschäden">Maschinenschäden</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={availabilityFilter} onValueChange={setAvailabilityFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Verfügbarkeit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Alle</SelectItem>
+                      <SelectItem value="Verfügbar">Verfügbar</SelectItem>
+                      <SelectItem value="Beschäftigt">Beschäftigt</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </CardContent>
             </Card>
-          )}
+
+            {/* Experts Grid */}
+            <div className="grid lg:grid-cols-2 gap-6">
+              {filteredExperts.map((expert) => (
+                <Card key={expert.id} className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center">
+                          <User className="h-6 w-6 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-slate-800">{expert.name}</h3>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <MapPin className="h-3 w-3 text-slate-500" />
+                            <span className="text-sm text-slate-600">{expert.location}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <Badge className={getAvailabilityColor(expert.availability)}>
+                        {getAvailabilityIcon(expert.availability)}
+                        <span className="ml-1">{expert.availability}</span>
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {/* Rating and Stats */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-1">
+                          <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                          <span className="font-semibold">{expert.rating}</span>
+                          <span className="text-sm text-slate-500">({expert.completedCases} Fälle)</span>
+                        </div>
+                        <div className="text-sm text-slate-600">Ø {expert.avgResponseTime} Antwortzeit</div>
+                      </div>
+
+                      {/* Specialties */}
+                      <div>
+                        <p className="text-sm text-slate-500 mb-2">Spezialisierungen:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {expert.specialties.map((specialty, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs">
+                              {specialty}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Languages and Certifications */}
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <p className="text-slate-500 mb-1">Sprachen:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {expert.languages.map((lang, index) => (
+                              <Badge key={index} variant="outline" className="text-xs">
+                                {lang}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-slate-500 mb-1">Zertifizierungen:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {expert.certifications.map((cert, index) => (
+                              <Badge key={index} variant="outline" className="text-xs">
+                                <Award className="h-3 w-3 mr-1" />
+                                {cert}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Contact Info */}
+                      <div className="pt-4 border-t">
+                        <div className="flex items-center justify-between text-sm">
+                          <div className="flex items-center space-x-4">
+                            <div className="flex items-center space-x-1 text-slate-600">
+                              <Mail className="h-3 w-3" />
+                              <span>{expert.email}</span>
+                            </div>
+                            <div className="flex items-center space-x-1 text-slate-600">
+                              <Phone className="h-3 w-3" />
+                              <span>{expert.phone}</span>
+                            </div>
+                          </div>
+                          <span className="text-slate-500">{expert.experience} Erfahrung</span>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center space-x-2 pt-2">
+                        <Button variant="outline" size="sm" className="flex-1 bg-transparent">
+                          Profil anzeigen
+                        </Button>
+                        <Button size="sm" className="flex-1 ">
+                          Kontaktieren
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {filteredExperts.length === 0 && (
+              <Card>
+                <CardContent className="text-center py-8">
+                  <User className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-slate-800 mb-2">Keine Experten gefunden</h3>
+                  <p className="text-slate-600">Es wurden keine Experten gefunden, die Ihren Suchkriterien entsprechen.</p>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </main>
       </div>
     </div>

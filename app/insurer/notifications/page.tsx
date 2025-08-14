@@ -199,105 +199,106 @@ export default function InsurerNotificationsPage() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          {/* Filters */}
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Bell className="h-5 w-5" />
-                <span>Benachrichtigungen</span>
-                {unreadCount > 0 && <Badge className="bg-red-500 text-white">{unreadCount} ungelesen</Badge>}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-4">
-                <div className="flex-1 min-w-[200px]">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
-                    <Input
-                      placeholder="Benachrichtigungen durchsuchen..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-[150px]">
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Alle</SelectItem>
-                    <SelectItem value="unread">Ungelesen</SelectItem>
-                    <SelectItem value="read">Gelesen</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={typeFilter} onValueChange={setTypeFilter}>
-                  <SelectTrigger className="w-[150px]">
-                    <SelectValue placeholder="Typ" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Alle Typen</SelectItem>
-                    <SelectItem value="report">Berichte</SelectItem>
-                    <SelectItem value="message">Nachrichten</SelectItem>
-                    <SelectItem value="deadline">Fristen</SelectItem>
-                    <SelectItem value="assignment">Zuweisungen</SelectItem>
-                    <SelectItem value="invoice">Rechnungen</SelectItem>
-                  </SelectContent>
-                </Select>
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Benachrichtigungen</h1>
+                <p className="text-gray-600">All Ihre Benachrichtigungen</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+            {/* Filters */}
+            <Card className="mb-6">
+              <CardContent>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex-1 min-w-[200px]">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                      <Input
+                        placeholder="Benachrichtigungen durchsuchen..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
+                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger className="w-[150px]">
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Alle</SelectItem>
+                      <SelectItem value="unread">Ungelesen</SelectItem>
+                      <SelectItem value="read">Gelesen</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={typeFilter} onValueChange={setTypeFilter}>
+                    <SelectTrigger className="w-[150px]">
+                      <SelectValue placeholder="Typ" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Alle Typen</SelectItem>
+                      <SelectItem value="report">Berichte</SelectItem>
+                      <SelectItem value="message">Nachrichten</SelectItem>
+                      <SelectItem value="deadline">Fristen</SelectItem>
+                      <SelectItem value="assignment">Zuweisungen</SelectItem>
+                      <SelectItem value="invoice">Rechnungen</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardContent>
+            </Card>
 
-          {/* Notifications List */}
-          <div className="space-y-4">
-            {filteredNotifications.map((notification) => (
-              <Card
-                key={notification.id}
-                className={`${!notification.read ? "border-l-4 border-l-primary" : ""}`}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-3 flex-1">
-                      {getNotificationIcon(notification.type)}
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-1">
-                          <h3 className={`font-semibold ${!notification.read ? "text-slate-900" : "text-slate-700"}`}>
-                            {notification.title}
-                          </h3>
-                          <Badge className={getPriorityColor(notification.priority)}>{notification.priority}</Badge>
-                          {!notification.read && <Badge className="bg-red-500 text-white text-xs">Neu</Badge>}
-                        </div>
-                        <p className="text-slate-600 mb-2">{notification.message}</p>
-                        <div className="flex items-center space-x-4 text-sm text-slate-500">
-                          <div className="flex items-center space-x-1">
-                            <Clock className="h-3 w-3" />
-                            <span>{notification.timestamp}</span>
+            {/* Notifications List */}
+            <div className="space-y-4">
+              {filteredNotifications.map((notification) => (
+                <Card
+                  key={notification.id}
+                  className={`${!notification.read ? "border-l-4 border-l-primary" : ""}`}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-start space-x-3 flex-1">
+                        {getNotificationIcon(notification.type)}
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-2 mb-1">
+                            <h3 className={`font-semibold ${!notification.read ? "text-slate-900" : "text-slate-700"}`}>
+                              {notification.title}
+                            </h3>
+                            <Badge className={getPriorityColor(notification.priority)}>{notification.priority}</Badge>
+                            {!notification.read && <Badge className="bg-red-500 text-white text-xs">Neu</Badge>}
                           </div>
-                          <div className="flex items-center space-x-1">
-                            <User className="h-3 w-3" />
-                            <span>{notification.source}</span>
-                          </div>
-                          {notification.caseId && (
+                          <p className="text-slate-600 mb-2">{notification.message}</p>
+                          <div className="flex items-center space-x-4 text-sm text-slate-500">
                             <div className="flex items-center space-x-1">
-                              <FileText className="h-3 w-3" />
-                              <span>{notification.caseId}</span>
+                              <Clock className="h-3 w-3" />
+                              <span>{notification.timestamp}</span>
                             </div>
-                          )}
+                            <div className="flex items-center space-x-1">
+                              <User className="h-3 w-3" />
+                              <span>{notification.source}</span>
+                            </div>
+                            {notification.caseId && (
+                              <div className="flex items-center space-x-1">
+                                <FileText className="h-3 w-3" />
+                                <span>{notification.caseId}</span>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
+                      <div className="flex items-center space-x-2">
+                        <Button variant="ghost" size="sm">
+                          {notification.read ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Button variant="ghost" size="sm">
-                        {notification.read ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                      </Button>
-                      <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </main>
       </div>

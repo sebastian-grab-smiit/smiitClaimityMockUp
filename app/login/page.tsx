@@ -13,6 +13,7 @@ import { Shield } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { PageHeader } from "@/components/shared/page-header"
+import logo from "../../public/logo.png"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -44,7 +45,8 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+              // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+              src={logo}
               alt="Claimity Logo"
               width={135}
               height={46}

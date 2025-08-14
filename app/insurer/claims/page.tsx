@@ -215,162 +215,161 @@ export default function ClaimsListPage() {
         </aside>
 
         <main className="flex-1 overflow-y-auto p-6">
-          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-slate-800 mb-1">Alle Schadensfälle</h1>
-              <p className="text-slate-600">Verwalten und überwachen Sie Ihre Schadensfälle</p>
-            </div>
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Alle Schadensfälle</h1>
+                <p className="text-gray-600">Verwalten und überwachen Sie Ihre Schadensfälle</p>
+              </div>
             <Button asChild>
               <Link href="/insurer/claims/new">
                 <Plus className="h-4 w-4 mr-2" />
                 Neuer Fall
               </Link>
             </Button>
-          </div>
+            </div>
 
-          {/* Filters */}
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="text-lg">Filter & Suche</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div className="lg:col-span-2">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
-                    <Input
-                      placeholder="Suche nach Fall-ID, Police oder Typ..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Alle Status</SelectItem>
-                    <SelectItem value="Neu">Neu</SelectItem>
-                    <SelectItem value="In Bearbeitung">In Bearbeitung</SelectItem>
-                    <SelectItem value="Abgeschlossen">Abgeschlossen</SelectItem>
-                    <SelectItem value="Freigegeben">Freigegeben</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={typeFilter} onValueChange={setTypeFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Schadenart" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Alle Arten</SelectItem>
-                    <SelectItem value="Fahrzeugschaden">Fahrzeugschaden</SelectItem>
-                    <SelectItem value="Gebäudeschaden">Gebäudeschaden</SelectItem>
-                    <SelectItem value="Wasserschaden">Wasserschaden</SelectItem>
-                    <SelectItem value="Haftpflichtschaden">Haftpflichtschaden</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={periodFilter} onValueChange={setPeriodFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Zeitraum" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Alle Zeiträume</SelectItem>
-                    <SelectItem value="today">Heute</SelectItem>
-                    <SelectItem value="week">Diese Woche</SelectItem>
-                    <SelectItem value="month">Dieser Monat</SelectItem>
-                    <SelectItem value="quarter">Dieses Quartal</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Claims List */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Schadensfälle ({filteredClaims.length})</CardTitle>
-                  <CardDescription>Übersicht über alle Ihre Schadensfälle</CardDescription>
-                </div>
-                <Button variant="outline">
-                  <Download className="h-4 w-4 mr-2" />
-                  Exportieren
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {filteredClaims.map((claim) => (
-                  <div key={claim.id} className="border rounded-lg p-4 hover:bg-slate-50 transition-colors">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-2">
-                          <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
-                            {getStatusIcon(claim.status)}
-                          </div>
-                          <div>
-                            <div className="flex items-center space-x-2">
-                              <h3 className="font-semibold text-slate-800">{claim.id}</h3>
-                              <Badge className={getStatusColor(claim.status)}>{claim.status}</Badge>
-                              <Badge variant="outline" className={getUrgencyColor(claim.urgency)}>
-                                {claim.urgency}
-                              </Badge>
-                            </div>
-                            <p className="text-sm text-slate-600">
-                              {claim.type} • Police: {claim.policyNumber}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-slate-600 mb-3">
-                          <div className="flex items-center">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            Schaden: {claim.incident}
-                          </div>
-                          <div className="flex items-center">
-                            <MapPin className="h-3 w-3 mr-1" />
-                            {claim.location}
-                          </div>
-                          <div className="flex items-center">
-                            <Users className="h-3 w-3 mr-1" />
-                            {claim.expert}
-                          </div>
-                          <div className="font-semibold text-slate-800">{claim.amount}</div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <Button asChild variant="outline" size="sm">
-                          <Link href={`/insurer/claims/${claim.id}`}>
-                            <Eye className="h-4 w-4 mr-1" />
-                            Details
-                          </Link>
-                        </Button>
-                      </div>
+            {/* Filters */}
+            <Card className="mb-6">
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                  <div className="lg:col-span-2">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                      <Input
+                        placeholder="Suche nach Fall-ID, Police oder Typ..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10"
+                      />
                     </div>
                   </div>
-                ))}
-              </div>
+                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Alle Status</SelectItem>
+                      <SelectItem value="Neu">Neu</SelectItem>
+                      <SelectItem value="In Bearbeitung">In Bearbeitung</SelectItem>
+                      <SelectItem value="Abgeschlossen">Abgeschlossen</SelectItem>
+                      <SelectItem value="Freigegeben">Freigegeben</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={typeFilter} onValueChange={setTypeFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Schadenart" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Alle Arten</SelectItem>
+                      <SelectItem value="Fahrzeugschaden">Fahrzeugschaden</SelectItem>
+                      <SelectItem value="Gebäudeschaden">Gebäudeschaden</SelectItem>
+                      <SelectItem value="Wasserschaden">Wasserschaden</SelectItem>
+                      <SelectItem value="Haftpflichtschaden">Haftpflichtschaden</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={periodFilter} onValueChange={setPeriodFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Zeitraum" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Alle Zeiträume</SelectItem>
+                      <SelectItem value="today">Heute</SelectItem>
+                      <SelectItem value="week">Diese Woche</SelectItem>
+                      <SelectItem value="month">Dieser Monat</SelectItem>
+                      <SelectItem value="quarter">Dieses Quartal</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardContent>
+            </Card>
 
-              {filteredClaims.length === 0 && (
-                <div className="text-center py-8">
-                  <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-slate-800 mb-2">Keine Fälle gefunden</h3>
-                  <p className="text-slate-600 mb-4">
-                    Es wurden keine Fälle gefunden, die Ihren Suchkriterien entsprechen.
-                  </p>
-                  <Button asChild className="">
-                    <Link href="/insurer/claims/new">
-                      <Plus className="h-4 w-4 mr-2" />
-                      Ersten Fall erstellen
-                    </Link>
+            {/* Claims List */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="mb-2">Schadensfälle ({filteredClaims.length})</CardTitle>
+                    <CardDescription>Übersicht über alle Ihre Schadensfälle</CardDescription>
+                  </div>
+                  <Button variant="outline">
+                    <Download className="h-4 w-4 mr-2" />
+                    Exportieren
                   </Button>
                 </div>
-              )}
-            </CardContent>
-          </Card>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {filteredClaims.map((claim) => (
+                    <div key={claim.id} className="border rounded-lg p-4 hover:bg-slate-50 transition-colors">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-3 mb-2">
+                            <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                              {getStatusIcon(claim.status)}
+                            </div>
+                            <div>
+                              <div className="flex items-center space-x-2">
+                                <h3 className="font-semibold text-slate-800">{claim.id}</h3>
+                                <Badge className={getStatusColor(claim.status)}>{claim.status}</Badge>
+                                <Badge variant="outline" className={getUrgencyColor(claim.urgency)}>
+                                  {claim.urgency}
+                                </Badge>
+                              </div>
+                              <p className="text-sm text-slate-600">
+                                {claim.type} • Police: {claim.policyNumber}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-slate-600 mb-3">
+                            <div className="flex items-center">
+                              <Calendar className="h-3 w-3 mr-1" />
+                              Schaden: {claim.incident}
+                            </div>
+                            <div className="flex items-center">
+                              <MapPin className="h-3 w-3 mr-1" />
+                              {claim.location}
+                            </div>
+                            <div className="flex items-center">
+                              <Users className="h-3 w-3 mr-1" />
+                              {claim.expert}
+                            </div>
+                            <div className="font-semibold text-slate-800">{claim.amount}</div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                          <Button asChild variant="outline" size="sm">
+                            <Link href={`/insurer/claims/${claim.id}`}>
+                              <Eye className="h-4 w-4 mr-1" />
+                              Details
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {filteredClaims.length === 0 && (
+                  <div className="text-center py-8">
+                    <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-slate-800 mb-2">Keine Fälle gefunden</h3>
+                    <p className="text-slate-600 mb-4">
+                      Es wurden keine Fälle gefunden, die Ihren Suchkriterien entsprechen.
+                    </p>
+                    <Button asChild className="">
+                      <Link href="/insurer/claims/new">
+                        <Plus className="h-4 w-4 mr-2" />
+                        Ersten Fall erstellen
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </main>
       </div>
     </div>

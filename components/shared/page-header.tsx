@@ -7,6 +7,7 @@ import Link from "next/link"
 import { NotificationCenter } from "./notification-center"
 import { LanguageSelector } from "./language-selector"
 import Image from "next/image"
+import logo from "../../public/logo.png"
 
 interface PageHeaderProps {
   userType?: "insurer" | "admin" | "expert-vehicle" | "expert-fraud" | "expert-appraiser" | "expert"
@@ -69,10 +70,11 @@ export function PageHeader({
           )}
           <div className="flex items-center space-x-2">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+              // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+              src={logo}
               alt="Claimity Logo"
-              width={95}
-              height={36}
+              width={100}
+              height={30}
               className="rounded-lg"
             />
             {/* <span className="text-xl font-bold text-slate-800">claimity</span> */}

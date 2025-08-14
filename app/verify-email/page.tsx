@@ -11,6 +11,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Mail, CheckCircle, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import logo from "../../public/logo.png"
 
 export default function VerifyEmailPage() {
   const [verificationCode, setVerificationCode] = useState("")
@@ -71,7 +72,8 @@ export default function VerifyEmailPage() {
           </Link> */}
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+              // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+              src={logo}
               alt="Claimity Logo"
               width={135}
               height={46}

@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
+import logo from "../../public/logo.png"
 
 type UserType = "insurer" | "expert"
 type InvitePayload = {
@@ -44,7 +45,8 @@ export default function InvitePage() {
       <div className="flex min-h-screen items-center justify-center px-4 md:px-6 py-10">
         <div className="w-full max-w-2xl flex flex-col items-center text-center gap-6">
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+              // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+              src={logo}
             alt="Claimity Logo"
             width={135}
             height={46}

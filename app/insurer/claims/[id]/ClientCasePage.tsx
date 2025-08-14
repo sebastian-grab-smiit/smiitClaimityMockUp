@@ -276,12 +276,6 @@ export default function ClaimDetailPage({ id }: { id: string }) {
             <ArrowLeft className="h-4 w-4 mr-2" />
             Zurück zur Übersicht
           </Link>
-
-        {/* <div className="max-w-7xl mx-auto p-6"> */}
-          <Link href="/insurer/claims" className="flex items-center text-primary mb-3">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Zurück zur Übersicht
-          </Link>
           {/* Claim Header */}
           <div className="mb-6">
             <div className="flex items-start justify-between mb-4">

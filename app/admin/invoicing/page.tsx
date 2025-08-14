@@ -241,10 +241,12 @@ export default function InvoicingPage() {
         </aside>
 
         <main className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-7xl mx-auto p-6">
-            <div className="mb-6">
-              <h1 className="text-2xl font-bold text-slate-800 mb-2">Rechnungsmanagement</h1>
-              <p className="text-slate-600">Verwaltung von Rechnungen und Zahlungsüberwachung</p>
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Rechnungsmanagement</h1>
+                <p className="text-gray-600">Verwaltung von Rechnungen und Zahlungsüberwachung</p>
+              </div>
             </div>
 
             <Tabs defaultValue="invoices" className="w-full">

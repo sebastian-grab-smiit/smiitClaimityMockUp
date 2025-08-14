@@ -83,156 +83,160 @@ export default function InsurerSettingsPage() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-slate-800 mb-2">Einstellungen</h1>
-            <p className="text-slate-600">Verwalten Sie Benutzer, Rollen und Benachrichtigungseinstellungen</p>
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Einstellungen</h1>
+                <p className="text-gray-600">Verwalten Sie Benutzer, Rollen und Benachrichtigungseinstellungen</p>
+              </div>
+            </div>
+
+            <Tabs defaultValue="users" className="space-y-6">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="users" className="flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  Benutzer & Rollen
+                </TabsTrigger>
+                <TabsTrigger value="notifications" className="flex items-center gap-2">
+                  <Bell className="h-4 w-4" />
+                  Benachrichtigungen
+                </TabsTrigger>
+                <TabsTrigger value="organization" className="flex items-center gap-2">
+                  <Shield className="h-4 w-4" />
+                  Organisation
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="users" className="space-y-6">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <div>
+                      <CardTitle>Team-Mitglieder</CardTitle>
+                      <CardDescription>Benutzerzugriff und Berechtigungen verwalten</CardDescription>
+                    </div>
+                    <Button className="">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Benutzer hinzufügen
+                    </Button>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {users.map((user) => (
+                        <div
+                          key={user.id}
+                          className="flex items-center justify-between p-4 border rounded-lg hover:bg-slate-50"
+                        >
+                          <div className="flex items-center space-x-4">
+                            <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
+                              <span className="text-primary font-semibold">
+                                {user.name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </span>
+                            </div>
+                            <div>
+                              <p className="font-medium text-slate-800">{user.name}</p>
+                              <p className="text-sm text-slate-500">{user.email}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <Badge variant={user.status === "Active" ? "default" : "secondary"}>{user.status}</Badge>
+                            <Select defaultValue={user.role}>
+                              <SelectTrigger className="w-40">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Admin">Admin</SelectItem>
+                                <SelectItem value="Claims Manager">Schadenmanager</SelectItem>
+                                <SelectItem value="Viewer">Betrachter</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <Button variant="ghost" size="sm">
+                              <Trash2 className="h-4 w-4 text-red-500" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="notifications" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Benachrichtigungseinstellungen</CardTitle>
+                    <CardDescription>Konfigurieren Sie, wie und wann Sie Benachrichtigungen erhalten</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <Label className="text-base">E-Mail-Benachrichtigungen</Label>
+                          <p className="text-sm text-slate-500">Updates per E-Mail erhalten</p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <Label className="text-base">Neue Fallzuweisungen</Label>
+                          <p className="text-sm text-slate-500">Benachrichtigung bei Expertenzuweisung</p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <Label className="text-base">Berichtseinreichungen</Label>
+                          <p className="text-sm text-slate-500">Benachrichtigung bei Berichtseinreichung</p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <Label className="text-base">SLA-Warnungen</Label>
+                          <p className="text-sm text-slate-500">Warnung vor Fristen</p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="organization" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Organisationseinstellungen</CardTitle>
+                    <CardDescription>Konfigurieren Sie Ihre Organisationsdetails</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="company">Firmenname</Label>
+                        <Input id="company" defaultValue="Helvetia Versicherung" />
+                      </div>
+                      <div>
+                        <Label htmlFor="contact">Hauptansprechpartner</Label>
+                        <Input id="contact" defaultValue="Hans Müller" />
+                      </div>
+                      <div>
+                        <Label htmlFor="email">Kontakt-E-Mail</Label>
+                        <Input id="email" type="email" defaultValue="contact@helvetia.ch" />
+                      </div>
+                      <div>
+                        <Label htmlFor="phone">Telefonnummer</Label>
+                        <Input id="phone" defaultValue="+41 58 280 10 00" />
+                      </div>
+                    </div>
+                    <div className="pt-4">
+                      <Button className="">Änderungen speichern</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
           </div>
-
-          <Tabs defaultValue="users" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="users" className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                Benutzer & Rollen
-              </TabsTrigger>
-              <TabsTrigger value="notifications" className="flex items-center gap-2">
-                <Bell className="h-4 w-4" />
-                Benachrichtigungen
-              </TabsTrigger>
-              <TabsTrigger value="organization" className="flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                Organisation
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="users" className="space-y-6">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <div>
-                    <CardTitle>Team-Mitglieder</CardTitle>
-                    <CardDescription>Benutzerzugriff und Berechtigungen verwalten</CardDescription>
-                  </div>
-                  <Button className="">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Benutzer hinzufügen
-                  </Button>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {users.map((user) => (
-                      <div
-                        key={user.id}
-                        className="flex items-center justify-between p-4 border rounded-lg hover:bg-slate-50"
-                      >
-                        <div className="flex items-center space-x-4">
-                          <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
-                            <span className="text-primary font-semibold">
-                              {user.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </span>
-                          </div>
-                          <div>
-                            <p className="font-medium text-slate-800">{user.name}</p>
-                            <p className="text-sm text-slate-500">{user.email}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                          <Badge variant={user.status === "Active" ? "default" : "secondary"}>{user.status}</Badge>
-                          <Select defaultValue={user.role}>
-                            <SelectTrigger className="w-40">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="Admin">Admin</SelectItem>
-                              <SelectItem value="Claims Manager">Schadenmanager</SelectItem>
-                              <SelectItem value="Viewer">Betrachter</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <Button variant="ghost" size="sm">
-                            <Trash2 className="h-4 w-4 text-red-500" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="notifications" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Benachrichtigungseinstellungen</CardTitle>
-                  <CardDescription>Konfigurieren Sie, wie und wann Sie Benachrichtigungen erhalten</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label className="text-base">E-Mail-Benachrichtigungen</Label>
-                        <p className="text-sm text-slate-500">Updates per E-Mail erhalten</p>
-                      </div>
-                      <Switch defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label className="text-base">Neue Fallzuweisungen</Label>
-                        <p className="text-sm text-slate-500">Benachrichtigung bei Expertenzuweisung</p>
-                      </div>
-                      <Switch defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label className="text-base">Berichtseinreichungen</Label>
-                        <p className="text-sm text-slate-500">Benachrichtigung bei Berichtseinreichung</p>
-                      </div>
-                      <Switch defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label className="text-base">SLA-Warnungen</Label>
-                        <p className="text-sm text-slate-500">Warnung vor Fristen</p>
-                      </div>
-                      <Switch defaultChecked />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="organization" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Organisationseinstellungen</CardTitle>
-                  <CardDescription>Konfigurieren Sie Ihre Organisationsdetails</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="company">Firmenname</Label>
-                      <Input id="company" defaultValue="Helvetia Versicherung" />
-                    </div>
-                    <div>
-                      <Label htmlFor="contact">Hauptansprechpartner</Label>
-                      <Input id="contact" defaultValue="Hans Müller" />
-                    </div>
-                    <div>
-                      <Label htmlFor="email">Kontakt-E-Mail</Label>
-                      <Input id="email" type="email" defaultValue="contact@helvetia.ch" />
-                    </div>
-                    <div>
-                      <Label htmlFor="phone">Telefonnummer</Label>
-                      <Input id="phone" defaultValue="+41 58 280 10 00" />
-                    </div>
-                  </div>
-                  <div className="pt-4">
-                    <Button className="">Änderungen speichern</Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
         </main>
       </div>
     </div>
