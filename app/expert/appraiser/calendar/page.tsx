@@ -192,8 +192,8 @@ export default function ExpertCalendarPage() {
         <main className="flex-1 overflow-y-auto p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Kalender & Verfügbarkeit</h1>
-              <p className="text-slate-600">Termine und Verfügbarkeit verwalten</p>
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">Kalender & Verfügbarkeit</h1>
+              <p className="text-gray-600">Termine und Verfügbarkeit verwalten</p>
             </div>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">

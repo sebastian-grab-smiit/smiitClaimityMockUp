@@ -265,7 +265,7 @@ export default function AssignmentPage() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Expertenzuweisung</h1>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Expertenzuweisung</h1>
                 <p className="text-gray-600">Weisen Sie bereite Fälle an verfügbare Experten zu</p>
               </div>
               {selectedCase && selectedExpert && (
@@ -478,7 +478,7 @@ export default function AssignmentPage() {
                       <div className="text-center py-8">
                         <Users className="h-12 w-12 text-slate-400 mx-auto mb-4" />
                         <h3 className="text-lg font-semibold text-slate-800 mb-2">Keine passenden Experten gefunden</h3>
-                        <p className="text-slate-600">Passen Sie die Filter an oder erweitern Sie die Suchkriterien.</p>
+                        <p className="text-gray-600">Passen Sie die Filter an oder erweitern Sie die Suchkriterien.</p>
                       </div>
                     )}
                   </CardContent>

@@ -222,196 +222,200 @@ export default function AdminCommunicationsPage() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-slate-800 mb-2">Kommunikation Monitor</h1>
-            <p className="text-slate-600">Nachrichten an Admin und Systemmeldungen</p>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Nachrichten</CardTitle>
-                  <CardDescription>Nachrichten aus Fällen und Systemmeldungen</CardDescription>
-                </div>
-                <div className="flex space-x-4">
-                  <div className="relative w-64">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                    <Input
-                      placeholder="Nachrichten suchen..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Kommunikation Monitor</h1>
+                <p className="text-gray-600">Nachrichten an Admin und Systemmeldungen</p>
               </div>
-            </CardHeader>
-            <CardContent>
-              <Tabs defaultValue="case-messages" className="space-y-4">
-                <TabsList>
-                  <TabsTrigger value="case-messages" className="flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4" />
-                    Fall-Nachrichten (1)
-                  </TabsTrigger>
-                  <TabsTrigger value="system-messages" className="flex items-center gap-2">
-                    <AlertCircle className="h-4 w-4" />
-                    Systemmeldungen (1)
-                  </TabsTrigger>
-                </TabsList>
+            </div>
 
-                <TabsContent value="case-messages">
-                  <div className="flex items-center space-x-4 mb-4">
-                    <Button
-                      variant={filterType === "all" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setFilterType("all")}
-                    >
-                      Alle
-                    </Button>
-                    <Button
-                      variant={filterType === "expert" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setFilterType("expert")}
-                    >
-                      <User className="h-4 w-4 mr-1" />
-                      Experten
-                    </Button>
-                    <Button
-                      variant={filterType === "insurer" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setFilterType("insurer")}
-                    >
-                      <Building className="h-4 w-4 mr-1" />
-                      Versicherer
-                    </Button>
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Nachrichten</CardTitle>
+                    <CardDescription>Nachrichten aus Fällen und Systemmeldungen</CardDescription>
                   </div>
+                  <div className="flex space-x-4">
+                    <div className="relative w-64">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <Input
+                        placeholder="Nachrichten suchen..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Tabs defaultValue="case-messages" className="space-y-4">
+                  <TabsList>
+                    <TabsTrigger value="case-messages" className="flex items-center gap-2">
+                      <MessageSquare className="h-4 w-4" />
+                      Fall-Nachrichten (1)
+                    </TabsTrigger>
+                    <TabsTrigger value="system-messages" className="flex items-center gap-2">
+                      <AlertCircle className="h-4 w-4" />
+                      Systemmeldungen (1)
+                    </TabsTrigger>
+                  </TabsList>
 
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Fall-ID</TableHead>
-                        <TableHead>Von</TableHead>
-                        <TableHead>Betreff</TableHead>
-                        <TableHead>Priorität</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Zeit</TableHead>
-                        <TableHead>Aktionen</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredAdminMessages.map((message) => (
-                        <TableRow key={message.id} className={message.status === "Unread" ? "bg-blue-50" : ""}>
-                          <TableCell className="font-medium">
-                            <div>
-                              <p>{message.caseId}</p>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              {getFromTypeIcon(message.fromType)}
+                  <TabsContent value="case-messages">
+                    <div className="flex items-center space-x-4 mb-4">
+                      <Button
+                        variant={filterType === "all" ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setFilterType("all")}
+                      >
+                        Alle
+                      </Button>
+                      <Button
+                        variant={filterType === "expert" ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setFilterType("expert")}
+                      >
+                        <User className="h-4 w-4 mr-1" />
+                        Experten
+                      </Button>
+                      <Button
+                        variant={filterType === "insurer" ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setFilterType("insurer")}
+                      >
+                        <Building className="h-4 w-4 mr-1" />
+                        Versicherer
+                      </Button>
+                    </div>
+
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Fall-ID</TableHead>
+                          <TableHead>Von</TableHead>
+                          <TableHead>Betreff</TableHead>
+                          <TableHead>Priorität</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Zeit</TableHead>
+                          <TableHead>Aktionen</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {filteredAdminMessages.map((message) => (
+                          <TableRow key={message.id} className={message.status === "Unread" ? "bg-blue-50" : ""}>
+                            <TableCell className="font-medium">
                               <div>
-                                <span className={message.status === "Unread" ? "font-semibold" : ""}>
-                                  {message.from}
-                                </span>
-                                <p className="text-xs text-slate-500">{message.insurer}</p>
+                                <p>{message.caseId}</p>
                               </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div>
-                              <p className={message.status === "Unread" ? "font-semibold" : ""}>{message.subject}</p>
-                              <p className="text-sm text-slate-500 truncate max-w-xs">{message.message}</p>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge className={getPriorityColor(message.priority)}>{message.priority}</Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant={message.status === "Unread" ? "default" : "secondary"}>
-                              {message.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-1 text-sm text-slate-500">
-                              <Clock className="h-3 w-3" />
-                              {message.timestamp}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Button variant="ghost" size="sm" asChild>
-                              <Link href={`/admin/cases/${message.caseId}`}>
-                                <ExternalLink className="h-4 w-4" />
-                              </Link>
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TabsContent>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                {getFromTypeIcon(message.fromType)}
+                                <div>
+                                  <span className={message.status === "Unread" ? "font-semibold" : ""}>
+                                    {message.from}
+                                  </span>
+                                  <p className="text-xs text-slate-500">{message.insurer}</p>
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div>
+                                <p className={message.status === "Unread" ? "font-semibold" : ""}>{message.subject}</p>
+                                <p className="text-sm text-slate-500 truncate max-w-xs">{message.message}</p>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge className={getPriorityColor(message.priority)}>{message.priority}</Badge>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant={message.status === "Unread" ? "default" : "secondary"}>
+                                {message.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-1 text-sm text-slate-500">
+                                <Clock className="h-3 w-3" />
+                                {message.timestamp}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Button variant="ghost" size="sm" asChild>
+                                <Link href={`/admin/cases/${message.caseId}`}>
+                                  <ExternalLink className="h-4 w-4" />
+                                </Link>
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TabsContent>
 
-                <TabsContent value="system-messages">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Fall-ID</TableHead>
-                        <TableHead>Betreff</TableHead>
-                        <TableHead>Nachricht</TableHead>
-                        <TableHead>Priorität</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Zeit</TableHead>
-                        <TableHead>Aktionen</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredSystemMessages.map((message) => (
-                        <TableRow key={message.id} className={message.status === "Unread" ? "bg-blue-50" : ""}>
-                          <TableCell className="font-medium">
-                            <div>
-                              <p>{message.caseId}</p>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <AlertCircle className="h-4 w-4 text-orange-600" />
-                              <span className={message.status === "Unread" ? "font-semibold" : ""}>
-                                {message.subject}
-                              </span>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <p className="text-sm truncate max-w-md">{message.message}</p>
-                          </TableCell>
-                          <TableCell>
-                            <Badge className={getPriorityColor(message.priority)}>{message.priority}</Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant={message.status === "Unread" ? "default" : "secondary"}>
-                              {message.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-1 text-sm text-slate-500">
-                              <Clock className="h-3 w-3" />
-                              {message.timestamp}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Button variant="ghost" size="sm" asChild>
-                              <Link href={`/admin/cases/${message.caseId}`}>
-                                <ExternalLink className="h-4 w-4" />
-                              </Link>
-                            </Button>
-                          </TableCell>
+                  <TabsContent value="system-messages">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Fall-ID</TableHead>
+                          <TableHead>Betreff</TableHead>
+                          <TableHead>Nachricht</TableHead>
+                          <TableHead>Priorität</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Zeit</TableHead>
+                          <TableHead>Aktionen</TableHead>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
+                      </TableHeader>
+                      <TableBody>
+                        {filteredSystemMessages.map((message) => (
+                          <TableRow key={message.id} className={message.status === "Unread" ? "bg-blue-50" : ""}>
+                            <TableCell className="font-medium">
+                              <div>
+                                <p>{message.caseId}</p>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                <AlertCircle className="h-4 w-4 text-orange-600" />
+                                <span className={message.status === "Unread" ? "font-semibold" : ""}>
+                                  {message.subject}
+                                </span>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <p className="text-sm truncate max-w-md">{message.message}</p>
+                            </TableCell>
+                            <TableCell>
+                              <Badge className={getPriorityColor(message.priority)}>{message.priority}</Badge>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant={message.status === "Unread" ? "default" : "secondary"}>
+                                {message.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-1 text-sm text-slate-500">
+                                <Clock className="h-3 w-3" />
+                                {message.timestamp}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Button variant="ghost" size="sm" asChild>
+                                <Link href={`/admin/cases/${message.caseId}`}>
+                                  <ExternalLink className="h-4 w-4" />
+                                </Link>
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+          </div>
         </main>
       </div>
     </div>

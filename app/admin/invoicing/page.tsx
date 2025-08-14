@@ -244,7 +244,7 @@ export default function InvoicingPage() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Rechnungsmanagement</h1>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Rechnungsmanagement</h1>
                 <p className="text-gray-600">Verwaltung von Rechnungen und Zahlungsüberwachung</p>
               </div>
             </div>
@@ -478,7 +478,7 @@ export default function InvoicingPage() {
                           <div className="text-center">
                             <DollarSign className="h-12 w-12 text-slate-400 mx-auto mb-4" />
                             <h3 className="text-lg font-semibold text-slate-800 mb-2">Keine Rechnung ausgewählt</h3>
-                            <p className="text-slate-600">
+                            <p className="text-gray-600">
                               Wählen Sie eine Rechnung aus der Liste aus, um Details anzuzeigen.
                             </p>
                           </div>

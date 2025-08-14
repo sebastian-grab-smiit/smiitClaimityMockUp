@@ -229,7 +229,7 @@ export default function ExpertDetailPage({ id }: { id: string }) {
                 <User className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-800">{expert.name}</h1>
+                <h1 className="text-2xl font-bold text-gray-900">{expert.name}</h1>
                 <div className="flex items-center space-x-4 mt-1">
                   <Badge
                     className={

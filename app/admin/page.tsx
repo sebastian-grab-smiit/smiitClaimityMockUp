@@ -311,146 +311,150 @@ export default function AdminDashboard() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-slate-800 mb-2">Admin Dashboard</h1>
-            <p className="text-slate-600">Globale Übersicht und Fallmanagement</p>
-          </div>
-
-          {/* High-Level Business Stats */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold text-slate-800 mb-4">Geschäftsübersicht</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {highLevelStats.map((stat, index) => (
-                <Card key={index}>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-slate-600">{stat.title}</p>
-                        <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
-                        <p className="text-xs text-slate-500 mt-1">{stat.description}</p>
-                        <div className="flex items-center mt-2">
-                          <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
-                          <span className="text-xs text-green-600">{stat.trend}</span>
-                        </div>
-                      </div>
-                      <div className={`p-3 rounded-lg ${stat.color}`}>
-                        <stat.icon className="h-6 w-6 text-white" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          {/* Financial Metrics */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold text-slate-800 mb-4">Finanzmetriken</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {financialStats.map((stat, index) => (
-                <Card key={index}>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium text-slate-600">{stat.title}</p>
-                        <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
-                        <p className="text-xs text-slate-500 mt-1">{stat.description}</p>
-                        <div className="flex items-center mt-2">
-                          <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
-                          <span className="text-xs text-green-600">{stat.trend}</span>
-                        </div>
-                      </div>
-                      <div className={`p-3 rounded-lg ${stat.color}`}>
-                        <stat.icon className="h-6 w-6 text-white" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          {/* Recent Activity */}
-          <Card className="mb-8">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center">
-                    <Clock className="h-5 w-5 mr-2 text-slate-600" />
-                    Aktuelle Aktivitäten
-                  </CardTitle>
-                  <CardDescription>Neueste Fallaktivitäten und Zuweisungen</CardDescription>
-                </div>
-                <Button size="sm" variant="outline">
-                  <Eye className="h-4 w-4 mr-2" />
-                  Alle anzeigen
-                </Button>
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
+                <p className="text-gray-600">Globale Übersicht und Fallmanagement</p>
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {recentActivity.map((activity) => (
-                  <div
-                    key={activity.id}
-                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-slate-50 cursor-pointer"
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
-                        <FileText className="h-5 w-5 text-slate-600" />
-                      </div>
-                      <div>
-                        <div className="flex items-center space-x-2">
-                          <h4 className="font-semibold text-slate-800">{activity.id}</h4>
-                          <Badge className={getStatusColor(activity.status)}>{activity.status}</Badge>
+            </div>
+
+            {/* High-Level Business Stats */}
+            <div className="mb-8">
+              <h2 className="text-lg font-semibold text-slate-800 mb-4">Geschäftsübersicht</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {highLevelStats.map((stat, index) => (
+                  <Card key={index}>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-slate-600">{stat.title}</p>
+                          <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
+                          <p className="text-xs text-slate-500 mt-1">{stat.description}</p>
+                          <div className="flex items-center mt-2">
+                            <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+                            <span className="text-xs text-green-600">{stat.trend}</span>
+                          </div>
                         </div>
-                        <p className="text-sm text-slate-600">
-                          {activity.insurer} → {activity.expert}
-                        </p>
-                        <p className="text-xs text-slate-500">{activity.type}</p>
+                        <div className={`p-3 rounded-lg ${stat.color}`}>
+                          <stat.icon className="h-6 w-6 text-white" />
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-slate-800">{activity.amount}</p>
-                      <p className="text-xs text-slate-500">{activity.time}</p>
-                    </div>
-                  </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* SLA Monitor */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Clock className="h-5 w-5 mr-2 text-blue-600" />
-                SLA-Monitor
-              </CardTitle>
-              <CardDescription>Überwachung von Bearbeitungszeiten und kritischen Fällen</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <div className="text-2xl font-bold text-green-600">92%</div>
-                  <div className="text-sm text-green-700">SLA eingehalten</div>
-                </div>
-                <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                  <div className="text-2xl font-bold text-yellow-600">5</div>
-                  <div className="text-sm text-yellow-700">Kritische Fälle</div>
-                </div>
-                <div className="text-center p-4 bg-red-50 rounded-lg">
-                  <div className="text-2xl font-bold text-red-600">3</div>
-                  <div className="text-sm text-red-700">Überfällige Fälle</div>
-                </div>
+            {/* Financial Metrics */}
+            <div className="mb-8">
+              <h2 className="text-lg font-semibold text-slate-800 mb-4">Finanzmetriken</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {financialStats.map((stat, index) => (
+                  <Card key={index}>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-slate-600">{stat.title}</p>
+                          <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
+                          <p className="text-xs text-slate-500 mt-1">{stat.description}</p>
+                          <div className="flex items-center mt-2">
+                            <TrendingUp className="h-3 w-3 text-green-500 mr-1" />
+                            <span className="text-xs text-green-600">{stat.trend}</span>
+                          </div>
+                        </div>
+                        <div className={`p-3 rounded-lg ${stat.color}`}>
+                          <stat.icon className="h-6 w-6 text-white" />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
-              <div className="mt-4 flex justify-center">
-                <Button variant="outline">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Detaillierte Analyse
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+
+            {/* Recent Activity */}
+            <Card className="mb-8">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="flex items-center">
+                      <Clock className="h-5 w-5 mr-2 text-slate-600" />
+                      Aktuelle Aktivitäten
+                    </CardTitle>
+                    <CardDescription>Neueste Fallaktivitäten und Zuweisungen</CardDescription>
+                  </div>
+                  <Button size="sm" variant="outline">
+                    <Eye className="h-4 w-4 mr-2" />
+                    Alle anzeigen
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recentActivity.map((activity) => (
+                    <div
+                      key={activity.id}
+                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-slate-50 cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-4">
+                        <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                          <FileText className="h-5 w-5 text-slate-600" />
+                        </div>
+                        <div>
+                          <div className="flex items-center space-x-2">
+                            <h4 className="font-semibold text-slate-800">{activity.id}</h4>
+                            <Badge className={getStatusColor(activity.status)}>{activity.status}</Badge>
+                          </div>
+                          <p className="text-sm text-slate-600">
+                            {activity.insurer} → {activity.expert}
+                          </p>
+                          <p className="text-xs text-slate-500">{activity.type}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-slate-800">{activity.amount}</p>
+                        <p className="text-xs text-slate-500">{activity.time}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* SLA Monitor */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Clock className="h-5 w-5 mr-2 text-blue-600" />
+                  SLA-Monitor
+                </CardTitle>
+                <CardDescription>Überwachung von Bearbeitungszeiten und kritischen Fällen</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <div className="text-center p-4 bg-green-50 rounded-lg">
+                    <div className="text-2xl font-bold text-green-600">92%</div>
+                    <div className="text-sm text-green-700">SLA eingehalten</div>
+                  </div>
+                  <div className="text-center p-4 bg-yellow-50 rounded-lg">
+                    <div className="text-2xl font-bold text-yellow-600">5</div>
+                    <div className="text-sm text-yellow-700">Kritische Fälle</div>
+                  </div>
+                  <div className="text-center p-4 bg-red-50 rounded-lg">
+                    <div className="text-2xl font-bold text-red-600">3</div>
+                    <div className="text-sm text-red-700">Überfällige Fälle</div>
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-center">
+                  <Button variant="outline">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Detaillierte Analyse
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </main>
       </div>
     </div>

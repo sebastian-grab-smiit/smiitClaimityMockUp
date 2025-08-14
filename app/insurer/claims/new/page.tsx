@@ -146,21 +146,21 @@ export default function NewClaimSelectionPage() {
               <div className="grid md:grid-cols-3 gap-6 text-sm">
                 <div>
                   <h3 className="font-medium text-slate-800 mb-2">📝 Manuell erfassen</h3>
-                  <p className="text-slate-600">
+                  <p className="text-gray-600">
                     Ideal für einfache Fälle oder wenn Sie alle Details selbst eingeben möchten. Vollständige Kontrolle über
                     alle Eingaben.
                   </p>
                 </div>
                 <div>
                   <h3 className="font-medium text-slate-800 mb-2">⚡ API Import</h3>
-                  <p className="text-slate-600">
+                  <p className="text-gray-600">
                     Perfekt wenn Sie bereits ein System haben, das Schadensdaten verwaltet. Schneller Import grosser
                     Datenmengen.
                   </p>
                 </div>
                 <div>
                   <h3 className="font-medium text-slate-800 mb-2">📄 PDF Upload mit OCR</h3>
-                  <p className="text-slate-600">
+                  <p className="text-gray-600">
                     Zeitersparend bei vorhandenen PDF-Dokumenten. Automatische Texterkennung und intelligente
                     Felderzuordnung.
                   </p>

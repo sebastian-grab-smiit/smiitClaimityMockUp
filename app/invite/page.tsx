@@ -45,7 +45,6 @@ export default function InvitePage() {
       <div className="flex min-h-screen items-center justify-center px-4 md:px-6 py-10">
         <div className="w-full max-w-2xl flex flex-col items-center text-center gap-6">
           <Image
-              // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
               src={logo}
             alt="Claimity Logo"
             width={135}
@@ -54,8 +53,8 @@ export default function InvitePage() {
           />
 
           <div>
-            <h1 className="text-2xl font-bold text-slate-800">Einladung annehmen</h1>
-            <p className="text-slate-600">Schliessen Sie Ihre Kontoerstellung für Claimity ab.</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Einladung annehmen</h1>
+            <p className="text-gray-600">Schliessen Sie Ihre Kontoerstellung für Claimity ab.</p>
           </div>
 
           <Suspense fallback={<InviteSkeleton />}>

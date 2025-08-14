@@ -70,7 +70,6 @@ export function PageHeader({
           )}
           <div className="flex items-center space-x-2">
             <Image
-              // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
               src={logo}
               alt="Claimity Logo"
               width={100}

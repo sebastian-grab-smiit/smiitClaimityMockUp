@@ -176,7 +176,7 @@ export default function AdminAllCasesPage() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Alle Fälle</h1>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Alle Fälle</h1>
                 <p className="text-gray-600">Übersicht über alle Fälle mit Verlauf und Status</p>
               </div>
               <Button variant="outline" className="flex items-center gap-2 bg-transparent">

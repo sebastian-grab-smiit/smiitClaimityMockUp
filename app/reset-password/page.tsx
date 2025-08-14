@@ -59,7 +59,6 @@ export default function ResetPasswordPage() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Image
-              // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
               src={logo}
               alt="Claimity Logo"
               width={135}
@@ -67,8 +66,8 @@ export default function ResetPasswordPage() {
               className="rounded-lg"
             />
           </div>
-          <h1 className="text-2xl font-bold text-slate-800">Neues Passwort</h1>
-          <p className="text-slate-600">Erstellen Sie ein neues, sicheres Passwort</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Neues Passwort</h1>
+          <p className="text-gray-600">Erstellen Sie ein neues, sicheres Passwort</p>
         </div>
 
         <Card>

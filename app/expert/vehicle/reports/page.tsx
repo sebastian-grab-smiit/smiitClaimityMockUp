@@ -228,7 +228,7 @@ export default function ExpertReportsPage() {
         <main className="flex-1 overflow-y-auto p-6">
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-slate-800 mb-2">Berichte & Vorlagen</h1>
-            <p className="text-slate-600">Verwalten Sie Ihre Berichte und verwenden Sie Vorlagen</p>
+            <p className="text-gray-600">Verwalten Sie Ihre Berichte und verwenden Sie Vorlagen</p>
           </div>
 
           {/* Tabs */}
@@ -379,7 +379,7 @@ export default function ExpertReportsPage() {
                     <div className="text-center py-12">
                       <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
                       <h3 className="text-lg font-medium text-slate-800 mb-2">Keine Berichte gefunden</h3>
-                      <p className="text-slate-600">Versuchen Sie andere Suchbegriffe oder Filter.</p>
+                      <p className="text-gray-600">Versuchen Sie andere Suchbegriffe oder Filter.</p>
                     </div>
                   )}
                 </>

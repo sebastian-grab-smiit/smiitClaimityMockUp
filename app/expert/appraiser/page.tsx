@@ -163,7 +163,7 @@ export default function ExpertDashboard() {
         <main className="flex-1 overflow-y-auto p-6">
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-slate-800 mb-2">Experten Dashboard</h1>
-            <p className="text-slate-600">Ihre zugewiesenen Fälle und Termine im Überblick</p>
+            <p className="text-gray-600">Ihre zugewiesenen Fälle und Termine im Überblick</p>
           </div>
 
           {/* Stats Cards */}

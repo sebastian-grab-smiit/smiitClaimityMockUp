@@ -72,7 +72,6 @@ export default function VerifyEmailPage() {
           </Link> */}
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Image
-              // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
               src={logo}
               alt="Claimity Logo"
               width={135}
@@ -80,8 +79,8 @@ export default function VerifyEmailPage() {
               className="rounded-lg"
             />
           </div>
-          <h1 className="text-2xl font-bold text-slate-800">E-Mail bestätigen</h1>
-          <p className="text-slate-600">Bestätigen Sie Ihre E-Mail-Adresse</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">E-Mail bestätigen</h1>
+          <p className="text-gray-600">Bestätigen Sie Ihre E-Mail-Adresse</p>
         </div>
 
         <Card>

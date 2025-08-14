@@ -122,8 +122,8 @@ export default function ExpertSettingsPage() {
         <main className="flex-1 overflow-y-auto p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Profil & Einstellungen</h1>
-              <p className="text-slate-600">Verwalten Sie Ihre Profildaten und Einstellungen</p>
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">Profil & Einstellungen</h1>
+              <p className="text-gray-600">Verwalten Sie Ihre Profildaten und Einstellungen</p>
             </div>
             <Button onClick={() => setIsEditing(!isEditing)} variant={isEditing ? "default" : "outline"}>
               {isEditing ? (

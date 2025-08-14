@@ -254,7 +254,7 @@ export default function ReportsReviewPage() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Berichte - Prüfung & Genehmigung</h1>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Berichte - Prüfung & Genehmigung</h1>
                 <p className="text-gray-600">Überprüfung von Expertengutachten auf Vollständigkeit und Qualität</p>
               </div>
             </div>
@@ -555,7 +555,7 @@ export default function ReportsReviewPage() {
                       <div className="text-center">
                         <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
                         <h3 className="text-lg font-semibold text-slate-800 mb-2">Keinen Bericht ausgewählt</h3>
-                        <p className="text-slate-600">Wählen Sie einen Bericht aus der Liste aus, um ihn zu prüfen.</p>
+                        <p className="text-gray-600">Wählen Sie einen Bericht aus der Liste aus, um ihn zu prüfen.</p>
                       </div>
                     </CardContent>
                   </Card>

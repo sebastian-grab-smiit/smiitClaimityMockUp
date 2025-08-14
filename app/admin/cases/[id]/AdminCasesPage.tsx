@@ -229,14 +229,13 @@ export default function AdminCaseDetailPage({ id }: { id: string }) {
             <ArrowLeft className="h-4 w-4 mr-2" />
             Zurück zur Übersicht
           </Link>
-          {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center">
                 <FileText className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-800">Fall {caseData.id}</h1>
+                <h1 className="text-2xl font-bold text-gray-900">Fall {caseData.id}</h1>
                 <div className="flex items-center space-x-4 mt-1">
                   <Badge className={getStatusColor(caseData.status)}>{caseData.status}</Badge>
                   <Badge className={getPriorityColor(caseData.priority)}>{caseData.priority}</Badge>

@@ -45,7 +45,6 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Image
-              // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
               src={logo}
               alt="Claimity Logo"
               width={135}
@@ -54,7 +53,7 @@ export default function LoginPage() {
             />
           </div>
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-slate-800">Anmelden</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Anmelden</h1>
           </div>
 
           <Card>

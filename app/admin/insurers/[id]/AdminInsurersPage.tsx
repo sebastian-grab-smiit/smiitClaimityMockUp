@@ -181,7 +181,7 @@ export default function InsurerDetailPage({ id }: { id: string }) {
                 <Building className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-800">{insurer.name}</h1>
+                <h1 className="text-2xl font-bold text-slate-900">{insurer.name}</h1>
                 <div className="flex items-center space-x-4 mt-1">
                   <Badge
                     className={
@@ -349,7 +349,7 @@ export default function InsurerDetailPage({ id }: { id: string }) {
                   <CardDescription>Nutzer, die für diesen Versicherer arbeiten</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-slate-600">Nutzerliste wird hier angezeigt...</p>
+                  <p className="text-gray-600">Nutzerliste wird hier angezeigt...</p>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -361,7 +361,7 @@ export default function InsurerDetailPage({ id }: { id: string }) {
                   <CardDescription>Versicherer-spezifische Konfiguration</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-slate-600">Einstellungen werden hier angezeigt...</p>
+                  <p className="text-gray-600">Einstellungen werden hier angezeigt...</p>
                 </CardContent>
               </Card>
             </TabsContent>

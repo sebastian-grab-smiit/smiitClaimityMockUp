@@ -195,14 +195,14 @@ export default function ClientCasePage({ id }: { id: string }) {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="flex items-center space-x-2 mb-2">
-                  <h1 className="text-2xl font-bold text-slate-800">{caseData.id}</h1>
+                  <h1 className="text-2xl font-bold text-gray-900 mb-2">{caseData.id}</h1>
                   <Badge className={getStatusColor(caseData.status)}>{caseData.status}</Badge>
                   <Badge className={getPriorityColor(caseData.priority)}>{caseData.priority}</Badge>
                 </div>
                 <p className="text-lg text-slate-600 mb-2">
                   {caseData.insurer} • {caseData.type}
                 </p>
-                <p className="text-slate-600">{caseData.description}</p>
+                <p className="text-gray-600">{caseData.description}</p>
               </div>
               <div className="text-right">
                 <p className="text-2xl font-bold text-slate-800">{caseData.amount}</p>

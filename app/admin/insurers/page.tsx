@@ -178,7 +178,7 @@ export default function AdminInsurersPage() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Versicherer</h1>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Versicherer</h1>
                 <p className="text-gray-600">Verwalten Sie Partnerschaften und Einstellungen von Versicherungsunternehmen.</p>
               </div>
               <Link href="/admin/insurers/new">

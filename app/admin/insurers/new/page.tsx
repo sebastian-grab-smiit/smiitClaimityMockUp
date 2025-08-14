@@ -114,186 +114,190 @@ export default function NewInsurerPage() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          <Link href="/admin/insurers" className="flex items-center text-primary mb-3">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Zurück zur Übersicht
-          </Link>
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-slate-800 mb-2">Neuen Versicherer hinzufügen</h1>
-            <p className="text-slate-600">Erstellen Sie eine neue Versicherungspartnerschaft</p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Building className="h-5 w-5 mr-2" />
-                  Unternehmensinformationen
-                </CardTitle>
-                <CardDescription>Grundlegende Informationen über das Versicherungsunternehmen</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="companyName">Firmenname *</Label>
-                    <Input
-                      id="companyName"
-                      value={formData.companyName}
-                      onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                      placeholder="z.B. Helvetia Versicherung AG"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="website">Website</Label>
-                    <Input
-                      id="website"
-                      value={formData.website}
-                      onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                      placeholder="https://www.example.ch"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="contactPerson">Hauptansprechpartner *</Label>
-                    <Input
-                      id="contactPerson"
-                      value={formData.contactPerson}
-                      onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
-                      placeholder="Max Mustermann"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">E-Mail *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="kontakt@example.ch"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Telefon *</Label>
-                    <Input
-                      id="phone"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+41 XX XXX XX XX"
-                      required
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Adressinformationen</CardTitle>
-                <CardDescription>Geschäftsadresse des Versicherers</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="address">Adresse</Label>
-                  <Input
-                    id="address"
-                    value={formData.address}
-                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    placeholder="Musterstrasse 123"
-                  />
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="postalCode">PLZ</Label>
-                    <Input
-                      id="postalCode"
-                      value={formData.postalCode}
-                      onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                      placeholder="8001"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="city">Stadt</Label>
-                    <Input
-                      id="city"
-                      value={formData.city}
-                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      placeholder="Zürich"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="canton">Kanton</Label>
-                    <Select
-                      value={formData.canton}
-                      onValueChange={(value) => setFormData({ ...formData, canton: value })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Kanton" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="ZH">Zürich</SelectItem>
-                        <SelectItem value="BE">Bern</SelectItem>
-                        <SelectItem value="LU">Luzern</SelectItem>
-                        <SelectItem value="BS">Basel-Stadt</SelectItem>
-                        <SelectItem value="BL">Basel-Landschaft</SelectItem>
-                        <SelectItem value="GE">Genf</SelectItem>
-                        <SelectItem value="VD">Waadt</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Zusätzliche Informationen</CardTitle>
-                <CardDescription>Weitere Details und Notizen</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="commissionRate">Provisionssatz (%)</Label>
-                  <Input
-                    id="commissionRate"
-                    type="number"
-                    step="0.1"
-                    value={formData.commissionRate}
-                    onChange={(e) => setFormData({ ...formData, commissionRate: e.target.value })}
-                    placeholder="15.0"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="notes">Notizen</Label>
-                  <Textarea
-                    id="notes"
-                    value={formData.notes}
-                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    placeholder="Zusätzliche Informationen oder Notizen..."
-                    rows={4}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="flex justify-end space-x-4">
-              <Button type="button" variant="outline" asChild>
-                <Link href="/admin/insurers">Abbrechen</Link>
-              </Button>
-              <Button type="submit" className="bg-teal-600 hover:bg-teal-700">
-                <Save className="h-4 w-4 mr-2" />
-                Versicherer erstellen
-              </Button>
+          <div className="space-y-6">
+            <Link href="/admin/insurers" className="flex items-center text-primary mb-3">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Zurück zur Übersicht
+            </Link>
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Neuen Versicherer hinzufügen</h1>
+                <p className="text-gray-600">Erstellen Sie eine neue Versicherungspartnerschaft</p>
+              </div>
             </div>
-          </form>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Building className="h-5 w-5 mr-2" />
+                    Unternehmensinformationen
+                  </CardTitle>
+                  <CardDescription>Grundlegende Informationen über das Versicherungsunternehmen</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="companyName">Firmenname *</Label>
+                      <Input
+                        id="companyName"
+                        value={formData.companyName}
+                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                        placeholder="z.B. Helvetia Versicherung AG"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="website">Website</Label>
+                      <Input
+                        id="website"
+                        value={formData.website}
+                        onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                        placeholder="https://www.example.ch"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="contactPerson">Hauptansprechpartner *</Label>
+                      <Input
+                        id="contactPerson"
+                        value={formData.contactPerson}
+                        onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
+                        placeholder="Max Mustermann"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">E-Mail *</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="kontakt@example.ch"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Telefon *</Label>
+                      <Input
+                        id="phone"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="+41 XX XXX XX XX"
+                        required
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Adressinformationen</CardTitle>
+                  <CardDescription>Geschäftsadresse des Versicherers</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="address">Adresse</Label>
+                    <Input
+                      id="address"
+                      value={formData.address}
+                      onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                      placeholder="Musterstrasse 123"
+                    />
+                  </div>
+
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="postalCode">PLZ</Label>
+                      <Input
+                        id="postalCode"
+                        value={formData.postalCode}
+                        onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                        placeholder="8001"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="city">Stadt</Label>
+                      <Input
+                        id="city"
+                        value={formData.city}
+                        onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                        placeholder="Zürich"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="canton">Kanton</Label>
+                      <Select
+                        value={formData.canton}
+                        onValueChange={(value) => setFormData({ ...formData, canton: value })}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Kanton" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="ZH">Zürich</SelectItem>
+                          <SelectItem value="BE">Bern</SelectItem>
+                          <SelectItem value="LU">Luzern</SelectItem>
+                          <SelectItem value="BS">Basel-Stadt</SelectItem>
+                          <SelectItem value="BL">Basel-Landschaft</SelectItem>
+                          <SelectItem value="GE">Genf</SelectItem>
+                          <SelectItem value="VD">Waadt</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Zusätzliche Informationen</CardTitle>
+                  <CardDescription>Weitere Details und Notizen</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="commissionRate">Provisionssatz (%)</Label>
+                    <Input
+                      id="commissionRate"
+                      type="number"
+                      step="0.1"
+                      value={formData.commissionRate}
+                      onChange={(e) => setFormData({ ...formData, commissionRate: e.target.value })}
+                      placeholder="15.0"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="notes">Notizen</Label>
+                    <Textarea
+                      id="notes"
+                      value={formData.notes}
+                      onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                      placeholder="Zusätzliche Informationen oder Notizen..."
+                      rows={4}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="flex justify-end space-x-4">
+                <Button type="button" variant="outline" asChild>
+                  <Link href="/admin/insurers">Abbrechen</Link>
+                </Button>
+                <Button type="submit" className="bg-teal-600 hover:bg-teal-700">
+                  <Save className="h-4 w-4 mr-2" />
+                  Versicherer erstellen
+                </Button>
+              </div>
+            </form>
+          </div>
         </main>
       </div>
     </div>

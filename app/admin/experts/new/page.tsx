@@ -141,7 +141,7 @@ export default function NewExpertPage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">Neuen Experten hinzufügen</h1>
+                  <h1 className="text-2xl font-bold text-gray-900 mb-2">Neuen Experten hinzufügen</h1>
                   <p className="text-gray-600">Fügen Sie einen neuen Experten zur Plattform hinzu</p>
                 </div>
               </div>

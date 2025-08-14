@@ -281,10 +281,10 @@ export default function ClaimDetailPage({ id }: { id: string }) {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="flex items-center space-x-3 mb-2">
-                  <h1 className="text-2xl font-bold text-slate-800">{claim.id}</h1>
+                  <h1 className="text-2xl font-bold text-gray-900 mb-2">{claim.id}</h1>
                   <Badge className={getStatusColor(claim.status)}>{claim.status}</Badge>
                 </div>
-                <p className="text-slate-600">
+                <p className="text-gray-600">
                   {claim.type} • Police: {claim.policyNumber}
                 </p>
               </div>

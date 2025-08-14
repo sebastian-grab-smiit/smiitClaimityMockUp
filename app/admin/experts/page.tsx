@@ -222,7 +222,7 @@ export default function AdminExpertsPage() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Experten</h1>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Experten</h1>
                 <p className="text-gray-600">Verwalten Sie Partnerschaften und Einstellungen von Experten.</p>
               </div>
               <Link href="/admin/experts/new">

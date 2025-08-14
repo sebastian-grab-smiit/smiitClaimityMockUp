@@ -81,7 +81,6 @@ export default function Setup2FAPage() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Image
-              // src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
               src={logo}
               alt="Claimity Logo"
               width={135}
@@ -89,8 +88,8 @@ export default function Setup2FAPage() {
               className="rounded-lg"
             />
           </div>
-          <h1 className="text-2xl font-bold text-slate-800">Zwei-Faktor-Authentifizierung einrichten</h1>
-          <p className="text-slate-600">Sichern Sie Ihr Konto mit 2FA</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Zwei-Faktor-Authentifizierung einrichten</h1>
+          <p className="text-gray-600">Sichern Sie Ihr Konto mit 2FA</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">

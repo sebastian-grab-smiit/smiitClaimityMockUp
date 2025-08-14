@@ -174,8 +174,8 @@ export default function ExpertCasesPage() {
         <main className="flex-1 overflow-y-auto p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Meine Fälle</h1>
-              <p className="text-slate-600">Übersicht aller zugewiesenen Fälle</p>
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">Meine Fälle</h1>
+              <p className="text-gray-600">Übersicht aller zugewiesenen Fälle</p>
             </div>
             <div className="text-sm text-slate-600">
               {filteredCases.length} von {cases.length} Fällen
@@ -284,7 +284,7 @@ export default function ExpertCasesPage() {
             <div className="bg-white rounded-lg p-12 text-center">
               <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-slate-800 mb-2">Keine Fälle gefunden</h3>
-              <p className="text-slate-600">Versuchen Sie andere Suchbegriffe oder Filter.</p>
+              <p className="text-gray-600">Versuchen Sie andere Suchbegriffe oder Filter.</p>
             </div>
           )}
         </main>
