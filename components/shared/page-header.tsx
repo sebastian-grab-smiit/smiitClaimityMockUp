@@ -33,7 +33,7 @@ export function PageHeader({
       case "expert-fraud":
         return "Betrugsermittler Portal"
       case "expert-vehicle":
-        return "Fahrzeugexperte Portal"
+        return "Fahrzeugexperten Portal"
       case "expert-appraiser":
         return "Schverständiger Portal"
       case "expert":
@@ -54,7 +54,7 @@ export function PageHeader({
     //   default:
     //     return "bg-slate-100 text-primary"
     // }
-    return "bg-slate-100 text-primary"
+    return "bg-slate-200 text-primary"
   }
 
   return (

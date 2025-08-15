@@ -17,7 +17,7 @@ export default function NewClaimSelectionPage() {
       href: "/insurer/claims/new/manual",
       color: "bg-blue-500",
       hoverColor: "hover:bg-blue-600",
-      recommended: false,
+      comingSoon: false,
     },
     {
       id: "api",
@@ -27,7 +27,7 @@ export default function NewClaimSelectionPage() {
       href: "/insurer/claims/new/api",
       color: "bg-purple-500",
       hoverColor: "hover:bg-purple-600",
-      recommended: false,
+      comingSoon: false,
     },
     {
       id: "pdf",
@@ -37,7 +37,7 @@ export default function NewClaimSelectionPage() {
       href: "/insurer/claims/new/pdf",
       color: "bg-teal-500",
       hoverColor: "hover:bg-teal-600",
-      recommended: true,
+      comingSoon: true,
     },
   ]
 
@@ -114,9 +114,11 @@ export default function NewClaimSelectionPage() {
                 const IconComponent = option.icon
                 return (
                   <Card key={option.id} className="relative hover:shadow-lg transition-shadow">
-                    {option.recommended && (
-                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <span className="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">Empfohlen</span>
+                    {option.comingSoon && (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
+                        <span className="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                          Bald verfügbar
+                        </span>
                       </div>
                     )}
                     <CardHeader className="text-center pb-4">
@@ -136,6 +138,12 @@ export default function NewClaimSelectionPage() {
                         </Link>
                       </Button>
                     </CardContent>
+                    {option.comingSoon && (
+                      <div
+                        className="absolute inset-0 z-10 rounded-lg bg-white/60 backdrop-blur-[0px]"
+                        aria-hidden="true"
+                      />
+                    )}
                   </Card>
                 )
               })}
