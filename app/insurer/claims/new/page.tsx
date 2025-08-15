@@ -27,7 +27,7 @@ export default function NewClaimSelectionPage() {
       href: "/insurer/claims/new/api",
       color: "bg-purple-500",
       hoverColor: "hover:bg-purple-600",
-      comingSoon: false,
+      comingSoon: true,
     },
     {
       id: "pdf",
@@ -37,7 +37,7 @@ export default function NewClaimSelectionPage() {
       href: "/insurer/claims/new/pdf",
       color: "bg-teal-500",
       hoverColor: "hover:bg-teal-600",
-      comingSoon: true,
+      comingSoon: false,
     },
   ]
 
@@ -116,7 +116,7 @@ export default function NewClaimSelectionPage() {
                   <Card key={option.id} className="relative hover:shadow-lg transition-shadow">
                     {option.comingSoon && (
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                        <span className="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                        <span className="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                           Bald verfügbar
                         </span>
                       </div>
