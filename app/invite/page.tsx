@@ -39,7 +39,7 @@ function parseInviteToken(token: string | null): InvitePayload | null {
 
 export default function InvitePage() {
   return (
-    <div className="bg-gradient-to-br from-slate-50 to-teal-50">
+    <div className="bg-gradient-to-br from-slate-100 to-teal-100">
       {/* If you have a header with h-16 (64px), use min-h-[calc(100vh-4rem)].
          If not, just use min-h-screen. */}
       <div className="flex min-h-screen items-center justify-center px-4 md:px-6 py-10">

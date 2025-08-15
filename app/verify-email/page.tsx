@@ -63,7 +63,7 @@ export default function VerifyEmailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-teal-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-teal-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           {/* <Link href="/signup" className="inline-flex items-center text-primary hover:text-primary mb-4">
