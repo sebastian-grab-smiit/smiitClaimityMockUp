@@ -8,6 +8,7 @@ import { NotificationCenter } from "./notification-center"
 import { LanguageSelector } from "./language-selector"
 import Image from "next/image"
 import logo from "../../public/logo.png"
+import logo_dummy from "../../public/logo.svg"
 
 interface PageHeaderProps {
   userType?: "insurer" | "admin" | "expert-vehicle" | "expert-fraud" | "expert-appraiser" | "expert"
@@ -69,13 +70,22 @@ export function PageHeader({
             </Link>
           )}
           <div className="flex items-center space-x-2">
+            {userType === "expert-vehicle" ?
+            <Image
+              src={logo_dummy}
+              alt="Claimity Logo"
+              width={150}
+              height={50}
+              className="rounded-lg"
+            /> :
             <Image
               src={logo}
               alt="Claimity Logo"
               width={100}
               height={30}
               className="rounded-lg"
-            />
+            />}
+
             {/* <span className="text-xl font-bold text-slate-800">claimity</span> */}
           </div>
           {userType && (

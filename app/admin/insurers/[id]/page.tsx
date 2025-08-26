@@ -13,7 +13,7 @@ export async function generateStaticParams() {
 export default async function Page({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
   const { id } = await params; // <-- await here
   return <AdminInsurersPage id={id} />;
