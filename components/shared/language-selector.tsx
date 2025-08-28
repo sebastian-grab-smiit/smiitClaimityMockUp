@@ -13,9 +13,9 @@ interface Language {
 
 const languages: Language[] = [
   { code: "de", name: "Deutsch",  country: "DE" },
+  { code: "en", name: "English",  country: "GB" },
   { code: "fr", name: "Français", country: "FR" },
   { code: "it", name: "Italiano", country: "IT" },
-  { code: "en", name: "English",  country: "GB" }, // or "US" if you prefer 🇺🇸
 ]
 
 export function LanguageSelector() {
@@ -43,7 +43,6 @@ export function LanguageSelector() {
         className="flex items-center space-x-2"
       >
         {currentLang && <Flag country={currentLang.country} />}
-        <span className="text-sm">{currentLang?.code.toUpperCase()}</span>
       </Button>
 
       {isOpen && (
@@ -70,11 +69,6 @@ export function LanguageSelector() {
                 )}
               </button>
             ))}
-          </div>
-          <div className="border-t border-slate-200 p-3">
-            <p className="text-xs text-slate-500">
-              Mehrsprachigkeit wird in Phase 2 verfügbar sein
-            </p>
           </div>
         </div>
       )}

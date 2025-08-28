@@ -17,7 +17,6 @@ import {
   MapPin,
   DollarSign,
   Timer,
-  Star,
 } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
@@ -28,9 +27,9 @@ export default function ExpertDashboard() {
   // Mock data
   const stats = [
     { title: "Zugewiesene Fälle", value: "5", icon: FileText, color: "bg-blue-500" },
-    { title: "Heute fällig", value: "2", icon: Clock, color: "bg-yellow-500" },
+    { title: "Bald fällig", value: "2", icon: Clock, color: "bg-yellow-500" },
     { title: "Abgeschlossen", value: "23", icon: CheckCircle, color: "bg-green-500" },
-    { title: "Bewertung", value: "4.8", icon: Star, color: "bg-purple-500" },
+    { title: "Erfasste Stunden", value: "48.5", icon: DollarSign, color: "bg-purple-500" },
   ]
 
   const assignedCases = [
@@ -42,7 +41,6 @@ export default function ExpertDashboard() {
       deadline: "18.01.2024",
       amount: "CHF 12,000",
       status: "Akzeptiert",
-      priority: "Hoch",
       distance: "2.5 km",
     },
     {
@@ -53,7 +51,6 @@ export default function ExpertDashboard() {
       deadline: "20.01.2024",
       amount: "CHF 8,500",
       status: "In Bearbeitung",
-      priority: "Mittel",
       distance: "1.8 km",
     },
   ]
@@ -92,22 +89,9 @@ export default function ExpertDashboard() {
     }
   }
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "Hoch":
-        return "bg-red-100 text-red-800"
-      case "Mittel":
-        return "bg-yellow-100 text-yellow-800"
-      case "Niedrig":
-        return "bg-green-100 text-green-800"
-      default:
-        return "bg-gray-100 text-gray-800"
-    }
-  }
-
   return (
     <div className="h-screen flex flex-col bg-slate-50">
-      <PageHeader userType="expert-vehicle" userName="Tony Tulliani" />
+      <PageHeader userType="expert-vehicle" userName="Dr. Hans Müller" />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
@@ -190,7 +174,7 @@ export default function ExpertDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Camera className="h-5 w-5 mr-2 text-blue-600" />
+                  <Camera className="h-5 w-5 mr-2 text-primary" />
                   Schnellaktionen
                 </CardTitle>
                 <CardDescription>Häufig verwendete Funktionen</CardDescription>
@@ -219,7 +203,7 @@ export default function ExpertDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Calendar className="h-5 w-5 mr-2 text-green-600" />
+                  <Calendar className="h-5 w-5 mr-2 text-primary" />
                   Heutiger Terminplan
                 </CardTitle>
                 <CardDescription>Ihre Termine für heute</CardDescription>
@@ -255,7 +239,7 @@ export default function ExpertDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <DollarSign className="h-5 w-5 mr-2 text-purple-600" />
+                  <DollarSign className="h-5 w-5 mr-2 text-primary" />
                   Zeit & Honorar
                 </CardTitle>
                 <CardDescription>Aktuelle Zeiterfassung</CardDescription>
@@ -276,7 +260,13 @@ export default function ExpertDashboard() {
                       <span>3.0h</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-purple-500 hover:bg-purple-600">Zeit erfassen</Button>
+                  <div className="text-center pt-2">
+                    <Link href="/expert/vehicle/cases">
+                      <Button variant="ghost" size="sm">
+                        Zeit erfassen
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -318,7 +308,6 @@ export default function ExpertDashboard() {
                           <div className="flex items-center space-x-2 mb-1">
                             <h3 className="font-semibold text-slate-800">{case_.id}</h3>
                             <Badge className={getStatusColor(case_.status)}>{case_.status}</Badge>
-                            <Badge className={getPriorityColor(case_.priority)}>{case_.priority}</Badge>
                           </div>
                           <p className="text-sm text-slate-600">
                             {case_.insurer} • {case_.type}

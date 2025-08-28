@@ -173,13 +173,6 @@ export default function InsurerNotificationsPage() {
               <span>Berichte</span>
             </Link>
             <Link
-              href="/insurer/experts"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
-              <Users className="h-4 w-4" />
-              <span>Experten</span>
-            </Link>
-            <Link
               href="/insurer/notifications"
               className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >

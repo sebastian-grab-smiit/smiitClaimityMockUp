@@ -70,22 +70,13 @@ export function PageHeader({
             </Link>
           )}
           <div className="flex items-center space-x-2">
-            {userType === "expert-vehicle" ?
-            <Image
-              src={logo_dummy}
-              alt="Claimity Logo"
-              width={150}
-              height={50}
-              className="rounded-lg"
-            /> :
             <Image
               src={logo}
               alt="Claimity Logo"
               width={100}
               height={30}
               className="rounded-lg"
-            />}
-
+            />
             {/* <span className="text-xl font-bold text-slate-800">claimity</span> */}
           </div>
           {userType && (
@@ -100,11 +91,6 @@ export function PageHeader({
             {userName && <span className="text-sm text-slate-600 hidden md:block">{userName}</span>}
             <LanguageSelector />
             {userType && <NotificationCenter />}
-            {/* <Link href={`/${userType}/settings`}>
-              <Button variant="ghost" size="sm">
-                <Settings className="h-4 w-4" />
-              </Button>
-            </Link> */}
             <Link href="/login">
               <Button variant="ghost" size="sm">
                 <LogOut className="h-4 w-4" />

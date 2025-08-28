@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { PageHeader } from "@/components/shared/page-header"
-import { FileText, Upload, ArrowLeft, User, MapPin, Star, Award, Settings, Save, Plus, Clock, MessageSquare } from "lucide-react"
+import { FileText, Upload, ArrowLeft, User, MapPin, Star, Award, Settings, Save, Plus, Clock, MessageSquare, BarChart3, Calendar } from "lucide-react"
 import Link from "next/link"
 
 export default function ExpertSettingsPage() {
@@ -15,7 +15,7 @@ export default function ExpertSettingsPage() {
   // Mock settings data
   const settings = {
     id: "EXP-001",
-    name: "Tony Tulliani",
+    name: "Dr. Hans Müller",
     email: "hans.mueller@expert.ch",
     phone: "+41 44 123 45 67",
     address: "Musterstrasse 123, 8001 Zürich",
@@ -66,7 +66,7 @@ export default function ExpertSettingsPage() {
 
   return (
     <div className="h-screen flex flex-col bg-slate-50">
-      <PageHeader userType="expert-vehicle" userName="Tony Tulliani" />
+      <PageHeader userType="expert-vehicle" userName="Dr. Hans Müller" />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
@@ -76,7 +76,7 @@ export default function ExpertSettingsPage() {
               href="/expert/vehicle"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <FileText className="h-4 w-4" />
+              <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
             <Link
@@ -97,7 +97,7 @@ export default function ExpertSettingsPage() {
               href="/expert/vehicle/calendar"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <Clock className="h-4 w-4" />
+              <Calendar className="h-4 w-4" />
               <span>Kalender</span>
             </Link>
             <Link

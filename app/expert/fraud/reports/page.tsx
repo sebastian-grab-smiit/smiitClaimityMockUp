@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { FileText, Upload, Download, Search, Plus, Eye, Edit, Clock, CheckCircle, AlertCircle, MessageSquare, Settings } from "lucide-react"
+import { FileText, Upload, Download, Search, Plus, Eye, Edit, Clock, CheckCircle, AlertCircle, MessageSquare, Settings, BarChart3, Calendar } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
 
@@ -182,7 +182,7 @@ export default function ExpertReportsPage() {
               href="/expert/fraud"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <FileText className="h-4 w-4" />
+              <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
             <Link
@@ -203,7 +203,7 @@ export default function ExpertReportsPage() {
               href="/expert/fraud/calendar"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <Clock className="h-4 w-4" />
+              <Calendar className="h-4 w-4" />
               <span>Kalender</span>
             </Link>
             <Link

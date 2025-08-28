@@ -22,7 +22,6 @@ import {
   MessageSquare
 } from "lucide-react"
 import Link from "next/link"
-import { QuickActions, insurerQuickActions } from "@/components/shared/quick-actions"
 import { PageHeader } from "@/components/shared/page-header"
 
 export default function InsurerDashboard() {
@@ -119,13 +118,6 @@ export default function InsurerDashboard() {
               <span>Berichte</span>
             </Link>
             <Link
-              href="/insurer/experts"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
-              <Users className="h-4 w-4" />
-              <span>Experten</span>
-            </Link>
-            <Link
               href="/insurer/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -172,18 +164,28 @@ export default function InsurerDashboard() {
               ))}
             </div>
 
-            <div className="grid lg:grid-cols-4 gap-6 mb-8">
-              {/* Quick Actions */}
-              <div className="lg:col-span-1">
-                <QuickActions actions={insurerQuickActions} />
-              </div>
-
+            <div className="grid lg:grid-cols-3 gap-6 mb-8">
               {/* Quick Action Cards */}
-              <div className="lg:col-span-3 grid md:grid-cols-2 gap-6">
+              <div className="lg:col-span-3 grid md:grid-cols-3 gap-6">
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <Plus className="h-5 w-5 mr-2 text-teal-600" />
+                      <Search className="h-5 w-5 mr-2 text-primary" />
+                      Fälle suchen
+                    </CardTitle>
+                    <CardDescription>Suchen Sie einen bestehenden Schadenfall</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Link href="/insurer/claims">
+                      <Button className="w-full ">Zu den Fällen</Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <Plus className="h-5 w-5 mr-2 text-primary" />
                       Neuen Fall erstellen
                     </CardTitle>
                     <CardDescription>Melden Sie einen neuen Schadenfall zur Begutachtung an</CardDescription>
@@ -198,16 +200,14 @@ export default function InsurerDashboard() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <Download className="h-5 w-5 mr-2 text-blue-600" />
+                      <Download className="h-5 w-5 mr-2 text-primary" />
                       Berichte exportieren
                     </CardTitle>
                     <CardDescription>Laden Sie Ihre Berichte und Rechnungen herunter</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Link href="/insurer/reports">
-                      <Button variant="outline" className="w-full bg-transparent">
-                        Zu den Berichten
-                      </Button>
+                      <Button className="w-full ">Zu den Berichten</Button>
                     </Link>
                   </CardContent>
                 </Card>

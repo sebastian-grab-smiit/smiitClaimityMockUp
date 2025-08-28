@@ -190,13 +190,6 @@ export default function ClaimsListPage() {
               <span>Berichte</span>
             </Link>
             <Link
-              href="/insurer/experts"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
-              <Users className="h-4 w-4" />
-              <span>Experten</span>
-            </Link>
-            <Link
               href="/insurer/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -237,7 +230,7 @@ export default function ClaimsListPage() {
                     <div className="relative">
                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                       <Input
-                        placeholder="Suche nach Fall-ID, Police oder Typ..."
+                        placeholder="Suche nach Fall-ID, Schadensnummer oder Typ..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="pl-10"
@@ -317,7 +310,7 @@ export default function ClaimsListPage() {
                                 </Badge>
                               </div>
                               <p className="text-sm text-slate-600">
-                                {claim.type} • Police: {claim.policyNumber}
+                                {claim.type} • Schadensnummer: {claim.policyNumber}
                               </p>
                             </div>
                           </div>

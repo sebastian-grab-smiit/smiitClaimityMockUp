@@ -246,13 +246,6 @@ export default function ClaimDetailPage({ id }: { id: string }) {
               <span>Berichte</span>
             </Link>
             <Link
-              href="/insurer/experts"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
-              <Users className="h-4 w-4" />
-              <span>Experten</span>
-            </Link>
-            <Link
               href="/insurer/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -285,7 +278,7 @@ export default function ClaimDetailPage({ id }: { id: string }) {
                   <Badge className={getStatusColor(claim.status)}>{claim.status}</Badge>
                 </div>
                 <p className="text-gray-600">
-                  {claim.type} • Police: {claim.policyNumber}
+                  {claim.type} • Schadensnummer: {claim.policyNumber}
                 </p>
               </div>
               <div className="text-right">

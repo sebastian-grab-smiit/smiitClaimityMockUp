@@ -5,7 +5,9 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  ArrowLeft, MapPin, Clock, Phone, Mail, Upload, Camera, MessageSquare, Timer, FileText, Download, Settings
+  ArrowLeft, MapPin, Clock, Phone, Mail, Upload, Camera, MessageSquare, Timer, FileText, Download, Settings,
+  BarChart3,
+  Calendar
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/page-header';
 import Link from "next/link"
@@ -26,7 +28,6 @@ export default function ClientCasePage({ id }: { id: string }) {
     deadline: '18.01.2024',
     amount: 'CHF 12,000',
     status: 'In Bearbeitung',
-    priority: 'Hoch',
     assignedDate: '15.01.2024',
     description:
       'Kollisionsschaden an BMW X5, Frontbereich betroffen. Fahrzeug ist fahrbereit, aber Reparatur erforderlich.',
@@ -113,19 +114,6 @@ export default function ClientCasePage({ id }: { id: string }) {
     }
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'Hoch':
-        return 'bg-red-100 text-red-800';
-      case 'Mittel':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'Niedrig':
-        return 'bg-green-100 text-green-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
   const totalHours = caseData.timeEntries.reduce((sum, entry) => sum + entry.hours, 0);
 
   const filteredMessages = caseData.messages.filter((msg) => msg.messageType === messageType)
@@ -142,7 +130,7 @@ export default function ClientCasePage({ id }: { id: string }) {
               href="/expert/appraiser"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <FileText className="h-4 w-4" />
+              <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
             <Link
@@ -163,7 +151,7 @@ export default function ClientCasePage({ id }: { id: string }) {
               href="/expert/appraiser/calendar"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <Clock className="h-4 w-4" />
+              <Calendar className="h-4 w-4" />
               <span>Kalender</span>
             </Link>
             <Link
@@ -197,7 +185,6 @@ export default function ClientCasePage({ id }: { id: string }) {
                 <div className="flex items-center space-x-2 mb-2">
                   <h1 className="text-2xl font-bold text-gray-900 mb-2">{caseData.id}</h1>
                   <Badge className={getStatusColor(caseData.status)}>{caseData.status}</Badge>
-                  <Badge className={getPriorityColor(caseData.priority)}>{caseData.priority}</Badge>
                 </div>
                 <p className="text-lg text-slate-600 mb-2">
                   {caseData.insurer} • {caseData.type}

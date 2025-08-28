@@ -46,7 +46,7 @@ export default function NewClaimPage() {
 
   const steps = [
     { number: 1, title: "Kategorie", detail: "Kategorie", description: "Kategorie des Falls" },
-    { number: 2, title: "Grunddaten", detail: "Grunddaten", description: "Police und Schadensart" },
+    { number: 2, title: "Grunddaten", detail: "Grunddaten", description: "Schadensnummer und Schadensart" },
     { number: 3, title: "Ort & Zeit", detail: "Ort & Zeit", description: "Wo und wann?" },
     { number: 4, title: "Schadendetails", detail: "Schadendetails", description: "Beschreibung und Schätzung" },
     { number: 5, title: "Dokumente", detail: "Dokumente (z.B. FZ-Ausweis, Unfallprotokoll, Fotos, Kostenvoranschlag, etc.)", description: "Fotos und Unterlagen hochladen" },
@@ -88,14 +88,14 @@ export default function NewClaimPage() {
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-md text-center">
           <CardContent className="p-8">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+            <CheckCircle className="h-16 w-16 text-primary mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-slate-800 mb-2">Fall erfolgreich erstellt!</h1>
             <p className="text-slate-600 mb-4">
               Ihr Schadenfall wurde erfolgreich eingereicht. Sie erhalten eine Bestätigung per E-Mail.
             </p>
             <div className="bg-slate-100 p-4 rounded-lg mb-6">
               <p className="text-sm text-slate-600">Fall-Nummer:</p>
-              <p className="font-mono font-bold text-lg">
+              <p className="font-bold text-lg">
                 CLM-2024-
                 {Math.floor(Math.random() * 1000)
                   .toString()
@@ -103,8 +103,8 @@ export default function NewClaimPage() {
               </p>
             </div>
             <div className="space-y-2">
-              <Button asChild className="w-full bg-blue-500 hover:bg-blue-600">
-                <Link href="/insurer/claims">Zu allen Fällen</Link>
+              <Button asChild className="w-full bg-primary">
+                <Link href="/insurer">Zum Dashboard</Link>
               </Button>
               <Button asChild variant="outline" className="w-full bg-transparent">
                 <Link href="/insurer/claims/new">Weiteren Fall erstellen</Link>
@@ -151,13 +151,6 @@ export default function NewClaimPage() {
             >
               <Download className="h-4 w-4" />
               <span>Berichte</span>
-            </Link>
-            <Link
-              href="/insurer/experts"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
-              <Users className="h-4 w-4" />
-              <span>Experten</span>
             </Link>
             <Link
               href="/insurer/notifications"

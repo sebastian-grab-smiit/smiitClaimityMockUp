@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Search, Filter, MapPin, Clock, FileText, Upload, MessageSquare, Settings } from "lucide-react"
+import { ArrowLeft, Search, Filter, MapPin, Clock, FileText, Upload, MessageSquare, Settings, BarChart3, Calendar } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
 
@@ -22,7 +22,6 @@ export default function ExpertCasesPage() {
       deadline: "18.01.2024",
       amount: "CHF 12,000",
       status: "Akzeptiert",
-      priority: "Hoch",
       distance: "2.5 km",
       assignedDate: "15.01.2024",
       description: "Kollisionsschaden an BMW X5, Frontbereich betroffen",
@@ -37,7 +36,6 @@ export default function ExpertCasesPage() {
       deadline: "20.01.2024",
       amount: "CHF 8,500",
       status: "In Bearbeitung",
-      priority: "Mittel",
       distance: "1.8 km",
       assignedDate: "16.01.2024",
       description: "Wasserschaden im Erdgeschoss nach Rohrbruch",
@@ -52,7 +50,6 @@ export default function ExpertCasesPage() {
       deadline: "22.01.2024",
       amount: "CHF 15,000",
       status: "Neu",
-      priority: "Niedrig",
       distance: "18.5 km",
       assignedDate: "17.01.2024",
       description: "Defekt an CNC-Maschine, Produktionsausfall",
@@ -67,7 +64,6 @@ export default function ExpertCasesPage() {
       deadline: "Abgeschlossen",
       amount: "CHF 5,200",
       status: "Abgeschlossen",
-      priority: "Mittel",
       distance: "4.2 km",
       assignedDate: "10.01.2024",
       description: "Parkschaden an Audi A4, Heckbereich",
@@ -86,19 +82,6 @@ export default function ExpertCasesPage() {
         return "bg-yellow-100 text-yellow-800"
       case "Abgeschlossen":
         return "bg-gray-100 text-gray-800"
-      default:
-        return "bg-gray-100 text-gray-800"
-    }
-  }
-
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "Hoch":
-        return "bg-red-100 text-red-800"
-      case "Mittel":
-        return "bg-yellow-100 text-yellow-800"
-      case "Niedrig":
-        return "bg-green-100 text-green-800"
       default:
         return "bg-gray-100 text-gray-800"
     }
@@ -128,7 +111,7 @@ export default function ExpertCasesPage() {
               href="/expert/appraiser"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <FileText className="h-4 w-4" />
+              <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
             <Link
@@ -149,7 +132,7 @@ export default function ExpertCasesPage() {
               href="/expert/appraiser/calendar"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
-              <Clock className="h-4 w-4" />
+              <Calendar className="h-4 w-4" />
               <span>Kalender</span>
             </Link>
             <Link
@@ -232,7 +215,6 @@ export default function ExpertCasesPage() {
                     <div className="flex items-center space-x-2 mb-2">
                       <h3 className="text-lg font-semibold text-slate-800">{case_.id}</h3>
                       <Badge className={getStatusColor(case_.status)}>{case_.status}</Badge>
-                      <Badge className={getPriorityColor(case_.priority)}>{case_.priority}</Badge>
                     </div>
                     <p className="text-slate-600 mb-1">
                       {case_.insurer} • {case_.type}
