@@ -206,7 +206,7 @@ export default function AdminCaseDetailPage({ id }: { id: string }) {
               <span>Rechnungen</span>
             </Link>
             <Link
-              href="/admin/communications"
+              href="/admin/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <MessageSquare className="h-4 w-4" />
@@ -386,7 +386,7 @@ export default function AdminCaseDetailPage({ id }: { id: string }) {
                       <TableRow>
                         <TableHead>Dateiname</TableHead>
                         <TableHead>Typ</TableHead>
-                        <TableHead>Größe</TableHead>
+                        <TableHead>Grösse</TableHead>
                         <TableHead>Hochgeladen von</TableHead>
                         <TableHead>Datum</TableHead>
                         <TableHead>Aktionen</TableHead>
@@ -494,7 +494,7 @@ export default function AdminCaseDetailPage({ id }: { id: string }) {
                       <TableRow>
                         <TableHead>Dateiname</TableHead>
                         <TableHead>Typ</TableHead>
-                        <TableHead>Größe</TableHead>
+                        <TableHead>Grösse</TableHead>
                         <TableHead>Hochgeladen von</TableHead>
                         <TableHead>Datum</TableHead>
                         <TableHead>Aktionen</TableHead>

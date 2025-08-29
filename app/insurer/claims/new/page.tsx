@@ -1,13 +1,37 @@
 "use client"
 
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Download, Upload, Zap, ArrowRight, Settings, Users, MessageSquare, FileText, BarChart3, Plus } from "lucide-react"
+import {
+  Download,
+  Upload,
+  Zap,
+  ArrowRight,
+  Settings,
+  Users,
+  MessageSquare,
+  FileText,
+  BarChart3,
+  Plus,
+} from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
 import { Badge } from "@/components/ui/badge"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function NewClaimSelectionPage() {
+  const router = useRouter()
+
   const options = [
     {
       id: "manual",
@@ -39,7 +63,33 @@ export default function NewClaimSelectionPage() {
       hoverColor: "hover:bg-teal-600",
       comingSoon: false,
     },
-  ]
+  ] as const
+
+  const categoryOptions = [
+    { value: "vehicle", label: "Fahrzeuggutachter" },
+    { value: "appraiser", label: "Sachverständiger" },
+    { value: "fraud", label: "Bekämpfung Versicherungsmissbrauch" },
+  ] as const
+
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [selectedFlow, setSelectedFlow] = useState<(typeof options)[number]["id"] | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<(typeof categoryOptions)[number]["value"]>("vehicle")
+
+  const onOpenFor = (flowId: (typeof options)[number]["id"], disabled?: boolean) => {
+    if (disabled) return
+    setSelectedFlow(flowId)
+    setDialogOpen(true)
+  }
+
+  const onContinue = () => {
+    if (!selectedFlow) return
+    router.push(`/insurer/claims/new/${selectedFlow}/${selectedCategory}`)
+    setDialogOpen(false)
+  }
+
+  const activeTitle = options.find(o => o.id === selectedFlow)?.title ?? "Kategorie wählen"
+  const activeColour = options.find(o => o.id === selectedFlow)?.color ?? "bg-primary"
+  const activeHoverColour = options.find(o => o.id === selectedFlow)?.hoverColor ?? "bg-primary"
 
   return (
     <div className="h-screen flex flex-col bg-slate-50">
@@ -124,13 +174,16 @@ export default function NewClaimSelectionPage() {
                       <CardDescription className="text-base">{option.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="pt-0">
-                      <Button asChild className={`w-full ${option.color} ${option.hoverColor} text-white`}>
-                        <Link href={option.href} className="flex items-center justify-center">
-                          Auswählen
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
+                      <Button
+                        className={`w-full ${option.color} ${option.hoverColor} text-white`}
+                        onClick={() => onOpenFor(option.id, option.comingSoon)}
+                        disabled={option.comingSoon}
+                      >
+                        Auswählen
+                        <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </CardContent>
+
                     {option.comingSoon && (
                       <div
                         className="absolute inset-0 z-10 rounded-lg bg-white/60 backdrop-blur-[0px]"
@@ -171,6 +224,38 @@ export default function NewClaimSelectionPage() {
           </div>
         </main>
       </div>
+
+      {/* Kategorie-Auswahl Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{activeTitle}</DialogTitle>
+            <DialogDescription>Bitte wählen Sie die Kategorie für den neuen Fall</DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-2">
+            <Select value={selectedCategory} onValueChange={(v) => setSelectedCategory(v as typeof selectedCategory)}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Kategorie auswählen" />
+              </SelectTrigger>
+              <SelectContent>
+                {categoryOptions.map((c) => (
+                  <SelectItem key={c.value} value={c.value}>
+                    {c.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDialogOpen(false)}>
+              Abbrechen
+            </Button>
+            <Button className={`${activeColour} ${activeHoverColour} text-white`} onClick={onContinue}>Weiter</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

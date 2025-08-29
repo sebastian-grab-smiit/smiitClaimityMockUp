@@ -200,7 +200,7 @@ export default function AdminExpertsPage() {
               <span>Rechnungen</span>
             </Link>
             <Link
-              href="/admin/communications"
+              href="/admin/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <MessageSquare className="h-4 w-4" />
@@ -275,7 +275,7 @@ export default function AdminExpertsPage() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Ø Performance</p>
+                      <p className="text-sm font-medium text-gray-600">Pünktliche Fälle</p>
                       <p className="text-2xl font-bold text-gray-900">
                         {Math.round(experts.reduce((acc, e) => acc + e.performanceScore, 0) / experts.length)}%
                       </p>

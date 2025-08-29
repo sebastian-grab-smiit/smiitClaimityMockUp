@@ -106,6 +106,14 @@ export default function ExpertDashboard() {
               <span>Dashboard</span>
             </Link>
             <Link
+              href="/expert/appraiser/assignments"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Clock className="h-4 w-4" />
+              <span>Zuweisungen</span>
+              <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
+            </Link>
+            <Link
               href="/expert/appraiser/cases"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -118,6 +126,13 @@ export default function ExpertDashboard() {
             >
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
+            </Link>
+            <Link
+              href="/expert/appraiser/time-tracking"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Timer className="h-4 w-4" />
+              <span>Zeiterfassung</span>
             </Link>
             <Link
               href="/expert/appraiser/calendar"

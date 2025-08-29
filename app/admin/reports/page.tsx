@@ -95,7 +95,7 @@ export default function ReportsReviewPage() {
       expert: "Thomas Schneider",
       expertEmail: "thomas.schneider@expert.ch",
       insurer: "Zurich Insurance",
-      status: "Genehmigt",
+      status: "Überarbeitung",
       submitted: "2024-01-18 11:45",
       deadline: "2024-01-21 17:00",
       amount: "CHF 120,000",
@@ -232,7 +232,7 @@ export default function ReportsReviewPage() {
               <span>Rechnungen</span>
             </Link>
             <Link
-              href="/admin/communications"
+              href="/admin/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <MessageSquare className="h-4 w-4" />
@@ -387,30 +387,6 @@ export default function ReportsReviewPage() {
                         </TabsList>
 
                         <TabsContent value="review" className="space-y-4">
-                          {/* Quality Score */}
-                          <div className="bg-slate-50 p-4 rounded-lg">
-                            <div className="flex items-center justify-between mb-3">
-                              <h3 className="font-semibold text-slate-800">Qualitätsbewertung</h3>
-                              <div className="flex items-center space-x-2">
-                                <div className="w-24 bg-slate-200 rounded-full h-2">
-                                  <div
-                                    className={`h-2 rounded-full ${
-                                      selectedReportData.qualityScore >= 90
-                                        ? "bg-green-500"
-                                        : selectedReportData.qualityScore >= 75
-                                          ? "bg-yellow-500"
-                                          : "bg-red-500"
-                                    }`}
-                                    style={{ width: `${selectedReportData.qualityScore}%` }}
-                                  />
-                                </div>
-                                <span className={`font-semibold ${getQualityColor(selectedReportData.qualityScore)}`}>
-                                  {selectedReportData.qualityScore}%
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-
                           {/* Completeness Checklist */}
                           <div className="space-y-3">
                             <h3 className="font-semibold text-slate-800">Vollständigkeitsprüfung</h3>

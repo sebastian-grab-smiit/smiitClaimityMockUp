@@ -57,6 +57,13 @@ export default function InsurerSettingsPage() {
               <span>Berichte</span>
             </Link>
             <Link
+              href="/insurer/experts"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Users className="h-4 w-4" />
+              <span>Experten</span>
+            </Link>
+            <Link
               href="/insurer/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -206,19 +213,19 @@ export default function InsurerSettingsPage() {
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label htmlFor="company">Firmenname</Label>
+                        <Label htmlFor="company" className="mb-2">Firmenname</Label>
                         <Input id="company" defaultValue="Helvetia Versicherung" />
                       </div>
                       <div>
-                        <Label htmlFor="contact">Hauptansprechpartner</Label>
+                        <Label htmlFor="contact" className="mb-2">Hauptansprechpartner</Label>
                         <Input id="contact" defaultValue="Hans Müller" />
                       </div>
                       <div>
-                        <Label htmlFor="email">Kontakt-E-Mail</Label>
+                        <Label htmlFor="email" className="mb-2">Kontakt-E-Mail</Label>
                         <Input id="email" type="email" defaultValue="contact@helvetia.ch" />
                       </div>
                       <div>
-                        <Label htmlFor="phone">Telefonnummer</Label>
+                        <Label htmlFor="phone" className="mb-2">Telefonnummer</Label>
                         <Input id="phone" defaultValue="+41 58 280 10 00" />
                       </div>
                     </div>

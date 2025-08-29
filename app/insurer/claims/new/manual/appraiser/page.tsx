@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { ArrowLeft, Upload, X, ImageIcon, Video, AlertCircle, FileText, CheckCircle, Settings, Users, Download, BarChart3, Plus, MessageSquare } from "lucide-react"
+import { ArrowLeft, Upload, X, ImageIcon, Video, AlertCircle, FileText, CheckCircle, Settings, Users, Download, BarChart3, Plus, MessageSquare, UserCog } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { PageHeader } from "@/components/shared/page-header"
@@ -45,12 +45,11 @@ export default function NewClaimPage() {
   })
 
   const steps = [
-    { number: 1, title: "Kategorie", detail: "Kategorie", description: "Kategorie des Falls" },
-    { number: 2, title: "Grunddaten", detail: "Grunddaten", description: "Schadensnummer und Schadensart" },
-    { number: 3, title: "Ort & Zeit", detail: "Ort & Zeit", description: "Wo und wann?" },
-    { number: 4, title: "Schadendetails", detail: "Schadendetails", description: "Beschreibung und Schätzung" },
-    { number: 5, title: "Dokumente", detail: "Dokumente (z.B. FZ-Ausweis, Unfallprotokoll, Fotos, Kostenvoranschlag, etc.)", description: "Fotos und Unterlagen hochladen" },
-    { number: 6, title: "Überprüfung", detail: "Überprüfung", description: "Angaben kontrollieren" },
+    { number: 1, title: "Grunddaten", detail: "Grunddaten", description: "Schadensnummer und Schadensart" },
+    { number: 2, title: "Ort & Zeit", detail: "Ort & Zeit", description: "Wo und wann?" },
+    { number: 3, title: "Schadendetails", detail: "Schadendetails", description: "Beschreibung und Schätzung" },
+    { number: 4, title: "Dokumente", detail: "Dokumente (z.B. FZ-Ausweis, Unfallprotokoll, Fotos, Kostenvoranschlag, etc.)", description: "Fotos und Unterlagen hochladen" },
+    { number: 5, title: "Überprüfung", detail: "Überprüfung", description: "Angaben kontrollieren" },
   ]
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,10 +172,10 @@ export default function NewClaimPage() {
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">
           <div className="mb-10 text-center">
-            <FileText className="h-16 w-16 text-blue-500 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-slate-800 mb-4">Manuelle Fallerfassung</h1>
+            <UserCog className="h-16 w-16 text-blue-500 mx-auto mb-4" />
+            <h1 className="text-2xl font-bold text-slate-800 mb-4">Sachverständiger</h1>
             <p className="text-lg text-slate-600">
-              Tagen Sie Ihre Falldaten manuell ein
+              Tragen Sie Ihre Falldaten manuell ein
             </p>
           </div>
         
@@ -214,32 +213,8 @@ export default function NewClaimPage() {
                 <CardDescription>{steps[currentStep - 1].description}</CardDescription>
               </CardHeader>
               <CardContent>
-                {/* Step 1: Category */}
+                {/* Step 1: Basic Info */}
                 {currentStep === 1 && (
-                  <div className="space-y-4">
-                    <div className="grid md:grid-cols-1 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="claimCategory">Kategorie *</Label>
-                        <Select
-                          value={formData.claimCategory}
-                          onValueChange={(value) => setFormData({ ...formData, claimCategory: value })}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Kategorie auswählen" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="vehicle">Fahrzeugschaden</SelectItem>
-                            <SelectItem value="property">Sachschaden</SelectItem>
-                            <SelectItem value="fraud">BVM</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Step 2: Basic Info */}
-                {currentStep === 2 && (
                   <div className="space-y-4">
                     <div className="grid md:grid-cols-3 gap-4">
                       <div className="space-y-2">
@@ -307,8 +282,8 @@ export default function NewClaimPage() {
                   </div>
                 )}
 
-                {/* Step 3: Location */}
-                {currentStep === 3 && (
+                {/* Step 2: Location */}
+                {currentStep === 2 && (
                   <div className="space-y-4">
                     <div className="grid md:grid-cols-3 gap-4">
                     <div className="space-y-2">
@@ -355,8 +330,8 @@ export default function NewClaimPage() {
                   </div>
                 )}
 
-                {/* Step 4: Damage Details */}
-                {currentStep === 4 && (
+                {/* Step 3: Damage Details */}
+                {currentStep === 3 && (
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="damageDescription">Schadensbeschreibung *</Label>
@@ -401,8 +376,8 @@ export default function NewClaimPage() {
                   </div>
                 )}
 
-                {/* Step 5: File Upload */}
-                {currentStep === 5 && (
+                {/* Step 4: File Upload */}
+                {currentStep === 4 && (
                   <div className="space-y-4">
                     <div className="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center">
                       <Upload className="h-12 w-12 text-slate-400 mx-auto mb-4" />
@@ -449,8 +424,8 @@ export default function NewClaimPage() {
                   </div>
                 )}
 
-                {/* Step 6: Review */}
-                {currentStep === 6 && (
+                {/* Step 5: Review */}
+                {currentStep === 5 && (
                   <div className="space-y-6">
                     <Alert>
                       <AlertCircle className="h-4 w-4" />
@@ -539,9 +514,9 @@ export default function NewClaimPage() {
                     Zurück
                   </Button>
 
-                  {currentStep < 6 ? (
+                  {currentStep < 5 ? (
                     <Button
-                      onClick={() => setCurrentStep(Math.min(6, currentStep + 1))}
+                      onClick={() => setCurrentStep(Math.min(5, currentStep + 1))}
                       className="bg-blue-500 hover:bg-blue-600"
                     >
                       Weiter

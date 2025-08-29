@@ -11,7 +11,7 @@ import { Search, MessageSquare, AlertCircle, Clock, User, Building, ExternalLink
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
 
-export default function AdminCommunicationsPage() {
+export default function AdminNotificationsPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [filterType, setFilterType] = useState("all")
 
@@ -203,7 +203,7 @@ export default function AdminCommunicationsPage() {
               <span>Rechnungen</span>
             </Link>
             <Link
-              href="/admin/communications"
+              href="/admin/notifications"
               className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
               <MessageSquare className="h-4 w-4" />

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { PageHeader } from "@/components/shared/page-header"
-import { FileText, Upload, ArrowLeft, User, MapPin, Star, Award, Settings, Save, Plus, Clock, MessageSquare, BarChart3, Calendar } from "lucide-react"
+import { FileText, Upload, ArrowLeft, User, MapPin, Star, Award, Settings, Save, Plus, Clock, MessageSquare, Calendar, BarChart3, Timer } from "lucide-react"
 import Link from "next/link"
 
 export default function ExpertSettingsPage() {
@@ -49,7 +49,6 @@ export default function ExpertSettingsPage() {
     stats: {
       avgResponseTime: "2.3 Stunden",
       onTimeDelivery: "95%",
-      customerSatisfaction: "4.8/5",
       activeStreak: "23 Tage",
     },
   }
@@ -80,6 +79,14 @@ export default function ExpertSettingsPage() {
               <span>Dashboard</span>
             </Link>
             <Link
+              href="/expert/vehicle/assignments"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Clock className="h-4 w-4" />
+              <span>Zuweisungen</span>
+              <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
+            </Link>
+            <Link
               href="/expert/vehicle/cases"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -92,6 +99,13 @@ export default function ExpertSettingsPage() {
             >
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
+            </Link>
+            <Link
+              href="/expert/vehicle/time-tracking"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Timer className="h-4 w-4" />
+              <span>Zeiterfassung</span>
             </Link>
             <Link
               href="/expert/vehicle/calendar"
@@ -143,7 +157,7 @@ export default function ExpertSettingsPage() {
           <div className="grid lg:grid-cols-4 gap-6">
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg p-6 mb-6">
+              <div className="bg-white rounded-lg p-6 mb-6 rounded-xl border shadow-sm">
                 <div className="text-center mb-6">
                   <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
                     <User className="h-10 w-10 text-white" />
@@ -186,7 +200,7 @@ export default function ExpertSettingsPage() {
 
             {/* Main Content */}
             <div className="lg:col-span-3">
-              <div className="bg-white rounded-lg p-6">
+              <div className="bg-white rounded-lg p-6 rounded-xl border shadow-sm">
                 {activeTab === "settings" && (
                   <div className="space-y-6">
                     <h2 className="text-xl font-semibold text-slate-800">Profil-Informationen</h2>
@@ -466,15 +480,6 @@ export default function ExpertSettingsPage() {
                         </div>
                         <p className="text-2xl font-bold text-green-900">{settings.stats.onTimeDelivery}</p>
                         <p className="text-sm text-green-700">Ausgezeichnet (Ziel: {">"} 90%)</p>
-                      </div>
-
-                      <div className="p-6 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg">
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="font-semibold text-purple-800">Kundenzufriedenheit</h3>
-                          <Star className="h-5 w-5 text-purple-600" />
-                        </div>
-                        <p className="text-2xl font-bold text-purple-900">{settings.stats.customerSatisfaction}</p>
-                        <p className="text-sm text-purple-700">Hervorragend</p>
                       </div>
 
                       <div className="p-6 bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg">

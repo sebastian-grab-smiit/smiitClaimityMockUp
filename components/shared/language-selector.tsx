@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 import ReactCountryFlag from "react-country-flag"
@@ -21,6 +21,26 @@ const languages: Language[] = [
 export function LanguageSelector() {
   const [currentLanguage, setCurrentLanguage] = useState("de")
   const [isOpen, setIsOpen] = useState(false)
+  
+  const rootRef = useRef<HTMLDivElement>(null)
+
+  // Close on click outside and on Escape
+  useEffect(() => {
+    if (!isOpen) return
+    const handlePointerDown = (e: PointerEvent) => {
+      const el = rootRef.current
+      if (el && !el.contains(e.target as Node)) setIsOpen(false)
+    }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false)
+    }
+    document.addEventListener("pointerdown", handlePointerDown)
+    document.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown)
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [isOpen])
 
   const currentLang = languages.find((l) => l.code === currentLanguage)
 
@@ -35,7 +55,7 @@ export function LanguageSelector() {
   )
 
   return (
-    <div className="relative">
+    <div ref={rootRef} className="relative">
       <Button
         variant="ghost"
         size="sm"

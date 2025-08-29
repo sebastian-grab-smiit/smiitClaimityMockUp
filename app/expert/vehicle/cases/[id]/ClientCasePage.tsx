@@ -134,6 +134,14 @@ export default function ClientCasePage({ id }: { id: string }) {
               <span>Dashboard</span>
             </Link>
             <Link
+              href="/expert/vehicle/assignments"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Clock className="h-4 w-4" />
+              <span>Zuweisungen</span>
+              <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
+            </Link>
+            <Link
               href="/expert/vehicle/cases"
               className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
@@ -146,6 +154,13 @@ export default function ClientCasePage({ id }: { id: string }) {
             >
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
+            </Link>
+            <Link
+              href="/expert/vehicle/time-tracking"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Timer className="h-4 w-4" />
+              <span>Zeiterfassung</span>
             </Link>
             <Link
               href="/expert/vehicle/calendar"
@@ -179,7 +194,7 @@ export default function ClientCasePage({ id }: { id: string }) {
             Zurück zur Übersicht
           </Link>
           {/* Case Header */}
-          <div className="bg-white rounded-lg p-6 mb-6">
+          <div className="bg-white p-6 mb-6 rounded-xl border shadow-sm">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="flex items-center space-x-2 mb-2">
@@ -214,7 +229,7 @@ export default function ClientCasePage({ id }: { id: string }) {
           </div>
 
           {/* Tabs */}
-          <div className="bg-white rounded-lg mb-6">
+          <div className="bg-white mb-6 rounded-xl border shadow-sm">
             <div className="border-b">
               <nav className="flex space-x-8 px-6">
                 {[
@@ -474,13 +489,20 @@ export default function ClientCasePage({ id }: { id: string }) {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-medium text-slate-800 mb-3">Berichtsvorlagen</h4>
-                      <div className="space-y-2">
-                        <Button variant="outline" className="w-full justify-start bg-transparent">
-                          <FileText className="h-4 w-4 mr-2" />
-                          Standard Vorlage
-                        </Button>
+                  
+                    <div className="border rounded-lg p-4">
+                      <h4 className="font-medium text-slate-800 mb-3">Berichtsentwurf</h4>
+                      <Button className="w-full min-h-[200px] mb-3" variant="outline">
+                        <Upload className="h-4 w-4 mr-2" />
+                        Anhänge
+                      </Button>
+                      <div className="flex items-center justify-between">
+                        <div className="flex space-x-2">
+                          <Button variant="outline" size="sm">
+                            Entwurf speichern
+                          </Button>
+                        </div>
+                        <Button className="">Bericht einreichen</Button>
                       </div>
                     </div>
 
@@ -508,26 +530,6 @@ export default function ClientCasePage({ id }: { id: string }) {
                           <span className="text-sm text-slate-700">Qualitätsprüfung</span>
                         </div>
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="border rounded-lg p-4">
-                    <h4 className="font-medium text-slate-800 mb-3">Berichtsentwurf</h4>
-                    <Button className="w-full min-h-[200px] mb-3" variant="outline">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Anhänge
-                    </Button>
-                    <div className="flex items-center justify-between">
-                      <div className="flex space-x-2">
-                        {/* <Button variant="outline" size="sm">
-                          <Upload className="h-4 w-4 mr-2" />
-                          Anhänge
-                        </Button> */}
-                        <Button variant="outline" size="sm">
-                          Entwurf speichern
-                        </Button>
-                      </div>
-                      <Button className="">Bericht einreichen</Button>
                     </div>
                   </div>
                 </div>

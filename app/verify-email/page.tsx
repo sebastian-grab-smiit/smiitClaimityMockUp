@@ -47,7 +47,7 @@ export default function VerifyEmailPage() {
 
   if (isVerified) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-teal-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 to-primary/40 flex items-center justify-center p-4">
         <Card className="w-full max-w-md text-center">
           <CardContent className="p-8">
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />

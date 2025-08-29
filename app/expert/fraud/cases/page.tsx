@@ -3,14 +3,13 @@
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Search, Filter, MapPin, Clock, FileText, Upload, MessageSquare, Settings, BarChart3, Calendar } from "lucide-react"
+import { ArrowLeft, Search, Filter, MapPin, Clock, FileText, Upload, MessageSquare, Settings, BarChart3, Calendar, Timer } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
 
 export default function ExpertCasesPage() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [statusFilter, setStatusFilter] = useState("all")
-  const [typeFilter, setTypeFilter] = useState("all")
+  const [activeTab, setActiveTab] = useState("all")
 
   // Mock data
   const cases = [
@@ -49,7 +48,7 @@ export default function ExpertCasesPage() {
       location: "Winterthur, Industriestrasse 42",
       deadline: "22.01.2024",
       amount: "CHF 15,000",
-      status: "Neu",
+      status: "Akzeptiert",
       distance: "18.5 km",
       assignedDate: "17.01.2024",
       description: "Defekt an CNC-Maschine, Produktionsausfall",
@@ -93,10 +92,13 @@ export default function ExpertCasesPage() {
       case_.insurer.toLowerCase().includes(searchTerm.toLowerCase()) ||
       case_.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
       case_.location.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesStatus = statusFilter === "all" || case_.status === statusFilter
-    const matchesType = typeFilter === "all" || case_.type === typeFilter
+    const matchesTab =
+      activeTab === "all" ||
+      (activeTab === "accepted" && case_.status === "Akzeptiert") ||
+      (activeTab === "in-progress" && case_.status === "In Bearbeitung") ||
+      (activeTab === "completed" && case_.status === "Abgeschlossen")
 
-    return matchesSearch && matchesStatus && matchesType
+    return matchesSearch && matchesTab
   })
 
   return (
@@ -115,6 +117,14 @@ export default function ExpertCasesPage() {
               <span>Dashboard</span>
             </Link>
             <Link
+              href="/expert/fraud/assignments"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Clock className="h-4 w-4" />
+              <span>Zuweisungen</span>
+              <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
+            </Link>
+            <Link
               href="/expert/fraud/cases"
               className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
@@ -127,6 +137,13 @@ export default function ExpertCasesPage() {
             >
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
+            </Link>
+            <Link
+              href="/expert/fraud/time-tracking"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Timer className="h-4 w-4" />
+              <span>Zeiterfassung</span>
             </Link>
             <Link
               href="/expert/fraud/calendar"
@@ -155,61 +172,55 @@ export default function ExpertCasesPage() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">Meine Fälle</h1>
-              <p className="text-gray-600">Übersicht aller zugewiesenen Fälle</p>
-            </div>
-            <div className="text-sm text-slate-600">
-              {filteredCases.length} von {cases.length} Fällen
-            </div>
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold text-slate-800 mb-2">Meine Fälle</h1>
+            <p className="text-gray-600">Verwalten Sie Ihre angenommenen Fälle</p>
           </div>
 
-          {/* Search and Filters */}
-          <div className="bg-white rounded-lg p-6 mb-6">
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
-                <input
-                  type="text"
-                  placeholder="Suche nach Fall-ID, Versicherer, Typ oder Ort..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
-                />
+          {/* Tab Navigation */}
+          <div className="bg-white mb-6 rounded-xl border shadow-sm">
+            <div className="border-b">
+              <nav className="flex space-x-8 px-6">
+                {[
+                  { id: "all", label: "Alle Fälle" },
+                  { id: "accepted", label: "Akzeptiert" },
+                  { id: "in-progress", label: "In Bearbeitung" },
+                  { id: "completed", label: "Abgeschlossen" },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                      activeTab === tab.id
+                        ? "border-primary text-primary"
+                        : "border-transparent text-slate-500 hover:text-slate-700"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </nav>
+            </div>
+
+            <div className="p-6">
+              {/* Search and Filters */}
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+                  <input
+                    type="text"
+                    placeholder="Suche nach Fall-ID, Versicherer, Typ oder Ort..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  />
+                </div>
               </div>
-            </div>
-
-            <div className="flex space-x-4">
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
-              >
-                <option value="all">Alle Status</option>
-                <option value="Neu">Neu</option>
-                <option value="Akzeptiert">Akzeptiert</option>
-                <option value="In Bearbeitung">In Bearbeitung</option>
-                <option value="Abgeschlossen">Abgeschlossen</option>
-              </select>
-              <select
-                value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value)}
-                className="px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
-              >
-                <option value="all">Alle Typen</option>
-                <option value="Fahrzeugschaden">Fahrzeugschaden</option>
-                <option value="Gebäudeschaden">Gebäudeschaden</option>
-                <option value="Maschinenschaden">Maschinenschaden</option>
-                <option value="Haftpflichtschaden">Haftpflichtschaden</option>
-              </select>
-            </div>
-          </div>
 
           {/* Cases List */}
           <div className="space-y-4">
             {filteredCases.map((case_) => (
-              <div key={case_.id} className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
+              <div key={case_.id} className="border rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <div className="flex items-center space-x-2 mb-2">
@@ -248,9 +259,6 @@ export default function ExpertCasesPage() {
                 <div className="flex items-center justify-between pt-4 border-t">
                   <div className="text-sm text-slate-500">Telefon: {case_.phone}</div>
                   <div className="flex space-x-2">
-                    <Button variant="outline" size="sm">
-                      Kontakt
-                    </Button>
                     <Link href={`/expert/fraud/cases/${case_.id}`}>
                       <Button size="sm" className="">
                         Details anzeigen
@@ -263,12 +271,14 @@ export default function ExpertCasesPage() {
           </div>
 
           {filteredCases.length === 0 && (
-            <div className="bg-white rounded-lg p-12 text-center">
+            <div className="text-center py-12">
               <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-slate-800 mb-2">Keine Fälle gefunden</h3>
               <p className="text-gray-600">Versuchen Sie andere Suchbegriffe oder Filter.</p>
             </div>
           )}
+            </div>
+          </div>
         </main>
       </div>
     </div>

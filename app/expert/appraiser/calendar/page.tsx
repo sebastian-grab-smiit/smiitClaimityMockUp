@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { FileText, Upload, ArrowLeft, ChevronLeft, ChevronRight, Plus, Clock, MapPin, MessageSquare, Settings, BarChart3, Calendar } from "lucide-react"
+import { FileText, Upload, ArrowLeft, ChevronLeft, ChevronRight, Plus, Clock, MapPin, MessageSquare, Settings, BarChart3, Calendar, Timer } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
 
@@ -150,6 +150,14 @@ export default function ExpertCalendarPage() {
               <span>Dashboard</span>
             </Link>
             <Link
+              href="/expert/appraiser/assignments"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Clock className="h-4 w-4" />
+              <span>Zuweisungen</span>
+              <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
+            </Link>
+            <Link
               href="/expert/appraiser/cases"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
@@ -162,6 +170,13 @@ export default function ExpertCalendarPage() {
             >
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
+            </Link>
+            <Link
+              href="/expert/appraiser/time-tracking"
+              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
+            >
+              <Timer className="h-4 w-4" />
+              <span>Zeiterfassung</span>
             </Link>
             <Link
               href="/expert/appraiser/calendar"
@@ -216,7 +231,7 @@ export default function ExpertCalendarPage() {
 
           <div className="grid lg:grid-cols-4 gap-6">
             {/* Calendar */}
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 rounded-xl border shadow-sm">
               <div className="bg-white rounded-lg p-6">
                 {/* Calendar Header */}
                 <div className="flex items-center justify-between mb-6">
@@ -283,7 +298,7 @@ export default function ExpertCalendarPage() {
             {/* Sidebar */}
             <div className="space-y-6">
               {/* Today's Appointments */}
-              <div className="bg-white rounded-lg p-6">
+              <div className="bg-white rounded-lg p-6 rounded-xl border shadow-sm">
                 <h3 className="font-semibold text-slate-800 mb-4">Heutige Termine</h3>
                 <div className="space-y-3">
                   {appointments
@@ -312,7 +327,7 @@ export default function ExpertCalendarPage() {
               </div>
 
               {/* Availability Settings */}
-              <div className="bg-white rounded-lg p-6">
+              <div className="bg-white rounded-lg p-6 rounded-xl border shadow-sm">
                 <h3 className="font-semibold text-slate-800 mb-4">Verfügbarkeit</h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -341,7 +356,7 @@ export default function ExpertCalendarPage() {
               </div>
 
               {/* Quick Stats */}
-              <div className="bg-white rounded-lg p-6">
+              <div className="bg-white rounded-lg p-6 rounded-xl border shadow-sm">
                 <h3 className="font-semibold text-slate-800 mb-4">Statistiken</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between">
