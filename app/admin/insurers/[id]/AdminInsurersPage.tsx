@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -24,9 +24,48 @@ import {
   MessageSquare,
   File,
   LucideMap,
+  Banknote,
+  CreditCard,
+  Save,
+  X,
 } from "lucide-react"
 import Link from "next/link"
 import { PageHeader } from "@/components/shared/page-header"
+
+type TariffItem = {
+  service: string
+  category: string
+  hourly?: number | null
+  flat?: number | null
+}
+
+const TARIFFS: Record<"sachverstaendiger" | "fahrzeugexperte" | "bvm", TariffItem[]> = {
+  sachverstaendiger: [
+    { service: "Sachverständiger", category: "einfache Rechnungsprüfung", flat: 75 },
+    { service: "Sachverständiger", category: "Aussendienst", hourly: 170 },
+    { service: "Sachverständiger", category: "Innendienst", hourly: 140 },
+  ],
+  fahrzeugexperte: [
+    { service: "Fahrzeugexpertise", category: "Standardexpertise", flat: 315 },
+    { service: "Fahrzeugexpertise", category: "Kurzexpertise", flat: 160 },
+    { service: "Fahrzeugexpertise", category: "LiveExpert", flat: 200 },
+    { service: "Fahrzeugexpertise", category: "Drive-In Expertise", flat: 200 },
+    { service: "Fahrzeugexpertise", category: "Rechnungskontrolle", flat: 75 },
+    { service: "Fahrzeugexpertise", category: "Wrackverkauf Schweiz", flat: 120 },
+    { service: "Fahrzeugexpertise", category: "Wrackverkauf Ausland", flat: 175 },
+    { service: "Fahrzeugexpertise", category: "Totalschaden", flat: 350 },
+  ],
+  bvm: [
+    { service: "BVM", category: "Ermittlung", hourly: 220 },
+    { service: "BVM", category: "Kurzcheck", flat: 100 },
+  ],
+}
+
+const CATEGORY_LABEL: Record<keyof typeof TARIFFS, string> = {
+  sachverstaendiger: "Sachverständiger",
+  fahrzeugexperte: "Fahrzeugexperte",
+  bvm: "Bekämpfung Versicherungsmissbrauch",
+}
 
 export default function InsurerDetailPage({ id }: { id: string }) {
   // Mock data for the insurer
@@ -42,7 +81,25 @@ export default function InsurerDetailPage({ id }: { id: string }) {
     contractType: "Premium",
     commissionRate: "18.5%",
     joinDate: "2022-03-15",
-    notes: "Strategischer Partner mit hohem Volumen. Bevorzugte Behandlung bei Expertenzuweisung.",
+    notes:
+      "Strategischer Partner mit hohem Volumen. Bevorzugte Behandlung bei Expertenzuweisung.",
+    // NEW: Admin user & payment details
+    adminUser: {
+      name: "Anna Beispiel",
+      email: "anna.beispiel@zurich.ch",
+      phone: "+41 79 555 22 11",
+      role: "Admin",
+    },
+    payment: {
+      accountHolder: "Zurich Insurance Group",
+      iban: "CH44 3199 9123 0008 8901 2",
+      bankName: "Zürcher Kantonalbank",
+      bic: "ZKBKCHZZ80A",
+      billingEmail: "ap@zurich.ch",
+      billingAddress: "Zurich Insurance Group, Finance AP, Postfach, 8022 Zürich",
+      paymentTerms: "30",
+    },
+    tariffs: TARIFFS,
   }
 
   const stats = [
@@ -92,6 +149,8 @@ export default function InsurerDetailPage({ id }: { id: string }) {
     }
   }
 
+  const money = (n?: number | null) => (n != null ? `CHF ${n}` : "–")
+
   return (
     <div className="h-screen flex flex-col bg-slate-50">
       <PageHeader userType="admin" />
@@ -100,68 +159,41 @@ export default function InsurerDetailPage({ id }: { id: string }) {
         {/* Sidebar */}
         <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
-            <Link
-              href="/admin"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/admin" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
-            <Link
-              href="/admin/experts"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/admin/experts" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <Users className="h-4 w-4" />
               <span>Experten</span>
             </Link>
-            <Link
-              href="/admin/insurers"
-              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
-            >
+            <Link href="/admin/insurers" className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg">
               <Building2 className="h-4 w-4" />
               <span>Versicherer</span>
             </Link>
-            <Link
-              href="/admin/cases"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/admin/cases" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <FileText className="h-4 w-4" />
               <span>Alle Fälle</span>
             </Link>
-            <Link
-              href="/admin/assignment"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/admin/assignment" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <LucideMap className="h-4 w-4" />
               <span>Zuordnung</span>
             </Link>
-            <Link
-              href="/admin/reports"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/admin/reports" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <File className="h-4 w-4" />
               <span>Berichte</span>
               <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
             </Link>
-            <Link
-              href="/admin/invoicing"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/admin/invoicing" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <DollarSign className="h-4 w-4" />
               <span>Rechnungen</span>
             </Link>
-            <Link
-              href="/admin/notifications"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/admin/notifications" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <MessageSquare className="h-4 w-4" />
               <span>Nachrichten</span>
               {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
             </Link>
-            <Link
-              href="/admin/settings"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/admin/settings" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <Settings className="h-4 w-4" />
               <span>Einstellungen</span>
             </Link>
@@ -170,11 +202,6 @@ export default function InsurerDetailPage({ id }: { id: string }) {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          <Link href="/admin/insurers" className="flex items-center text-primary mb-3">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Zurück zur Übersicht
-          </Link>
-          {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center">
@@ -183,22 +210,26 @@ export default function InsurerDetailPage({ id }: { id: string }) {
               <div>
                 <h1 className="text-2xl font-bold text-slate-900">{insurer.name}</h1>
                 <div className="flex items-center space-x-4 mt-1">
-                  <Badge
-                    className={
-                      insurer.status === "Aktiv" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
-                    }
-                  >
+                  <Badge className={insurer.status === "Aktiv" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}>
                     {insurer.status}
                   </Badge>
                   <span className="text-slate-600">Seit {insurer.joinDate}</span>
                 </div>
               </div>
             </div>
-            <Button className="bg-primary">
-              <Edit className="h-4 w-4 mr-2" />
-              Bearbeiten
-            </Button>
-          </div>
+              <div className="flex space-x-2">
+                <Link href="/admin/insurers">
+                  <Button variant="outline">
+                    <X className="h-4 w-4 mr-2" />
+                    Abbrechen
+                  </Button>
+                </Link>
+                <Button className="bg-primary">
+                  <Save className="h-4 w-4 mr-2" />
+                  Versicherer speichern
+                </Button>
+              </div>
+            </div>
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -218,13 +249,16 @@ export default function InsurerDetailPage({ id }: { id: string }) {
           </div>
 
           <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList>
+            <TabsList className="flex flex-wrap">
               <TabsTrigger value="overview">Übersicht</TabsTrigger>
               <TabsTrigger value="cases">Fälle</TabsTrigger>
-              <TabsTrigger value="experts">Nutzer</TabsTrigger>
+              <TabsTrigger value="team">Team</TabsTrigger>
+              <TabsTrigger value="tariffs">Tarife</TabsTrigger>
+              <TabsTrigger value="payments">Zahlungen</TabsTrigger>
               <TabsTrigger value="settings">Einstellungen</TabsTrigger>
             </TabsList>
 
+            {/* OVERVIEW */}
             <TabsContent value="overview" className="space-y-6">
               <div className="grid lg:grid-cols-2 gap-6">
                 <Card>
@@ -294,6 +328,7 @@ export default function InsurerDetailPage({ id }: { id: string }) {
               </div>
             </TabsContent>
 
+            {/* CASES */}
             <TabsContent value="cases">
               <Card>
                 <CardHeader>
@@ -342,18 +377,133 @@ export default function InsurerDetailPage({ id }: { id: string }) {
               </Card>
             </TabsContent>
 
-            <TabsContent value="experts">
+            {/* TEAM / ADMIN */}
+            <TabsContent value="team">
+              <div className="grid lg:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Admin-Benutzer</CardTitle>
+                    <CardDescription>Primärer Administrator für dieses Konto</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-600">Name</span>
+                      <span className="font-medium">{insurer.adminUser.name}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-600">E-Mail</span>
+                      <span className="font-medium">{insurer.adminUser.email}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-600">Telefon</span>
+                      <span className="font-medium">{insurer.adminUser.phone}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-600">Rolle</span>
+                      <Badge>Admin</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Weitere Nutzer</CardTitle>
+                    <CardDescription>Nutzerverwaltung (Platzhalter)</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-slate-600">Nutzerliste wird hier angezeigt…</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* TARIFFS */}
+            <TabsContent value="tariffs" className="space-y-6">
+              {(
+                Object.keys(insurer.tariffs) as (keyof typeof insurer.tariffs)[]
+              ).map((key) => (
+                <Card key={key}>
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <Banknote className="h-5 w-5 mr-2 text-slate-600" />
+                      {CATEGORY_LABEL[key]}
+                    </CardTitle>
+                    <CardDescription>Preisübersicht dieser Kategorie</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Dienstleistung</TableHead>
+                            <TableHead>Kategorie</TableHead>
+                            <TableHead>Stundensatz (CHF/h)</TableHead>
+                            <TableHead>Pauschale (CHF)</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {insurer.tariffs[key].map((row, idx) => (
+                            <TableRow key={`${row.category}-${idx}`}>
+                              <TableCell className="font-medium">{row.service}</TableCell>
+                              <TableCell>{row.category}</TableCell>
+                              <TableCell>{row.hourly != null ? money(row.hourly) : "–"}</TableCell>
+                              <TableCell>{row.flat != null ? money(row.flat) : "–"}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </TabsContent>
+
+            {/* PAYMENTS */}
+            <TabsContent value="payments">
               <Card>
                 <CardHeader>
-                  <CardTitle>Zugewiesene Nutzer</CardTitle>
-                  <CardDescription>Nutzer, die für diesen Versicherer arbeiten</CardDescription>
+                  <CardTitle className="flex items-center">
+                    <CreditCard className="h-5 w-5 mr-2 text-slate-600" />
+                    Zahlungsdetails
+                  </CardTitle>
+                  <CardDescription>Bank- & Rechnungsdaten</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">Nutzerliste wird hier angezeigt...</p>
+                <CardContent className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded">
+                      <span className="text-slate-600">Kontoinhaber</span>
+                      <span className="font-medium">{insurer.payment.accountHolder}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded">
+                      <span className="text-slate-600">IBAN</span>
+                      <span className="font-medium">{insurer.payment.iban}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded">
+                      <span className="text-slate-600">Bankname</span>
+                      <span className="font-medium">{insurer.payment.bankName}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded">
+                      <span className="text-slate-600">BIC / SWIFT</span>
+                      <span className="font-medium">{insurer.payment.bic}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded">
+                      <span className="text-slate-600">Rechnungs-E-Mail</span>
+                      <span className="font-medium">{insurer.payment.billingEmail}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-slate-50 rounded">
+                      <span className="text-slate-600">Zahlungsziel</span>
+                      <span className="font-medium">{insurer.payment.paymentTerms} Tage</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-600 mb-1">Rechnungsadresse</p>
+                    <p className="bg-slate-50 p-3 rounded">{insurer.payment.billingAddress}</p>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
 
+            {/* SETTINGS placeholder */}
             <TabsContent value="settings">
               <Card>
                 <CardHeader>
@@ -361,7 +511,7 @@ export default function InsurerDetailPage({ id }: { id: string }) {
                   <CardDescription>Versicherer-spezifische Konfiguration</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600">Einstellungen werden hier angezeigt...</p>
+                  <p className="text-gray-600">Einstellungen werden hier angezeigt…</p>
                 </CardContent>
               </Card>
             </TabsContent>

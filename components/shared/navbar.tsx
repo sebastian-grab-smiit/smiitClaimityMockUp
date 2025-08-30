@@ -32,7 +32,7 @@ interface NavItem {
 }
 
 interface NavbarProps {
-  userType: "insurer" | "admin" | "expert-vehicle" | "expert-fraud" | "expert-appraiser"
+  userType: "insurer" | "admin" | "expert"
   currentPath?: string
 }
 
@@ -62,32 +62,15 @@ export function Navbar({ userType, currentPath = "" }: NavbarProps) {
           { href: "/insurer/notifications", icon: MessageSquare, label: "Nachrichten", badge: 2, badgeColor: "bg-red-500" },
           { href: "/insurer/settings", icon: Settings, label: "Einstellungen" },
         ]
-      case "expert-appraiser":
+      case "expert":
         return [
-          { href: "/expert/appraiser", icon: BarChart3, label: "Dashboard" },
-          { href: "/expert/appraiser/cases", icon: FileText, label: "Meine Fälle" },
-          { href: "/expert/appraiser/reports", icon: Upload, label: "Berichte" },
-          { href: "/expert/appraiser/calendar", icon: Calendar, label: "Kalender" },
-          { href: "/expert/appraiser/notifications", icon: MessageSquare, label: "Nachrichten", badge: 2, badgeColor: "bg-red-500" },
-          { href: "/expert/appraiser/settings", icon: Settings, label: "Profil" },
-        ]
-      case "expert-fraud":
-        return [
-          { href: "/expert/fraud", icon: BarChart3, label: "Dashboard" },
-          { href: "/expert/fraud/cases", icon: FileText, label: "Meine Fälle" },
-          { href: "/expert/fraud/reports", icon: Upload, label: "Berichte" },
-          { href: "/expert/fraud/calendar", icon: Calendar, label: "Kalender" },
-          { href: "/expert/fraud/notifications", icon: MessageSquare, label: "Nachrichten", badge: 2, badgeColor: "bg-red-500" },
-          { href: "/expert/fraud/settings", icon: Settings, label: "Profil" },
-        ]
-      case "expert-vehicle":
-        return [
-          { href: "/expert/vehicle", icon: BarChart3, label: "Dashboard" },
-          { href: "/expert/vehicle/cases", icon: FileText, label: "Meine Fälle" },
-          { href: "/expert/vehicle/reports", icon: Upload, label: "Berichte" },
-          { href: "/expert/vehicle/calendar", icon: Calendar, label: "Kalender" },
-          { href: "/expert/vehicle/notifications", icon: MessageSquare, label: "Nachrichten", badge: 2, badgeColor: "bg-red-500" },
-          { href: "/expert/vehicle/settings", icon: Settings, label: "Profil" },
+          { href: "/expert", icon: BarChart3, label: "Dashboard" },
+          { href: "/expert/assignments", icon: FileText, label: "Zuweisungen" },
+          { href: "/expert/cases", icon: FileText, label: "Meine Fälle" },
+          { href: "/expert/reports", icon: Upload, label: "Berichte" },
+          { href: "/expert/time-tracking", icon: Calendar, label: "Zeiterfassung" },
+          { href: "/expert/notifications", icon: MessageSquare, label: "Nachrichten", badge: 2, badgeColor: "bg-red-500" },
+          { href: "/expert/settings", icon: Settings, label: "Profil" },
         ]
       default:
         return []

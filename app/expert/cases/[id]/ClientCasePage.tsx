@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import {
   ArrowLeft, MapPin, Clock, Phone, Mail, Upload, Camera, MessageSquare, Timer, FileText, Download, Settings,
   BarChart3,
-  Calendar
+  Calendar, X
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/page-header';
 import Link from "next/link"
@@ -17,6 +17,37 @@ export default function ClientCasePage({ id }: { id: string }) {
   const [timeEntry, setTimeEntry] = useState('');
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState("insurer")
+
+  // --- NEW: Invoice state ---
+  const [invoice, setInvoice] = useState<{ dueDate: string; amount: string; file: File | null }>({
+    dueDate: '',
+    amount: '',
+    file: null,
+  });
+  const [invoiceSaved, setInvoiceSaved] = useState(false);
+  const [invoiceError, setInvoiceError] = useState<string | null>(null);
+
+  const onInvoiceFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    if (f.type !== 'application/pdf') {
+      setInvoiceError('Bitte nur PDF-Dateien hochladen.');
+      return;
+    }
+    setInvoiceError(null);
+    setInvoice((prev) => ({ ...prev, file: f }));
+  };
+
+  const removeInvoiceFile = () => setInvoice((prev) => ({ ...prev, file: null }));
+
+  const saveInvoice = () => {
+    // here you would call your API
+    setInvoiceSaved(true);
+    setTimeout(() => setInvoiceSaved(false), 2000);
+  };
+
+  const formatBytes = (bytes?: number) =>
+    typeof bytes === 'number' ? `${(bytes / 1024 / 1024).toFixed(2)} MB` : '';
 
   // ---- your original mock data (kept) ----
   const caseData = {
@@ -115,26 +146,25 @@ export default function ClientCasePage({ id }: { id: string }) {
   };
 
   const totalHours = caseData.timeEntries.reduce((sum, entry) => sum + entry.hours, 0);
-
   const filteredMessages = caseData.messages.filter((msg) => msg.messageType === messageType)
 
   return (
     <div className="h-screen flex flex-col bg-slate-50">
-      <PageHeader userType="expert-fraud" userName="Dr. Hans Müller" />
+      <PageHeader userType="expert-appraiser" userName="Dr. Hans Müller" />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
-              href="/expert/fraud"
+              href="/expert"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
             <Link
-              href="/expert/fraud/assignments"
+              href="/expert/assignments"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Clock className="h-4 w-4" />
@@ -142,35 +172,28 @@ export default function ClientCasePage({ id }: { id: string }) {
               <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
             </Link>
             <Link
-              href="/expert/fraud/cases"
+              href="/expert/cases"
               className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
               <FileText className="h-4 w-4" />
               <span>Meine Fälle</span>
             </Link>
             <Link
-              href="/expert/fraud/reports"
+              href="/expert/reports"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
             </Link>
             <Link
-              href="/expert/fraud/time-tracking"
+              href="/expert/time-tracking"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Timer className="h-4 w-4" />
               <span>Zeiterfassung</span>
             </Link>
             <Link
-              href="/expert/fraud/calendar"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
-              <Calendar className="h-4 w-4" />
-              <span>Kalender</span>
-            </Link>
-            <Link
-              href="/expert/fraud/notifications"
+              href="/expert/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <MessageSquare className="h-4 w-4" />
@@ -178,7 +201,7 @@ export default function ClientCasePage({ id }: { id: string }) {
               {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
             </Link>
             <Link
-              href="/expert/fraud/settings"
+              href="/expert/settings"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Settings className="h-4 w-4" />
@@ -189,7 +212,7 @@ export default function ClientCasePage({ id }: { id: string }) {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          <Link href="/expert/fraud/cases" className="flex items-center text-primary mb-3">
+          <Link href="/expert/cases" className="flex items-center text-primary mb-3">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Zurück zur Übersicht
           </Link>
@@ -238,6 +261,7 @@ export default function ClientCasePage({ id }: { id: string }) {
                   { id: "messages", label: "Nachrichten" },
                   { id: "time", label: "Zeiterfassung" },
                   { id: "report", label: "Bericht" },
+                  { id: "invoice", label: "Rechnung" }, // NEW TAB
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -531,6 +555,89 @@ export default function ClientCasePage({ id }: { id: string }) {
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* NEW: Rechnung */}
+              {activeTab === "invoice" && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-slate-800">Rechnungsdaten</h3>
+                    {invoiceSaved && (
+                      <Badge className="bg-green-100 text-green-800">Gespeichert</Badge>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+                        <Calendar className="h-4 w-4" />
+                        Fälligkeitsdatum
+                      </label>
+                      <input
+                        type="date"
+                        value={invoice.dueDate}
+                        onChange={(e) => setInvoice((p) => ({ ...p, dueDate: e.target.value }))}
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Rechnungsbetrag (CHF)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                        value={invoice.amount}
+                        onChange={(e) => setInvoice((p) => ({ ...p, amount: e.target.value }))}
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Rechnung als PDF</label>
+                    <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center">
+                      <input
+                        id="invoice-pdf"
+                        type="file"
+                        accept="application/pdf,.pdf"
+                        onChange={onInvoiceFileChange}
+                        className="hidden"
+                      />
+                      {invoice.file ? (
+                        <div className="flex items-center justify-between bg-slate-50 rounded-lg p-3">
+                          <div className="flex items-center gap-3">
+                            <FileText className="h-5 w-5 text-slate-500" />
+                            <div className="text-left">
+                              <p className="text-sm font-medium text-slate-800">{invoice.file.name}</p>
+                              <p className="text-xs text-slate-500">{formatBytes(invoice.file.size)}</p>
+                            </div>
+                          </div>
+                          <Button variant="ghost" size="sm" onClick={removeInvoiceFile}>
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <>
+                          <Upload className="h-10 w-10 text-slate-400 mx-auto mb-3" />
+                          <p className="text-slate-600 mb-3">Laden Sie Ihre Rechnung als PDF hoch</p>
+                          <Button asChild variant="outline">
+                            <label htmlFor="invoice-pdf" className="cursor-pointer">
+                              PDF auswählen
+                            </label>
+                          </Button>
+                        </>
+                      )}
+                      {invoiceError && <p className="text-red-600 text-sm mt-3">{invoiceError}</p>}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-end">
+                    <Button onClick={saveInvoice}>
+                      Speichern
+                    </Button>
                   </div>
                 </div>
               )}

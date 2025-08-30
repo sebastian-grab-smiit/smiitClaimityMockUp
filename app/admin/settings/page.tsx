@@ -26,10 +26,9 @@ import { PageHeader } from "@/components/shared/page-header"
 type TabId = "system" | "users" | "data" | "notifications" | "security" | "audit"
 
 export default function AdminSettingsPage() {
-  const [activeTab, setActiveTab] = useState<TabId>("system")
+  const [activeTab, setActiveTab] = useState<TabId>("users")
 
   const tabs: { id: TabId; label: string; icon: React.ElementType }[] = [
-    { id: "system",         label: "System",               icon: Shield },
     { id: "users",          label: "Benutzer & Rollen",    icon: Users },
     { id: "data",           label: "Daten & Backup",       icon: Database },
     { id: "notifications",  label: "Benachrichtigungen",   icon: Bell },
@@ -139,58 +138,6 @@ export default function AdminSettingsPage() {
 
               {/* Tab contents */}
               <div className="p-6">
-                {/* System */}
-                <TabsContent value="system" className="space-y-6">
-                  <h1 className="text-2xl font-bold text-gray-900 mb-2">System-Einstellungen</h1>
-
-                  <section className="bg-white rounded-lg p-6">
-                    <h3 className="font-semibold text-slate-800 mb-4">Hosting & Infrastruktur</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Hosting-Standort</label>
-                        <select className="w-full px-3 py-2 border border-slate-300 rounded-lg">
-                          <option>Schweiz (Zürich)</option>
-                          <option>Schweiz (Genf)</option>
-                        </select>
-                        <p className="text-xs text-slate-500 mt-1">CH-Hosting für Datenschutz-Compliance</p>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Backup-Frequenz</label>
-                        <select className="w-full px-3 py-2 border border-slate-300 rounded-lg">
-                          <option>Täglich</option>
-                          <option>Alle 6 Stunden</option>
-                          <option>Alle 12 Stunden</option>
-                        </select>
-                      </div>
-                    </div>
-                  </section>
-
-                  <section className="bg-white rounded-lg p-6">
-                    <h3 className="font-semibold text-slate-800 mb-4">Datenaufbewahrung</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
-                          Aufbewahrungsdauer für Fälle
-                        </label>
-                        <select className="w-full px-3 py-2 border border-slate-300 rounded-lg">
-                          <option>10 Jahre (Standard)</option>
-                          <option>7 Jahre</option>
-                          <option>15 Jahre</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
-                          Aufbewahrungsdauer für Audit Logs
-                        </label>
-                        <select className="w-full px-3 py-2 border border-slate-300 rounded-lg">
-                          <option>7 Jahre (Revisionssicher)</option>
-                          <option>10 Jahre</option>
-                        </select>
-                      </div>
-                    </div>
-                  </section>
-                </TabsContent>
-
                 {/* Users */}
                 <TabsContent value="users" className="space-y-6">
                   <h1 className="text-2xl font-bold text-gray-900 mb-2">Benutzer & Rollen</h1>

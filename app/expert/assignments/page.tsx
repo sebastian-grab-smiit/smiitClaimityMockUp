@@ -129,21 +129,21 @@ export default function ExpertAssignmentsPage() {
 
   return (
     <div className="h-screen flex flex-col bg-slate-50">
-      <PageHeader userType="expert-vehicle" userName="Dr. Hans Müller" />
+      <PageHeader userType="expert-appraiser" userName="Dr. Hans Müller" />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
             <Link
-              href="/expert/vehicle"
+              href="/expert"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
             <Link
-              href="/expert/vehicle/assignments"
+              href="/expert/assignments"
               className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
             >
               <Clock className="h-4 w-4" />
@@ -151,35 +151,28 @@ export default function ExpertAssignmentsPage() {
               <Badge className="bg-yellow-500 text-white text-xs">{assignments.length}</Badge>
             </Link>
             <Link
-              href="/expert/vehicle/cases"
+              href="/expert/cases"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <FileText className="h-4 w-4" />
               <span>Meine Fälle</span>
             </Link>
             <Link
-              href="/expert/vehicle/reports"
+              href="/expert/reports"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
             </Link>
             <Link
-              href="/expert/vehicle/time-tracking"
+              href="/expert/time-tracking"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Timer className="h-4 w-4" />
               <span>Zeiterfassung</span>
             </Link>
             <Link
-              href="/expert/vehicle/calendar"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
-              <Calendar className="h-4 w-4" />
-              <span>Kalender</span>
-            </Link>
-            <Link
-              href="/expert/vehicle/notifications"
+              href="/expert/notifications"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <MessageSquare className="h-4 w-4" />
@@ -187,7 +180,7 @@ export default function ExpertAssignmentsPage() {
               <Badge className="bg-red-500 text-white text-xs">2</Badge>
             </Link>
             <Link
-              href="/expert/vehicle/settings"
+              href="/expert/settings"
               className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
             >
               <Settings className="h-4 w-4" />

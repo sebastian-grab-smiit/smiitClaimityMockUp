@@ -5,12 +5,65 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { PageHeader } from "@/components/shared/page-header"
-import { FileText, Upload, ArrowLeft, User, MapPin, Star, Award, Settings, Save, Plus, Clock, MessageSquare, Calendar, BarChart3, Timer } from "lucide-react"
+import {
+  FileText, Upload, ArrowLeft, User, MapPin, Star, Award, Settings, Save, Plus,
+  Clock, MessageSquare, Calendar, BarChart3, Timer, Table, Download
+} from "lucide-react"
 import Link from "next/link"
+
+type TariffRow = { category: string; hourly?: number; flat?: number }
+type TariffGroup = { group: string; rows: TariffRow[] }
 
 export default function ExpertSettingsPage() {
   const [activeTab, setActiveTab] = useState("settings")
   const [isEditing, setIsEditing] = useState(false)
+
+  // Tarife (wie im Screenshot)
+  const tarife: TariffGroup[] = [
+    {
+      group: "Sachverständiger",
+      rows: [
+        { category: "einfache Rechnungsprüfung", flat: 75 },
+        { category: "Aussendienst", hourly: 170 },
+        { category: "Innendienst", hourly: 140 },
+      ],
+    },
+    // {
+    //   group: "Fahrzeugexpertise",
+    //   rows: [
+    //     { category: "Standardexpertise", flat: 315 },
+    //     { category: "Kurzexpertise", flat: 160 },
+    //     { category: "LiveExpert", flat: 200 },
+    //     { category: "Drive-In Expertise", flat: 200 },
+    //     { category: "Rechnungskontrolle", flat: 75 },
+    //     { category: "Wrackverkauf Schweiz", flat: 120 },
+    //     { category: "Wrackverkauf Ausland", flat: 175 },
+    //     { category: "Totalschaden", flat: 350 },
+    //   ],
+    // },
+    // {
+    //   group: "BVM",
+    //   rows: [
+    //     { category: "Ermittlung", hourly: 220 },
+    //     { category: "Kurzcheck", flat: 100 },
+    //   ],
+    // },
+  ]
+  const fmt = (n?: number) => (typeof n === "number" ? n.toLocaleString("de-CH") : "—")
+  const exportCSV = () => {
+    const header = ["Dienstleistung", "Kategorie", "Stundenansatz Experte (CHF/h)", "Pauschale (CHF)"]
+    const lines = [header.join(";")]
+    tarife.forEach((g) =>
+      g.rows.forEach((r) => lines.push([g.group, r.category, r.hourly ?? "", r.flat ?? ""].join(";")))
+    )
+    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8;" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = "tarife.csv"
+    a.click()
+    URL.revokeObjectURL(url)
+  }
 
   // Mock settings data
   const settings = {
@@ -65,67 +118,39 @@ export default function ExpertSettingsPage() {
 
   return (
     <div className="h-screen flex flex-col bg-slate-50">
-      <PageHeader userType="expert-vehicle" userName="Dr. Hans Müller" />
+      <PageHeader userType="expert-appraiser" userName="Dr. Hans Müller" />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside className="w-64 bg-white border-r shrink-0">
           <nav className="p-4 space-y-2">
-            <Link
-              href="/expert/vehicle"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/expert" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <BarChart3 className="h-4 w-4" />
               <span>Dashboard</span>
             </Link>
-            <Link
-              href="/expert/vehicle/assignments"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/expert/assignments" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <Clock className="h-4 w-4" />
               <span>Zuweisungen</span>
               <Badge className="bg-yellow-500 text-white text-xs">3</Badge>
             </Link>
-            <Link
-              href="/expert/vehicle/cases"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/expert/cases" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <FileText className="h-4 w-4" />
               <span>Meine Fälle</span>
             </Link>
-            <Link
-              href="/expert/vehicle/reports"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/expert/reports" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <Upload className="h-4 w-4" />
               <span>Berichte</span>
             </Link>
-            <Link
-              href="/expert/vehicle/time-tracking"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/expert/time-tracking" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <Timer className="h-4 w-4" />
               <span>Zeiterfassung</span>
             </Link>
-            <Link
-              href="/expert/vehicle/calendar"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
-              <Calendar className="h-4 w-4" />
-              <span>Kalender</span>
-            </Link>
-            <Link
-              href="/expert/vehicle/notifications"
-              className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg"
-            >
+            <Link href="/expert/notifications" className="flex items-center space-x-2 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
               <MessageSquare className="h-4 w-4" />
               <span>Nachrichten</span>
               {<Badge className="bg-red-500 text-white text-xs">{2}</Badge>}
             </Link>
-            <Link
-              href="/expert/vehicle/settings"
-              className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg"
-            >
+            <Link href="/expert/settings" className="flex items-center space-x-2 px-3 py-2 bg-slate-50 text-primary rounded-lg">
               <Settings className="h-4 w-4" />
               <span>Profil</span>
             </Link>
@@ -177,6 +202,7 @@ export default function ExpertSettingsPage() {
                     { id: "availability", label: "Verfügbarkeit", icon: MapPin },
                     { id: "notifications", label: "Benachrichtigungen", icon: Settings },
                     { id: "stats", label: "Statistiken", icon: Award },
+                    { id: "tarife", label: "Tarife", icon: Table }, // NEW
                   ].map((tab) => {
                     const Icon = tab.icon
                     return (
@@ -204,7 +230,7 @@ export default function ExpertSettingsPage() {
                 {activeTab === "settings" && (
                   <div className="space-y-6">
                     <h2 className="text-xl font-semibold text-slate-800">Profil-Informationen</h2>
-
+                    {/* ... unchanged profile fields ... */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">Name</label>
@@ -260,11 +286,7 @@ export default function ExpertSettingsPage() {
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">Über mich</label>
-                      <Textarea
-                        defaultValue={settings.bio}
-                        disabled={!isEditing}
-                        className="min-h-[100px] disabled:bg-slate-50"
-                      />
+                      <Textarea defaultValue={settings.bio} disabled={!isEditing} className="min-h-[100px] disabled:bg-slate-50" />
                     </div>
 
                     <div>
@@ -314,13 +336,10 @@ export default function ExpertSettingsPage() {
                 {activeTab === "availability" && (
                   <div className="space-y-6">
                     <h2 className="text-xl font-semibold text-slate-800">Verfügbarkeit & Arbeitszeiten</h2>
-
+                    {/* ... unchanged availability content ... */}
                     <div className="space-y-4">
                       {Object.entries(settings.workingHours).map(([day, hours]) => (
-                        <div
-                          key={day}
-                          className="flex items-center justify-between p-4 border border-slate-200 rounded-lg"
-                        >
+                        <div key={day} className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
                           <div className="flex items-center space-x-4">
                             <input type="checkbox" checked={hours.available} disabled={!isEditing} className="rounded" />
                             <span className="font-medium text-slate-800 w-20">
@@ -329,19 +348,9 @@ export default function ExpertSettingsPage() {
                           </div>
                           {hours.available && (
                             <div className="flex items-center space-x-2">
-                              <input
-                                type="time"
-                                defaultValue={hours.start}
-                                disabled={!isEditing}
-                                className="px-2 py-1 border border-slate-300 rounded disabled:bg-slate-50"
-                              />
+                              <input type="time" defaultValue={hours.start} disabled={!isEditing} className="px-2 py-1 border border-slate-300 rounded disabled:bg-slate-50" />
                               <span className="text-slate-500">bis</span>
-                              <input
-                                type="time"
-                                defaultValue={hours.end}
-                                disabled={!isEditing}
-                                className="px-2 py-1 border border-slate-300 rounded disabled:bg-slate-50"
-                              />
+                              <input type="time" defaultValue={hours.end} disabled={!isEditing} className="px-2 py-1 border border-slate-300 rounded disabled:bg-slate-50" />
                             </div>
                           )}
                         </div>
@@ -376,85 +385,24 @@ export default function ExpertSettingsPage() {
                 {activeTab === "notifications" && (
                   <div className="space-y-6">
                     <h2 className="text-xl font-semibold text-slate-800">Benachrichtigungs-Einstellungen</h2>
-
+                    {/* ... unchanged notifications content ... */}
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
-                        <div>
-                          <h4 className="font-medium text-slate-800">E-Mail Benachrichtigungen</h4>
-                          <p className="text-sm text-slate-600">Erhalten Sie Updates per E-Mail</p>
+                      {[
+                        { label: "E-Mail Benachrichtigungen", desc: "Erhalten Sie Updates per E-Mail", checked: settings.preferences.emailNotifications },
+                        { label: "SMS Benachrichtigungen", desc: "Wichtige Updates per SMS", checked: settings.preferences.smsNotifications },
+                        { label: "Push Benachrichtigungen", desc: "Browser-Benachrichtigungen", checked: settings.preferences.pushNotifications },
+                        { label: "Wöchentliche Berichte", desc: "Zusammenfassung Ihrer Aktivitäten", checked: settings.preferences.weeklyReports },
+                        { label: "Fall-Zuweisungen", desc: "Benachrichtigung bei neuen Fällen", checked: settings.preferences.caseAssignmentAlerts },
+                        { label: "Deadline-Erinnerungen", desc: "Erinnerungen vor Fälligkeitsdaten", checked: settings.preferences.deadlineReminders },
+                      ].map((item) => (
+                        <div key={item.label} className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
+                          <div>
+                            <h4 className="font-medium text-slate-800">{item.label}</h4>
+                            <p className="text-sm text-slate-600">{item.desc}</p>
+                          </div>
+                          <input type="checkbox" checked={item.checked} disabled={!isEditing} className="rounded" />
                         </div>
-                        <input
-                          type="checkbox"
-                          checked={settings.preferences.emailNotifications}
-                          disabled={!isEditing}
-                          className="rounded"
-                        />
-                      </div>
-
-                      <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
-                        <div>
-                          <h4 className="font-medium text-slate-800">SMS Benachrichtigungen</h4>
-                          <p className="text-sm text-slate-600">Wichtige Updates per SMS</p>
-                        </div>
-                        <input
-                          type="checkbox"
-                          checked={settings.preferences.smsNotifications}
-                          disabled={!isEditing}
-                          className="rounded"
-                        />
-                      </div>
-
-                      <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
-                        <div>
-                          <h4 className="font-medium text-slate-800">Push Benachrichtigungen</h4>
-                          <p className="text-sm text-slate-600">Browser-Benachrichtigungen</p>
-                        </div>
-                        <input
-                          type="checkbox"
-                          checked={settings.preferences.pushNotifications}
-                          disabled={!isEditing}
-                          className="rounded"
-                        />
-                      </div>
-
-                      <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
-                        <div>
-                          <h4 className="font-medium text-slate-800">Wöchentliche Berichte</h4>
-                          <p className="text-sm text-slate-600">Zusammenfassung Ihrer Aktivitäten</p>
-                        </div>
-                        <input
-                          type="checkbox"
-                          checked={settings.preferences.weeklyReports}
-                          disabled={!isEditing}
-                          className="rounded"
-                        />
-                      </div>
-
-                      <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
-                        <div>
-                          <h4 className="font-medium text-slate-800">Fall-Zuweisungen</h4>
-                          <p className="text-sm text-slate-600">Benachrichtigung bei neuen Fällen</p>
-                        </div>
-                        <input
-                          type="checkbox"
-                          checked={settings.preferences.caseAssignmentAlerts}
-                          disabled={!isEditing}
-                          className="rounded"
-                        />
-                      </div>
-
-                      <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
-                        <div>
-                          <h4 className="font-medium text-slate-800">Deadline-Erinnerungen</h4>
-                          <p className="text-sm text-slate-600">Erinnerungen vor Fälligkeitsdaten</p>
-                        </div>
-                        <input
-                          type="checkbox"
-                          checked={settings.preferences.deadlineReminders}
-                          disabled={!isEditing}
-                          className="rounded"
-                        />
-                      </div>
+                      ))}
                     </div>
                   </div>
                 )}
@@ -462,7 +410,7 @@ export default function ExpertSettingsPage() {
                 {activeTab === "stats" && (
                   <div className="space-y-6">
                     <h2 className="text-xl font-semibold text-slate-800">Performance-Statistiken</h2>
-
+                    {/* ... unchanged stats content ... */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg">
                         <div className="flex items-center justify-between mb-2">
@@ -509,6 +457,46 @@ export default function ExpertSettingsPage() {
                         </div>
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {activeTab === "tarife" && (
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xl font-semibold text-slate-800">Tarife</h2>
+                      <Button variant="outline" onClick={exportCSV}>
+                        <Download className="h-4 w-4 mr-2" />
+                        CSV exportieren
+                      </Button>
+                    </div>
+
+                    <div className="overflow-x-auto rounded-lg border">
+                      <table className="w-full border-separate border-spacing-0 text-sm">
+                        <thead>
+                          <tr className="bg-slate-100 text-slate-700">
+                            <th className="text-left font-semibold p-3 border-b">Dienstleistung</th>
+                            <th className="text-left font-semibold p-3 border-b">Kategorie</th>
+                            <th className="text-right font-semibold p-3 border-b">Stundenansatz Experte (CHF/h)</th>
+                            <th className="text-right font-semibold p-3 border-b">Pauschale (CHF)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {tarife.map((g) =>
+                            g.rows.map((row, idx) => (
+                              <tr key={`${g.group}-${row.category}`} className="even:bg-slate-50">
+                                <td className="p-3 border-b align-top">
+                                  {idx === 0 ? <span className="font-medium text-slate-800">{g.group}</span> : ""}
+                                </td>
+                                <td className="p-3 border-b">{row.category}</td>
+                                <td className="p-3 border-b text-right">{fmt(row.hourly)}</td>
+                                <td className="p-3 border-b text-right">{fmt(row.flat)}</td>
+                              </tr>
+                            ))
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                    <p className="text-xs text-slate-500">Alle Beträge in CHF. Leere Felder bedeuten „nicht zutreffend“.</p>
                   </div>
                 )}
               </div>
