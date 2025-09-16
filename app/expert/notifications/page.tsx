@@ -138,7 +138,7 @@ export default function ExpertNotificationsPage() {
 
   return (
     <div className="h-screen flex flex-col bg-slate-50">
-      <PageHeader userType="expert-appraiser" userName="Dr. Hans Müller" />
+      <PageHeader userType="expert-vehicle" userName="Kurt Seiler" />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}

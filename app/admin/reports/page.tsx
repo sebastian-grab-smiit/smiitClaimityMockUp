@@ -44,7 +44,7 @@ export default function ReportsReviewPage() {
       id: "RPT-2024-001",
       claimId: "CLM-2024-001",
       title: "Schadensgutachten Fahrzeugkollision",
-      expert: "Dr. Hans Müller",
+      expert: "Kurt Seiler",
       expertEmail: "hans.mueller@expert.ch",
       insurer: "Helvetia Versicherung",
       status: "Zur Prüfung",

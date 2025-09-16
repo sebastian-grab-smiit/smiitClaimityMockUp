@@ -33,7 +33,7 @@ export default function ClaimsListPage() {
       policyNumber: "POL-2024-123456",
       type: "Fahrzeugschaden",
       status: "In Bearbeitung",
-      expert: "Dr. Hans Müller",
+      expert: "Kurt Seiler",
       created: "15.01.2024",
       incident: "12.01.2024",
       amount: "CHF 8,500",

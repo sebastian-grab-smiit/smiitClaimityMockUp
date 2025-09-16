@@ -94,7 +94,7 @@ export default function ClientCasePage({ id }: { id: string }) {
       },
       {
         id: 2,
-        sender: 'Dr. Hans Müller',
+        sender: 'Kurt Seiler',
         role: 'Experte',
         messageType: 'insurer',
         time: '17.01.2024 11:30',
@@ -114,7 +114,7 @@ export default function ClientCasePage({ id }: { id: string }) {
       },
       {
         id: 4,
-        sender: 'Dr. Hans Müller',
+        sender: 'Kurt Seiler',
         role: 'Experte',
         messageType: 'admin',
         time: '17.01.2024 11:30',
@@ -150,7 +150,7 @@ export default function ClientCasePage({ id }: { id: string }) {
 
   return (
     <div className="h-screen flex flex-col bg-slate-50">
-      <PageHeader userType="expert-appraiser" userName="Dr. Hans Müller" />
+      <PageHeader userType="expert-vehicle" userName="Kurt Seiler" />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}

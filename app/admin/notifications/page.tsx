@@ -20,7 +20,7 @@ export default function AdminNotificationsPage() {
     {
       id: 1,
       caseId: "CLM-2024-001",
-      from: "Dr. Hans Müller (Expert)",
+      from: "Kurt Seiler (Expert)",
       fromType: "expert",
       subject: "Zusätzliche Dokumentation benötigt",
       message: "Benötige Zugang zu zusätzlichen Werkstattberichten für vollständige Bewertung des Fahrzeugschadens.",

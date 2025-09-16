@@ -29,7 +29,7 @@ export default function AdminExpertsPage() {
   const experts = [
     {
       id: "EXP-2024-001",
-      name: "Dr. Hans Müller",
+      name: "Kurt Seiler",
       email: "hans.mueller@expert.ch",
       phone: "+41 44 123 45 67",
       address: "Bahnhofstrasse 10, 8001 Zürich, Schweiz",

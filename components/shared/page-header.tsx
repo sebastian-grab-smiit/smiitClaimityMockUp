@@ -7,6 +7,8 @@ import Link from "next/link"
 import { NotificationCenter } from "./notification-center"
 import { LanguageSelector } from "./language-selector"
 import Image from "next/image"
+import logo from "../../public/logo.png"
+import logo_dummy from "../../public/tdc.png"
 
 interface PageHeaderProps {
   userType?: "insurer" | "admin" | "expert-vehicle" | "expert-fraud" | "expert-appraiser" | "expert" | ""
@@ -48,13 +50,22 @@ export function PageHeader({
 
             {/* Logo */}
             <div className="flex items-center space-x-3 min-w-0">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
-                alt="Claimity Logo"
-                width={80}
-                height={24}
-                className="h-6 w-auto sm:h-7"
-              />
+              {userType === "expert-vehicle" ?
+                <Image
+                  src={logo_dummy}
+                  alt="Claimity Logo"
+                  width={150}
+                  height={50}
+                  className="rounded-lg"
+                /> :
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-QPdI2ZFgQGOHkKIkK0SoioSmi1UBNJ.png"
+                  alt="Claimity Logo"
+                  width={80}
+                  height={24}
+                  className="h-6 w-auto sm:h-7"
+                />
+              }
 
               {userType && (
                 <div className="hidden sm:flex items-center">

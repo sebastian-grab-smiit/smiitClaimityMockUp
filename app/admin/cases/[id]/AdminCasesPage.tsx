@@ -42,7 +42,7 @@ export default function AdminCaseDetailPage({ id }: { id: string }) {
   const caseData = {
     id,
     insurer: "Zurich Insurance",
-    expert: "Dr. Hans Müller",
+    expert: "Kurt Seiler",
     type: "Fahrzeugschaden",
     amount: "CHF 15,000",
     status: "In Bearbeitung",
@@ -84,7 +84,7 @@ export default function AdminCaseDetailPage({ id }: { id: string }) {
       },
       {
         id: 2,
-        sender: 'Dr. Hans Müller',
+        sender: 'Kurt Seiler',
         role: 'Experte',
         messageType: 'insurer',
         time: '17.01.2024 11:30',
@@ -107,7 +107,7 @@ export default function AdminCaseDetailPage({ id }: { id: string }) {
       },
       {
         id: 2,
-        sender: 'Dr. Hans Müller',
+        sender: 'Kurt Seiler',
         role: 'Experte',
         messageType: 'admin',
         time: '17.01.2024 11:30',

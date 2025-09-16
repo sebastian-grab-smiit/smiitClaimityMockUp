@@ -41,7 +41,7 @@ export default function ClaimDetailPage({ id }: { id: string }) {
     type: "Fahrzeugschaden",
     status: "In Bearbeitung",
     expert: {
-      name: "Dr. Hans Müller",
+      name: "Kurt Seiler",
       email: "hans.mueller@expert.ch",
       phone: "+41 44 123 45 67",
       specialties: ["Fahrzeugschäden", "Maschinenschäden"],
@@ -69,7 +69,7 @@ export default function ClaimDetailPage({ id }: { id: string }) {
     {
       date: "16.01.2024 14:15",
       event: "Experte kontaktiert Versicherungsnehmer",
-      user: "Dr. Hans Müller",
+      user: "Kurt Seiler",
       type: "contact",
     },
     {
@@ -106,14 +106,14 @@ export default function ClaimDetailPage({ id }: { id: string }) {
       type: "document",
       size: "89 KB",
       uploaded: "16.01.2024",
-      uploader: "Dr. Hans Müller",
+      uploader: "Kurt Seiler",
     },
   ]
 
   const messages = [
     {
       id: 1,
-      sender: "Dr. Hans Müller",
+      sender: "Kurt Seiler",
       role: "Experte",
       messageType: 'expert',
       message:
@@ -158,7 +158,7 @@ export default function ClaimDetailPage({ id }: { id: string }) {
       name: "Schadensgutachten_Vorabericht.pdf",
       status: "Entwurf",
       created: "17.01.2024",
-      expert: "Dr. Hans Müller",
+      expert: "Kurt Seiler",
     },
   ]
 
@@ -168,7 +168,7 @@ export default function ClaimDetailPage({ id }: { id: string }) {
       amount: "CHF 450.00",
       status: "Offen",
       due: "30.01.2024",
-      expert: "Dr. Hans Müller",
+      expert: "Kurt Seiler",
     },
   ]
 

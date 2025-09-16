@@ -41,7 +41,7 @@ export default function InsurerDashboard() {
       id: "CLM-2024-001",
       type: "Fahrzeugschaden",
       status: "In Bearbeitung",
-      expert: "Dr. Hans Müller",
+      expert: "Kurt Seiler",
       created: "15.01.2024",
       amount: "CHF 8,500",
       location: "Zürich",

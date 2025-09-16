@@ -230,7 +230,7 @@ export default function NewExpertPage() {
                         id="name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="Dr. Hans Müller"
+                        placeholder="Kurt Seiler"
                       />
                     </div>
                     <div className="space-y-2">

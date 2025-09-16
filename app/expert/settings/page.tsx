@@ -68,7 +68,7 @@ export default function ExpertSettingsPage() {
   // Mock settings data
   const settings = {
     id: "EXP-001",
-    name: "Dr. Hans Müller",
+    name: "Kurt Seiler",
     email: "hans.mueller@expert.ch",
     phone: "+41 44 123 45 67",
     address: "Musterstrasse 123, 8001 Zürich",
@@ -118,7 +118,7 @@ export default function ExpertSettingsPage() {
 
   return (
     <div className="h-screen flex flex-col bg-slate-50">
-      <PageHeader userType="expert-appraiser" userName="Dr. Hans Müller" />
+      <PageHeader userType="expert-vehicle" userName="Kurt Seiler" />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}

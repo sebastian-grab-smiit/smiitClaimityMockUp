@@ -42,7 +42,7 @@ export default function InvoicingPage() {
       id: "INV-2024-001",
       number: "2024-001",
       claimId: "CLM-2024-001",
-      expert: "Dr. Hans Müller",
+      expert: "Kurt Seiler",
       expertEmail: "hans.mueller@expert.ch",
       insurer: "Helvetia Versicherung",
       amount: "CHF 450.00",

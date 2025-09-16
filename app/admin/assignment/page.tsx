@@ -61,7 +61,7 @@ export default function AssignmentPage() {
   const experts = [
     {
       id: "EXP-001",
-      name: "Dr. Hans Müller",
+      name: "Kurt Seiler",
       email: "hans.mueller@expert.ch",
       phone: "+41 44 123 45 67",
       location: "Zürich, ZH",

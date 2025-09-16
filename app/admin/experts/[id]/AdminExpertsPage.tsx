@@ -71,7 +71,7 @@ export default function ExpertDetailPage({ id }: { id: string }) {
     id,
     company: "Muster AG",
     category: "fahrzeugexperte" as TariffCategory,
-    name: "Dr. Hans Müller",
+    name: "Kurt Seiler",
     email: "hans.mueller@expert.ch",
     phone: "+41 44 123 45 67",
     address: "Musterstrasse 123, 8001 Zürich", // legacy full (for reference)

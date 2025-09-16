@@ -33,7 +33,7 @@ export default function AdminDashboard() {
   ]
 
   const expertAssignments = [
-    { expert: "Dr. Hans Müller", location: "Zürich", specialty: "KFZ-Gutachten", activeCases: 5, availability: "Verfügbar", rating: 4.8 },
+    { expert: "Kurt Seiler", location: "Zürich", specialty: "KFZ-Gutachten", activeCases: 5, availability: "Verfügbar", rating: 4.8 },
     { expert: "Maria Weber", location: "Basel", specialty: "Gebäudeschäden", activeCases: 3, availability: "Beschäftigt", rating: 4.9 },
     { expert: "Thomas Schneider", location: "Bern", specialty: "Wasserschäden", activeCases: 2, availability: "Verfügbar", rating: 4.7 },
   ]
@@ -53,7 +53,7 @@ export default function AdminDashboard() {
   ]
 
   const recentActivity = [
-    { id: "CLM-2024-048", insurer: "Helvetia Versicherung", expert: "Dr. Hans Müller", type: "Fahrzeugschaden", amount: "CHF 15,000", status: "Zugewiesen", time: "Vor 15 Min" },
+    { id: "CLM-2024-048", insurer: "Helvetia Versicherung", expert: "Kurt Seiler", type: "Fahrzeugschaden", amount: "CHF 15,000", status: "Zugewiesen", time: "Vor 15 Min" },
     { id: "CLM-2024-049", insurer: "AXA Schweiz", expert: "Maria Weber", type: "Gebäudeschaden", amount: "CHF 45,000", status: "In Bearbeitung", time: "Vor 32 Min" },
     { id: "CLM-2024-050", insurer: "Zurich Insurance", expert: "Thomas Schneider", type: "Wasserschaden", amount: "CHF 8,500", status: "Abgeschlossen", time: "Vor 1 Std" },
   ]
